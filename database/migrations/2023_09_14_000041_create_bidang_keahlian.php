@@ -11,12 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('foto', function (Blueprint $table){
+        Schema::create('bidang_keahlian', function (Blueprint $table){
+            /* ------------------------------- ATTRIBUTES ------------------------------- */
             $table->id();
-            $table->unsignedBigInteger('id_perusahaan')->nullable();
-            $table->string('path', 100)->nullable();
-
-            $table->foreign('id_perusahaan')->on('perusahaan')->references('id');
+            $table->string('nama')->unique()->nullable(false);
         });
     }
 
@@ -25,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('foto');
+        Schema::dropIfExists('bidang_keahlian');
     }
 };
