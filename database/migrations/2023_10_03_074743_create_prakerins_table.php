@@ -20,6 +20,15 @@ return new class extends Migration
             $table->enum('status', ['berlangsung', 'selesai'])->default('berlangsung')->nullable(false);
             $table->date('tanggal_mulai')->nullable(false);
             $table->date('tanggal_selesai')->nullable(false);
+
+            $table->foreign('id_siswa')->references('nis')->on('siswa')
+                ->cascadeOnDelete()->cascadeOnUpdate();
+            $table->foreign('id_pembimbing_sekolah')->references('nip_nik')->on('pembimbing')
+                ->cascadeOnDelete()->cascadeOnUpdate();
+            $table->foreign('id_pembimbing_industri')->references('nip_nik')->on('pembimbing')
+                ->cascadeOnDelete()->cascadeOnUpdate();
+            $table->foreign('id_jurnal')->references('id')->on('jurnal')
+                ->cascadeOnDelete()->cascadeOnUpdate();
         });
     }
 
