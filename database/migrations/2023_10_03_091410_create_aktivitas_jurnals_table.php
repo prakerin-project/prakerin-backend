@@ -12,6 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('aktivitas_jurnal', function (Blueprint $table) {
+            /* ------------------------------- ATTRIBUTES ------------------------------- */
             $table->id();
             $table->string('id_prakerin', 15)->nullable(false);
             $table->string('pengonfirmasi', 20)->nullable();
@@ -22,6 +23,7 @@ return new class extends Migration
             $table->time('jam_masuk')->nullable(false);
             $table->time('jam_pulang')->nullable(false);
 
+            /* ----------------------------------- FK ----------------------------------- */
             $table->foreign('id_prakerin')->references('id')->on('prakerin')
                 ->cascadeOnDelete()->cascadeOnUpdate();
             $table->foreign('pengonfirmasi')->references('nip_nik')->on('pembimbing')

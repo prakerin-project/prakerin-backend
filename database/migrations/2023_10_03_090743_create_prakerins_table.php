@@ -11,6 +11,7 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('prakerin', function (Blueprint $table) {
+            /* ------------------------------- ATTRIBUTES ------------------------------- */
             $table->string('id', 15)->primary();
             $table->string('id_pengajuan', 15);
             $table->string('nis_siswa', 12)->nullable(false);
@@ -20,6 +21,7 @@ return new class extends Migration {
             $table->date('tanggal_mulai')->nullable(false);
             $table->date('tanggal_selesai')->nullable(false);
 
+            /* ----------------------------------- FK ----------------------------------- */
             $table->foreign('id_pengajuan')->references('id')->on('pengajuan')
                 ->cascadeOnDelete()->cascadeOnUpdate();
             $table->foreign('nis_siswa')->references('nis')->on('siswa')

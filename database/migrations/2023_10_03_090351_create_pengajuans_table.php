@@ -12,6 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('pengajuan', function (Blueprint $table) {
+            /* ----------------------------------- FK ----------------------------------- */
             $table->string('id', 15)->primary();
             $table->string('nip_walas', 20)->nullable(false);
             $table->string('nip_kaprog', 20)->nullable(false);
@@ -26,6 +27,7 @@ return new class extends Migration
             $table->enum('status', ['belum_disetujui', 'disetujui', 'diajukan', 'diterima', 'ditolak'])->default('belum_disetujui')->nullable();
             $table->timestamps();
 
+            /* ----------------------------------- FK ----------------------------------- */
             $table->foreign('nip_walas')->references('nip')->on('walas')
                 ->cascadeOnDelete()->cascadeOnUpdate();
             $table->foreign('nip_kaprog')->references('nip')->on('kaprog')

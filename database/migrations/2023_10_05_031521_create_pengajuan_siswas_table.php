@@ -12,10 +12,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('pengajuan_siswa', function (Blueprint $table) {
+            /* ------------------------------- ATTRIBUTES ------------------------------- */
             $table->id();
             $table->string('id_pengajuan', 15)->nullable(false);
             $table->string('nis_siswa', 12)->nullable(false);
 
+            /* ----------------------------------- FK ----------------------------------- */
             $table->foreign('id_pengajuan')->references('id')->on('pengajuan')
                 ->cascadeOnDelete()->cascadeOnUpdate();
             $table->foreign('nis_siswa')->references('nis')->on('siswa')
