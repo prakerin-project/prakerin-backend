@@ -13,12 +13,18 @@ return new class extends Migration
     {
         Schema::create('aktivitas_jurnal', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('id_jurnal')->nullable(false);
+            $table->string('id_prakerin', 15)->nullable(false);
+            $table->string('pengonfirmasi', 20)->nullable();
             $table->string('aktivitas', 255)->nullable(false);
             $table->date('tanggal')->useCurrent()->nullable(false);
             $table->enum('konfirmasi', ['valid', 'not_valid'])->default('not_valid')->nullable(false);
+            $table->string('foto', 25)->nullable(false);
+            $table->time('jam_masuk')->nullable(false);
+            $table->time('jam_pulang')->nullable(false);
 
-            $table->foreign('id_jurnal')->references('id')->on('jurnal')
+            $table->foreign('id_prakerin')->references('id')->on('prakerin')
+                ->cascadeOnDelete()->cascadeOnUpdate();
+            $table->foreign('pengonfirmasi')->references('nip_nik')->on('pembimbing')
                 ->cascadeOnDelete()->cascadeOnUpdate();
         });
     }

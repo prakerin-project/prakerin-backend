@@ -13,9 +13,9 @@ return new class extends Migration {
         Schema::create('kaprog', function (Blueprint $table) {
             /* ------------------------------- ATTRIBUTES ------------------------------- */
             $table->string('nip', 20)->primary();
-            $table->string('nama', 100)->nullable(false);
             $table->unsignedBigInteger('id_jurusan')->nullable(false);
             $table->unsignedBigInteger('id_user')->nullable(false);
+            $table->string('nama', 100)->nullable(false);
             $table->string('no_telp', 22)->nullable(false); // (+62) 8XX-XXXX-XXXX
             /* ----------------------------------- FK ----------------------------------- */
             $table->foreign('id_jurusan')->references('id')->on('jurusan')

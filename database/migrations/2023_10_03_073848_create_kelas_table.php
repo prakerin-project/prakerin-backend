@@ -16,6 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('id_jurusan')->nullable(false);
             $table->char('kelompok', 1)->nullable();
             $table->enum('tingkat', ['10', '11', '12'])->nullable(false);
+            $table->unsignedSmallInteger('angkatan')->nullable(false);
 
             $table->foreign('id_jurusan')->references('id')->on('jurusan')
                 ->cascadeOnDelete()->cascadeOnUpdate();

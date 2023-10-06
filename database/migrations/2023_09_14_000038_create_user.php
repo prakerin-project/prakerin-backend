@@ -16,6 +16,7 @@ return new class extends Migration {
             $table->string('username', 20)->nullable(false)->unique();
             $table->string('password', 255)->nullable(false);
             $table->enum('role', ['siswa', 'walas', 'kaprog', 'pb_industri', 'pb_sekolah', 'hubin', 'tu'])->nullable(false);
+            $table->string('foto_profil', 31)->nullable();
             $table->timestamps();
         });
     }

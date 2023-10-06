@@ -13,12 +13,13 @@ return new class extends Migration {
         Schema::create('perusahaan', function (Blueprint $table) {
             /* ------------------------------- ATTRIBUTES ------------------------------- */
             $table->id();
-            $table->unsignedBigInteger('id_bidang_keahlian');
-            $table->string('nama_perusahaan', 100)->nullable(false);
-            $table->text('alamat')->nullable(false);
+            $table->unsignedBigInteger('id_jenis_perusahaan');
+            $table->string('nama_perusahaan', 100)->unique()->nullable(false);
             $table->string('email', 60)->nullable(false);
+            $table->text('alamat')->nullable(false);
+            $table->string('foto', 50)->nullable();
             /* ----------------------------------- FK ----------------------------------- */
-            $table->foreign('id_bidang_keahlian')->references('id')->on('bidang_keahlian')
+            $table->foreign('id_jenis_perusahaan')->references('id')->on('jenis_perusahaan')
                 ->cascadeOnDelete()->cascadeOnUpdate();
         });
     }

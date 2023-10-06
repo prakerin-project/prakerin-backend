@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('bidang_keahlian', function (Blueprint $table){
+        Schema::create('jenis_perusahaan', function (Blueprint $table){
             /* ------------------------------- ATTRIBUTES ------------------------------- */
             $table->id();
             $table->string('nama')->unique()->nullable(false);
