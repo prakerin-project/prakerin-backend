@@ -8,4 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Siswa extends Model
 {
     use HasFactory;
+
+    protected $table = 'siswa';
+    protected $primaryKey = 'nis';
+    protected $keyType = 'string';
+    protected $guarded = [];
+
+    public $timestamps = false;
 }

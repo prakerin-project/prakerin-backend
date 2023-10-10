@@ -8,4 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Perusahaan extends Model
 {
     use HasFactory;
+
+    protected $table = 'perusahaan';
+    protected $primaryKey = 'id';
+    protected $keyType = 'int';
+    protected $guarded = ['id'];
+
+    public $timestamps = false;
 }

@@ -8,4 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Jurusan extends Model
 {
     use HasFactory;
+
+    protected $table = 'jurusan';
+    protected $primaryKey = 'id';
+    protected $keyType = 'int';
+    protected $guarded = ['id'];
+
+    public $timestamps = false;
 }

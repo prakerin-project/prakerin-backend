@@ -5,14 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Pengajuan extends Model
+class Logs extends Model
 {
     use HasFactory;
 
-    protected $table = 'pengajuan';
+    protected $table = 'logs';
     protected $primaryKey = 'id';
-    protected $keyType = 'string';
-    protected $guarded = [];
+    protected $keyType = 'int';
+    protected $guarded = ['id'];
 
-    public $timestamps = true;
+    public $timestamps = false;
 }
