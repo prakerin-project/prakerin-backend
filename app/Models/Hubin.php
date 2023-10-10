@@ -12,7 +12,11 @@ class Hubin extends Model
     protected $table = 'hubin';
     protected $primaryKey = 'nip';
     protected $keyType = 'string';
-    protected $guarded = [];
-
+    protected $guarded = ['nip'];
     public $timestamps = false;
+    /* -------------------------------- RELATION -------------------------------- */
+    public function user()
+    {
+        return $this->belongsTo(User::class,'id_user');
+    }
 }

@@ -12,6 +12,14 @@ class PengajuanSiswa extends Model
     protected $primaryKey = 'id';
     protected $keyType = 'int';
     protected $guarded = ['id'];
-
     public $timestamps = false;
+    /* -------------------------------- RELATION -------------------------------- */
+    public function pengajuan()
+    {
+        return $this->belongsTo(Pengajuan::class, 'id_pengajuan');
+    }
+    public function siswa()
+    {
+        return $this->belongsTo(Siswa::class, 'nis_siswa');
+    }
 }

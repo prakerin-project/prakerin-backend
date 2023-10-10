@@ -13,6 +13,5 @@ class Logs extends Model
     protected $primaryKey = 'id';
     protected $keyType = 'int';
     protected $guarded = ['id'];
-
     public $timestamps = false;
 }

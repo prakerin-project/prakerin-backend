@@ -13,6 +13,10 @@ class JenisPerusahaan extends Model
     protected $primaryKey = 'id';
     protected $keyType = 'int';
     protected $guarded = ['id'];
-
     public $timestamps = false;
+    /* -------------------------------- RELATION -------------------------------- */
+    public function perusahaan()
+    {
+        return $this->hasMany(Perusahaan::class,'id_bidang_perusahaan');
+    }
 }

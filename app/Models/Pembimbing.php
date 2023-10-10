@@ -12,7 +12,10 @@ class Pembimbing extends Model
     protected $table = 'pembimbing';
     protected $primaryKey = 'nip_nik';
     protected $keyType = 'string';
-    protected $guarded = [];
-
+    protected $guarded = ['nip_nik'];
     public $timestamps = false;
+    public function aktivitas_jurnal()
+    {
+        return $this->hasMany(AktivitasJurnal::class, 'pengonfirmasi', 'nip_nik');
+    }
 }

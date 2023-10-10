@@ -12,7 +12,8 @@ class Siswa extends Model
     protected $table = 'siswa';
     protected $primaryKey = 'nis';
     protected $keyType = 'string';
-    protected $guarded = [];
-
+    protected $guarded = ['nis'];
     public $timestamps = false;
+    /* -------------------------------- RELATION -------------------------------- */
+
 }

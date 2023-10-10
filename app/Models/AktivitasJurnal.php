@@ -13,6 +13,15 @@ class AktivitasJurnal extends Model
     protected $primaryKey = 'id';
     protected $keyType = 'int';
     protected $guarded = ['id'];
-
     public $timestamps = false;
+
+    /* -------------------------------- RELATION -------------------------------- */
+    public function prakerin()
+    {
+        return $this->belongsTo(Prakerin::class, 'id_prakerin');
+    }
+    public function pengonfirmasi()
+    {
+        return $this->belongsTo(Pembimbing::class, 'pengonfirmasi');
+    }
 }
