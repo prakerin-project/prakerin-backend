@@ -17,6 +17,6 @@ class JenisPerusahaan extends Model
     /* -------------------------------- RELATION -------------------------------- */
     public function perusahaan()
     {
-        return $this->hasMany(Perusahaan::class,'id_bidang_perusahaan');
+        return $this->hasMany(Perusahaan::class,'id_jenis_perusahaan');
     }
 }

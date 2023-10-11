@@ -19,4 +19,9 @@ class Perusahaan extends Model
     {
         return $this->belongsTo(JenisPerusahaan::class, 'id_jenis_perusahaan');
     }
+
+    public function foto()
+    {
+        $this->hasMany(Foto::class, 'id_perusahaan');
+    }
 }

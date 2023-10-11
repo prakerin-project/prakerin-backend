@@ -13,6 +13,15 @@ class Walas extends Model
     protected $primaryKey = 'nip';
     protected $keyType = 'string';
     protected $guarded = [];
-
     public $timestamps = false;
+    /* -------------------------------- RELATION -------------------------------- */
+    public function user()
+    {
+        $this->belongsTo(User::class, 'id_user');
+    }
+
+    public function kelas()
+    {
+        $this->belongsTo(Kelas::class, 'id_kelas');
+    }
 }

@@ -5,22 +5,18 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class AktivitasJurnal extends Model
+class Foto extends Model
 {
     use HasFactory;
 
-    protected $table = 'aktivitas_jurnal';
+    protected $table = 'foto';
     protected $primaryKey = 'id';
     protected $keyType = 'int';
     protected $guarded = ['id'];
     public $timestamps = false;
     /* -------------------------------- RELATION -------------------------------- */
-    public function prakerin()
+    public function perusahaan()
     {
-        return $this->belongsTo(Prakerin::class, 'id_prakerin');
-    }
-    public function pengonfirmasi()
-    {
-        return $this->belongsTo(Pembimbing::class, 'pengonfirmasi');
+        $this->belongsTo(Perusahaan::class, 'id_perusahaan');
     }
 }

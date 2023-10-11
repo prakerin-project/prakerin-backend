@@ -15,5 +15,13 @@ class Siswa extends Model
     protected $guarded = ['nis'];
     public $timestamps = false;
     /* -------------------------------- RELATION -------------------------------- */
+    public function kelas()
+    {
+        $this->hasOne(Kelas::class, 'id_kelas');
+    }
 
+    public function user()
+    {
+        $this->belongsTo(User::class, 'id_user');
+    }
 }

@@ -15,5 +15,13 @@ class Kelas extends Model
     protected $guarded = ['id'];
     public $timestamps = false;
     /* -------------------------------- RELATION -------------------------------- */
-    
+    public function jurusan()
+    {
+        $this->belongsTo(Jurusan::class, 'id_jurusan');
+    }
+
+    public function walas()
+    {
+        $this->hasOne(Walas::class, 'id_kelas');
+    }
 }

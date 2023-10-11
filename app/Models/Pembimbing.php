@@ -14,8 +14,14 @@ class Pembimbing extends Model
     protected $keyType = 'string';
     protected $guarded = ['nip_nik'];
     public $timestamps = false;
+    /* -------------------------------- RELATION -------------------------------- */
     public function aktivitas_jurnal()
     {
         return $this->hasMany(AktivitasJurnal::class, 'pengonfirmasi', 'nip_nik');
+    }
+
+    public function monitoring()
+    {
+        $this->hasMany(Monitoring::class, 'nip_pembimbing');
     }
 }
