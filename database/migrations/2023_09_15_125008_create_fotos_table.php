@@ -12,9 +12,13 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('foto', function (Blueprint $table) {
+            /* ------------------------------- ATTRIBUTES ------------------------------- */
             $table->id();
             $table->unsignedBigInteger('id_perusahaan')->nullable(false);
             $table->string('path', 20)->nullable(false);
+            /* ----------------------------------- FK ----------------------------------- */
+            $table->foreign('id_perusahaan')->references('id')->on('perusahaan')
+                ->cascadeOnDelete()->cascadeOnUpdate();
         });
     }
 
