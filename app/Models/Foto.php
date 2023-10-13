@@ -17,6 +17,6 @@ class Foto extends Model
     /* -------------------------------- RELATION -------------------------------- */
     public function perusahaan()
     {
-        $this->belongsTo(Perusahaan::class, 'id_perusahaan');
+        return $this->belongsTo(Perusahaan::class, 'id_perusahaan');
     }
 }

@@ -22,6 +22,6 @@ class Perusahaan extends Model
 
     public function foto()
     {
-        $this->hasMany(Foto::class, 'id_perusahaan');
+        return $this->hasMany(Foto::class, 'id_perusahaan');
     }
 }

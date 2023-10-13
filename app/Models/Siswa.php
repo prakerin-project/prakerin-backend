@@ -17,11 +17,11 @@ class Siswa extends Model
     /* -------------------------------- RELATION -------------------------------- */
     public function kelas()
     {
-        $this->hasOne(Kelas::class, 'id_kelas');
+        return $this->hasOne(Kelas::class, 'id_kelas');
     }
 
     public function user()
     {
-        $this->belongsTo(User::class, 'id_user');
+        return $this->belongsTo(User::class, 'id_user');
     }
 }

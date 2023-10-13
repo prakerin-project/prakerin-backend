@@ -17,7 +17,6 @@ return new class extends Migration {
             $table->string('nama_perusahaan', 100)->unique()->nullable(false);
             $table->string('email', 60)->nullable(false);
             $table->text('alamat')->nullable(false);
-            $table->string('foto', 50)->nullable();
             /* ----------------------------------- FK ----------------------------------- */
             $table->foreign('id_jenis_perusahaan')->references('id')->on('jenis_perusahaan')
                 ->cascadeOnDelete()->cascadeOnUpdate();

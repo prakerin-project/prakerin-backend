@@ -22,6 +22,6 @@ class Pembimbing extends Model
 
     public function monitoring()
     {
-        $this->hasMany(Monitoring::class, 'nip_pembimbing');
+        return $this->hasMany(Monitoring::class, 'nip_pembimbing');
     }
 }

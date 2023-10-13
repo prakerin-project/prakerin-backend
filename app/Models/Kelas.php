@@ -17,11 +17,11 @@ class Kelas extends Model
     /* -------------------------------- RELATION -------------------------------- */
     public function jurusan()
     {
-        $this->belongsTo(Jurusan::class, 'id_jurusan');
+        return $this->belongsTo(Jurusan::class, 'id_jurusan');
     }
 
     public function walas()
     {
-        $this->hasOne(Walas::class, 'id_kelas');
+        return $this->hasOne(Walas::class, 'id_kelas');
     }
 }

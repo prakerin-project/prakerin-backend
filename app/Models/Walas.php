@@ -17,11 +17,11 @@ class Walas extends Model
     /* -------------------------------- RELATION -------------------------------- */
     public function user()
     {
-        $this->belongsTo(User::class, 'id_user');
+        return $this->belongsTo(User::class, 'id_user');
     }
 
     public function kelas()
     {
-        $this->belongsTo(Kelas::class, 'id_kelas');
+        return $this->belongsTo(Kelas::class, 'id_kelas');
     }
 }
