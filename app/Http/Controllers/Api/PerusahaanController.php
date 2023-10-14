@@ -6,14 +6,15 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Perusahaan\CreatePerusahaanRequest;
 use App\Models\Foto;
 use App\Models\Perusahaan;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
+use App\Traits\FotoTrait;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class PerusahaanController extends Controller
 {
+    use FotoTrait;
+
     public function getAll(): JsonResponse
     {
         $data = Perusahaan::with('jenis_perusahaan', 'foto')->get();
@@ -35,28 +36,11 @@ class PerusahaanController extends Controller
 
         if ($request->hasFile('foto')) {
             foreach ($request->foto as $foto) {
-                $fileName = $perusahaan->id . "_" . Str::random(10) . '.' . $foto->getClientOriginalExtension();
-                Storage::disk('public')->putFileAs('perusahaan', $foto, $fileName);
-
-                Foto::query()->create([
-                    'id_perusahaan' => $perusahaan->id,
-                    'path' => $fileName
-                ]);
+                $this->fotoUpload($perusahaan->id, $foto);
             }
         }
 
         return response()->json($perusahaan, 201);
-    }
-
-    public function deleteFoto(int $id)
-    {
-        $foto = Foto::query()->findOrFail($id);
-
-        // Delete foto on storage
-        Storage::disk("public")->delete("perusahaan/$foto->path");
-
-        // Delete record of foto
-        $foto->delete();
     }
 
     public function delete(int $id)
