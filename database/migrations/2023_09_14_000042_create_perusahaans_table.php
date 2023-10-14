@@ -15,7 +15,7 @@ return new class extends Migration {
             $table->id();
             $table->unsignedBigInteger('id_jenis_perusahaan');
             $table->string('nama_perusahaan', 100)->unique()->nullable(false);
-            $table->string('email', 60)->nullable(false);
+            $table->string('email', 60)->unique()->nullable(false);
             $table->text('alamat')->nullable(false);
             /* ----------------------------------- FK ----------------------------------- */
             $table->foreign('id_jenis_perusahaan')->references('id')->on('jenis_perusahaan')

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Perusahaan\CreatePerusahaanRequest;
+use App\Http\Requests\Perusahaan\UpdatePerusahaanRequest;
 use App\Models\Perusahaan;
 use App\Traits\FotoTrait;
 use Illuminate\Http\JsonResponse;
@@ -45,6 +46,16 @@ class PerusahaanController extends Controller
         }
 
         return response()->json($perusahaan, 201);
+    }
+
+    public function update(int $id, UpdatePerusahaanRequest $request): JsonResponse
+    {
+        $data = $request->validated();
+        $perusahaan = $this->getById($id);
+
+        $perusahaan->fill($data)->save();
+
+        return response()->json($perusahaan, 200);
     }
 
     public function delete(int $id)

@@ -6,9 +6,8 @@ use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Validation\Rule;
-use Illuminate\Validation\Rules\File;
 
-class CreatePerusahaanRequest extends FormRequest
+class UpdatePerusahaanRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -29,10 +28,8 @@ class CreatePerusahaanRequest extends FormRequest
         return [
             'id_jenis_perusahaan' => ['required', 'integer'],
             'nama_perusahaan' => ['required', 'string', Rule::unique('perusahaan', 'nama_perusahaan')],
-            'email' => ['required', 'email', Rule::unique('perusahaan', 'email')],
-            'alamat' => ['required'],
-            'foto' => ['array', 'nullable', 'max:5'],
-            'foto.*' => ['mimes:jpeg,jpg,png', 'max:5120']
+            'email' => ['required', 'email', Rule::unique('perusahaan', 'email')->ignore($this->id)],
+            'alamat' => ['required']
         ];
     }
 

@@ -27,6 +27,7 @@ Route::controller(PerusahaanController::class)->group(function () {
     Route::get('/perusahaan', 'getAll');
     Route::post('/perusahaan', 'create');
     Route::get('/perusahaan/{id}', 'getOne')->where('id', '[0-9]+');
+    Route::put('/perusahaan/{id}', 'update')->where('id', '[0-9]+');
     Route::delete('/perusahaan/{id}', 'delete')->where('id', '[0-9]+');
 });
 
