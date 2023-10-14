@@ -1,7 +1,7 @@
 <?php
 
+use App\Http\Controllers\Api\JenisPerusahaanController;
 use App\Http\Controllers\Api\PerusahaanController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,9 +15,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::controller(JenisPerusahaanController::class)->group(function () {
+    Route::get('/perusahaan/jenis', 'getAll');
+    Route::post('/perusahaan/jenis', 'create');
+    Route::get('/perusahaan/jenis/{id}', 'getOne')->where('id', '[0-9]+');
+    Route::put('/perusahaan/jenis/{id}', 'update')->where('id', '[0-9]+');
+    Route::delete('/perusahaan/jenis/{id}', 'delete')->where('id', '[0-9]+');
+});
+
 Route::controller(PerusahaanController::class)->group(function () {
     Route::get('/perusahaan', 'getAll');
     Route::post('/perusahaan', 'create');
-    Route::get('/perusahaan/{id}', 'getById');
-    Route::delete('/perusahaan/{id}', 'delete');
+    Route::get('/perusahaan/{id}', 'getOne')->where('id', '[0-9]+');
+    Route::delete('/perusahaan/{id}', 'delete')->where('id', '[0-9]+');
 });
+

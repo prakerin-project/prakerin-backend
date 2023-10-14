@@ -4,12 +4,9 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Perusahaan\CreatePerusahaanRequest;
-use App\Models\Foto;
 use App\Models\Perusahaan;
 use App\Traits\FotoTrait;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
 
 class PerusahaanController extends Controller
 {
@@ -24,6 +21,13 @@ class PerusahaanController extends Controller
     public function getById(int $id)
     {
         $perusahaan = Perusahaan::query()->with('jenis_perusahaan', 'foto')->findOrFail($id);
+
+        return $perusahaan;
+    }
+
+    public function getOne(int $id)
+    {
+        $perusahaan = $this->getById($id);
 
         return response()->json($perusahaan, 200);
     }
@@ -46,7 +50,7 @@ class PerusahaanController extends Controller
     public function delete(int $id)
     {
         // Search perusahaan
-        $perusahaan = Perusahaan::query()->with('jenis_perusahaan', 'foto')->findOrFail($id);
+        $perusahaan = $this->getById($id);
 
         if ($perusahaan->foto->count() > 0) {
             // Deleting each foto of perusahaan

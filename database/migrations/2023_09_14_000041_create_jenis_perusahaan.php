@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('jenis_perusahaan', function (Blueprint $table){
             /* ------------------------------- ATTRIBUTES ------------------------------- */
             $table->id();
-            $table->string('nama')->unique()->nullable(false);
+            $table->string('nama', 100)->unique()->nullable(false);
         });
     }
 

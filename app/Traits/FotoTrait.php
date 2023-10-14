@@ -9,7 +9,7 @@ use Illuminate\Support\Str;
 
 trait FotoTrait
 {
-    public function fotoUpload($perusaahanId, $foto)
+    public function uploadFoto($perusaahanId, $foto)
     {
         $fileName = $perusaahanId . "_" . Str::random(10) . '.' . $foto->getClientOriginalExtension();
         Storage::disk('public')->putFileAs('perusahaan', $foto, $fileName);
@@ -20,7 +20,7 @@ trait FotoTrait
         ]);
     }
 
-    public function deleteFoto(int $id)
+    public function deleteFoto(int $id): void
     {
         $foto = Foto::query()->findOrFail($id);
 
