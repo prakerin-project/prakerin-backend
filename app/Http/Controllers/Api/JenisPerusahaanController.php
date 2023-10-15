@@ -6,8 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\JenisPerusahaan\JenisPerusahaanRequest;
 use App\Models\JenisPerusahaan;
 use App\Traits\RequestTrait;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 
 class JenisPerusahaanController extends Controller
 {
@@ -38,7 +40,7 @@ class JenisPerusahaanController extends Controller
         return response()->json($j_perusahaan, 200);
     }
 
-    public function create(JenisPerusahaanRequest $request)
+    public function create(JenisPerusahaanRequest $request): JsonResponse
     {
         $data = $request->validated();
 
@@ -47,17 +49,17 @@ class JenisPerusahaanController extends Controller
         return response()->json($j_perusahaan, 201);
     }
 
-    public function update(int $id, JenisPerusahaanRequest $request)
+    public function update(int $id, JenisPerusahaanRequest $request): JsonResponse
     {
         $data = $request->validated();
         $j_perusahaan = $this->getById($id);
 
         $j_perusahaan->fill($data)->save();
 
-        return $j_perusahaan;
+        return response()->json($j_perusahaan, 200);
     }
 
-    public function delete(int $id)
+    public function delete(int $id): JsonResponse
     {
         $this->getById($id)->delete();
 
