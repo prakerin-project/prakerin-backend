@@ -5,28 +5,35 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\JenisPerusahaan\JenisPerusahaanRequest;
 use App\Models\JenisPerusahaan;
+use App\Traits\RequestTrait;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class JenisPerusahaanController extends Controller
 {
-    public function getALl(): JsonResponse
+    use RequestTrait;
+
+    public function getALl(Request $request): JsonResponse
     {
-        $j_perusahaan = JenisPerusahaan::query()->with('perusahaan')->orderBy('nama')->get();
+        $relation = $this->getRelation($request->input('relation', []), ['perusahaan']);
+
+        $j_perusahaan = JenisPerusahaan::query()->with($relation)->orderBy('nama')->get();
 
         return response()->json($j_perusahaan, 200);
     }
 
-    public function getById(int $id)
+    public function getById(int $id, $relation = [])
     {
-        $j_perusahaan = JenisPerusahaan::with('perusahaan')->findOrFail($id);
+        $relation = $this->getRelation($relation, ['perusahaan']);
+
+        $j_perusahaan = JenisPerusahaan::with($relation)->findOrFail($id);
 
         return $j_perusahaan;
     }
 
-    public function getOne(int $id): JsonResponse
+    public function getOne(int $id, Request $request): JsonResponse
     {
-        $j_perusahaan = $this->getById($id);
+        $j_perusahaan = $this->getById($id, $request->input('relation', []));
 
         return response()->json($j_perusahaan, 200);
     }
