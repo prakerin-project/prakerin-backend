@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\JenisPerusahaanController;
+use App\Http\Controllers\Api\JurusanController;
 use App\Http\Controllers\Api\PerusahaanController;
 use Illuminate\Support\Facades\Route;
 
@@ -14,6 +15,14 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
+
+Route::controller(JurusanController::class)->group(function () {
+    Route::get('/jurusan', 'getAll');
+    Route::post('/jurusan', 'create');
+    Route::get('/jurusan/{id}', 'getOne')->where('id', '[0-9]+');
+    Route::put('/jurusan/{id}', 'update')->where('id', '[0-9]+');
+    Route::delete('/jurusan/{id}', 'delete')->where('id', '[0-9]+');
+});
 
 Route::controller(JenisPerusahaanController::class)->group(function () {
     Route::get('/perusahaan/jenis', 'getAll');
