@@ -14,7 +14,7 @@ return new class extends Migration {
             /* ------------------------------- ATTRIBUTES ------------------------------- */
             $table->id();
             $table->string('nama_jurusan', 100)->nullable(false)->unique();
-            $table->string('akronim', 10)->nullable(false);
+            $table->string('akronim', 5)->nullable(false)->unique();
         });
     }
 
