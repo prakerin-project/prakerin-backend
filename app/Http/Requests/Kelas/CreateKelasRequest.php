@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Requests\Perusahaan;
+namespace App\Http\Requests\Kelas;
 
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Validation\Rule;
 
-class UpdatePerusahaanRequest extends FormRequest
+class CreateKelasRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,10 +26,10 @@ class UpdatePerusahaanRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'id_jenis_perusahaan' => ['required', 'integer', Rule::exists('jenis_perusahaan', 'id')],
-            'nama_perusahaan' => ['required', 'string', Rule::unique('perusahaan', 'nama_perusahaan')],
-            'email' => ['required', 'email', Rule::unique('perusahaan', 'email')->ignore($this->id)],
-            'alamat' => ['required']
+            'id_jurusan' => ['required', 'integer', Rule::exists('jurusan', 'id')],
+            'kelompok' => ['nullable', 'max:1', 'string'],
+            'tingkat' => ['required', Rule::in(['10', '11', '12'])],
+            'angkatan' => ['required', 'integer']
         ];
     }
 

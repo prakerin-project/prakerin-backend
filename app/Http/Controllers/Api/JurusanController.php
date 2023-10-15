@@ -27,9 +27,9 @@ class JurusanController extends Controller
     {
         $relation = $this->getRelation($relation, ['kelas', 'kaprog', 'pembimbing']);
 
-        $j_perusahaan = Jurusan::with($relation)->findOrFail($id);
+        $jurusan = Jurusan::with($relation)->findOrFail($id);
 
-        return $j_perusahaan;
+        return $jurusan;
     }
 
     public function getOne(int $id, Request $request): JsonResponse

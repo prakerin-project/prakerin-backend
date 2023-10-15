@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\JenisPerusahaanController;
 use App\Http\Controllers\Api\JurusanController;
+use App\Http\Controllers\Api\KelasController;
 use App\Http\Controllers\Api\PerusahaanController;
 use Illuminate\Support\Facades\Route;
 
@@ -22,6 +23,14 @@ Route::controller(JurusanController::class)->group(function () {
     Route::get('/jurusan/{id}', 'getOne')->where('id', '[0-9]+');
     Route::put('/jurusan/{id}', 'update')->where('id', '[0-9]+');
     Route::delete('/jurusan/{id}', 'delete')->where('id', '[0-9]+');
+});
+
+Route::controller(KelasController::class)->group(function () {
+    Route::get('/kelas', 'getAll');
+    Route::post('/kelas', 'create');
+    Route::get('/kelas/{id}', 'getOne')->where('id', '[0-9]+');
+    Route::put('/kelas/{id}', 'update')->where('id', '[0-9]+');
+    Route::delete('/kelas/{id}', 'delete')->where('id', '[0-9]+');
 });
 
 Route::controller(JenisPerusahaanController::class)->group(function () {

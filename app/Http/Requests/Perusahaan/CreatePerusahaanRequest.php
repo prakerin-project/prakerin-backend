@@ -27,8 +27,8 @@ class CreatePerusahaanRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'id_jenis_perusahaan' => ['required', 'integer'],
-            'nama_perusahaan' => ['required', 'string', Rule::unique('perusahaan', 'nama_perusahaan')],
+            'id_jenis_perusahaan' => ['required', 'integer', Rule::exists('jenis_perusahaan', 'id')],
+            'nama_perusahaan' => ['required', 'string', 'max:100', Rule::unique('perusahaan', 'nama_perusahaan')],
             'email' => ['required', 'email', Rule::unique('perusahaan', 'email')],
             'alamat' => ['required'],
             'foto' => ['array', 'nullable', 'max:5'],
