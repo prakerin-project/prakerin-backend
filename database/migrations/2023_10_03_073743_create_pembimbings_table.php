@@ -19,6 +19,7 @@ return new class extends Migration {
             $table->string('no_telp', 22)->nullable(false); // (+62) 8XX-XXXX-XXXX
             $table->string('email', 255)->unique()->nullable(false);
             $table->enum('lingkup', ['sekolah', 'industri'])->nullable(false);
+            $table->enum('jenis_kelamin', ['L', 'P'])->nullable(false);
             /* ----------------------------------- FK ----------------------------------- */
             $table->foreign('id_user')->references('id')->on('user')
                 ->cascadeOnDelete()->cascadeOnUpdate();

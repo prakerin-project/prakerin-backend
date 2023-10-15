@@ -17,6 +17,7 @@ return new class extends Migration {
             $table->string('id_user', 36)->nullable(false);
             $table->string('nama', 100)->nullable(false);
             $table->string('no_telp', 22)->nullable(false); // (+62) 8XX-XXXX-XXXX
+            $table->enum('jenis_kelamin', ['L', 'P'])->nullable(false);
             /* ----------------------------------- FK ----------------------------------- */
             $table->foreign('id_kelas')->references('id')->on('kelas')
                 ->cascadeOnDelete()->cascadeOnUpdate();
