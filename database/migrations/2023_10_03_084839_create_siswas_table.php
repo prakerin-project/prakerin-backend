@@ -17,7 +17,7 @@ return new class extends Migration {
             $table->string('id_user', 36)->nullable(false);
             $table->string('nama', 100)->nullable(false);
             $table->string('email', 255)->unique()->nullable(false);
-            $table->year('tahun_ajaran')->nullable(false);
+            $table->year('tahun_masuk')->nullable(false);
             $table->enum('jenis_kelamin', ['L', 'P'])->nullable(false);
             $table->string('tempat_lahir', 30)->nullable(false);
             $table->date('tanggal_lahir')->nullable(false);
