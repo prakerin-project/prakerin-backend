@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\User\CreateUserRequest;
+use App\Http\Requests\User\UpdateUserRequest;
 use App\Models\Hubin;
 use App\Models\Kaprog;
 use App\Models\Pembimbing;
@@ -48,6 +49,10 @@ class UserController extends Controller
                 ->except(['username', 'password', 'role'])
         )->with('user')->get(['*']);
     }
+    private function updateUser($id, UpdateUserRequest $request, string|array $relation = [])
+    {
+        return User::with($relation)->find($id)->fill($request->only('username', 'password'))->save();
+    }
     /**
      * Get all records from User
      */
@@ -77,22 +82,40 @@ class UserController extends Controller
             $request->merge(['role' => $request->role])->only(['role', 'username', 'password'])
         );
 
-        $resp = $this->createRole($user->id, $request);
+        $res = $this->createRole($user->id, $request);
 
-        return response()->json($resp);
+        return response()->json($res);
     }
     /**
      * Update User Records with role
      */
-    public function update(CreateUserRequest $request)
+    public function update(UpdateUserRequest $request)
     {
-        return response()->json([$request->all(), $request->role]);
+        $this->useModel($request->role);
+        $user = User::with($request->role)->has($request->role)->findOrFail($request->id);
+        $role = $user->getRelation($request->role);
+
+        $user->fill($request->only(['username', 'password']));
+        $role->fill($request->except(['username', 'password']));
+        $user->save();
+        $role->save();
+
+        $res = $user->getChanges();
+        unset($res['password']);
+
+        return response()->json($res);
     }
     /**
      * Delete records from database
      */
-    public function delete(CreateUserRequest $request)
+    public function delete(Request $request)
     {
-        return response()->json([$request->all(), $request->role]);
+        $user = User::findOrFail($request->id);
+        $user->delete();
+
+        return response()->json([
+            "status"  => "success",
+            "message" => "User $user->username deleted."
+        ]);
     }
 }

@@ -2,12 +2,13 @@
 
 namespace App\Http\Requests\User;
 
+use App\Models\User;
 use App\Rules\LowerCaseValidation;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class CreateUserRequest extends FormRequest
+class UpdateUserRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,7 +26,7 @@ class CreateUserRequest extends FormRequest
     public function rules(): array
     {
         $rules = [
-            'username'      => ['required', 'string', 'max:20', 'unique:user,username', new LowerCaseValidation],
+            'username'      => ['required', 'string', 'max:20', new LowerCaseValidation],
             'password'      => ['required', 'string'],
             'nama'          => ['required', 'max:100', 'string'],
             'no_telp'       => ['required', 'max:16'],
@@ -34,21 +35,21 @@ class CreateUserRequest extends FormRequest
         //add more rules according to role requested
         switch ($this->role) {
             case 'tu':
-                $rules = array_merge($rules, ['nip' => ['required', 'max:20', 'unique:tata_usaha,nip']]);
+                $rules = array_merge($rules, ['nip' => ['required', 'max:20']]);
                 break;
             case 'hubin':
-                $rules = array_merge($rules, ['nip' => ['required', 'max:20', 'unique:hubin,nip']]);
+                $rules = array_merge($rules, ['nip' => ['required', 'max:20']]);
                 break;
             case 'walas':
                 $rules = array_merge($rules, [
-                    'nip'      => ['required', 'max:20', 'unique:walas,nip'],
-                    'id_kelas' => ['required', 'integer', 'unique:walas,id_kelas']
+                    'nip'      => ['required', 'max:20'],
+                    'id_kelas' => ['required', 'integer']
                 ]);
                 break;
             case 'kaprog':
                 $rules = array_merge($rules, [
-                    'nip'        => ['required', 'max:20', 'unique:kaprog,nip'],
-                    'id_jurusan' => ['required', 'integer', 'unique:kaprog,id_jurusan']
+                    'nip'        => ['required', 'max:20'],
+                    'id_jurusan' => ['required', 'integer']
                 ]);
                 break;
             case 'pb_sekolah':
@@ -57,14 +58,14 @@ class CreateUserRequest extends FormRequest
                     'nip_nik'    => ['required', 'max:20'],
                     'lingkup'    => ['required', 'in:sekolah,industri'],
                     'id_jurusan' => ['required', 'integer'],
-                    'email'      => ['required', 'email', 'unique:pembimbing,email'],
+                    'email'      => ['required', 'email'],
                 ]);
                 break;
             case 'siswa':
                 $rules = array_merge($rules, [
-                    'nis'           => ['required', 'max:12', 'unique:siswa,nis'],
+                    'nis'           => ['required', 'max:12'],
                     'id_kelas'      => ['required', 'integer'],
-                    'email'         => ['required', 'email', 'unique:siswa,email'],
+                    'email'         => ['required', 'email'],
                     'tahun_masuk'   => ['required', 'date_format:Y'],
                     'tempat_lahir'  => ['required', 'max:30'],
                     'tanggal_lahir' => ['required', 'date_format:Y-m-d'],
@@ -75,16 +76,8 @@ class CreateUserRequest extends FormRequest
         }
         return $rules;
     }
-    public function messages()
-    {
-        return [
-            'id_kelas.unique'   => 'One class can only have one Homeroom Teacher',
-            'id_jurusan.unique' => 'One major can only have one Head of Major',
-        ];
-    }
     protected function failedValidation(Validator $validator)
     {
         throw new HttpResponseException(response()->json($validator->getMessageBag(), 400));
     }
-
 }
