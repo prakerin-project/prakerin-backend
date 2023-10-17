@@ -12,7 +12,7 @@ class Kaprog extends Model
     protected $table = 'kaprog';
     protected $primaryKey = 'nip';
     protected $keyType = 'string';
-    protected $guarded = ['nip'];
+    protected $guarded = [];
     public $timestamps = false;
     /* -------------------------------- RELATION -------------------------------- */
     public function jurusan()

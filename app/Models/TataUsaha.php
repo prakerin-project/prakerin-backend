@@ -12,7 +12,7 @@ class TataUsaha extends Model
     protected $table = 'tata_usaha';
     protected $primaryKey = 'nip';
     protected $keyType = 'string';
-    protected $guarded = ['nip'];
+    protected $guarded = [];
     public $timestamps = false;
     /* -------------------------------- RELATION -------------------------------- */
     public function user()
