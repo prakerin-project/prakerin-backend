@@ -58,10 +58,14 @@ class UserController extends Controller
      */
     public function getAll(Request $request)
     {
-        $relations = $this->getRelation($request->relation, $request->relation);
+        $relations = empty($request->relation)
+            ? ["hubin", "tata_usaha", "siswa", "pembimbing", "kaprog", "walas"]
+            : $this->getRelation($request->relation, $request->relation);
+
         foreach ($relations as $relation) {
             $users[$relation] = User::query()->has($relation)->with($relation)->get();
         }
+
         return response()->json($users, 200);
     }
     /**
