@@ -47,7 +47,7 @@ class UserController extends Controller
             $request
                 ->merge(['id_user' => $id])
                 ->except(['username', 'password', 'role'])
-        )->with('user')->get(['*']);
+        )->load('user');
     }
     private function updateUser($id, UpdateUserRequest $request, string|array $relation = [])
     {
