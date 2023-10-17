@@ -41,7 +41,7 @@ class PerusahaanController extends Controller
 
         if ($request->hasFile('foto')) {
             foreach ($request->foto as $foto) {
-                $this->fotoUpload($perusahaan->id, $foto);
+                $this->uploadFoto($perusahaan->id, $foto);
             }
         }
 
