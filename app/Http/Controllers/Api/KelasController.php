@@ -64,7 +64,7 @@ class KelasController extends Controller
         $kelas->delete();
 
         return response()->json([
-            'status' => 'success',
+            'status'  => 'success',
             'message' => 'Deleted successfully.'
         ], 200);
     }

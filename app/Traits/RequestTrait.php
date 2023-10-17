@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 trait RequestTrait
 {
-    public function getRelation(array $request, array $allowed): array
+    public function getRelation(array $request = [], array $allowed = []): array
     {
         $relation = [];
 
