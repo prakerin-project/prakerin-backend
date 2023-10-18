@@ -5,6 +5,36 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * App\Models\Prakerin
+ *
+ * @property string $id
+ * @property string $id_pengajuan
+ * @property string $nis_siswa
+ * @property string $nip_nik_pembimbing_sekolah
+ * @property string $nip_nik_pembimbing_industri
+ * @property string $status
+ * @property string $tanggal_mulai
+ * @property string $tanggal_selesai
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\AktivitasJurnal> $aktivitas_jurnal
+ * @property-read int|null $aktivitas_jurnal_count
+ * @property-read \App\Models\Pembimbing $pembimbing_indsutri
+ * @property-read \App\Models\Pembimbing $pembimbing_sekolah
+ * @property-read \App\Models\Pengajuan $pengajuan
+ * @property-read \App\Models\Siswa $siswa
+ * @method static \Illuminate\Database\Eloquent\Builder|Prakerin newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Prakerin newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Prakerin query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Prakerin whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Prakerin whereIdPengajuan($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Prakerin whereNipNikPembimbingIndustri($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Prakerin whereNipNikPembimbingSekolah($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Prakerin whereNisSiswa($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Prakerin whereStatus($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Prakerin whereTanggalMulai($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Prakerin whereTanggalSelesai($value)
+ * @mixin \Eloquent
+ */
 class Prakerin extends Model
 {
     use HasFactory;

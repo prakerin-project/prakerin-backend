@@ -108,45 +108,6 @@
 @endsection
 @section('footer')
     <script type="module">
-        $('.table').DataTable();
-
-        let fotos = [];
-        $('input[type=file]').on('change', function (e) {
-            for (let i = 0; i < this.files.length; i++) {
-                fotos.push(this.files[i]);
-            }
-
-            console.log(fotos);
-            // fotos.map((f) => {
-            //     console.log(f.nama)
-            // })
-            // console.log(fotos)
-        })
-
-        /*-------------------------- TAMBAH SURAT -------------------------- */
-        $('#tambah-user-form').on('submit', function (e) {
-            e.preventDefault();
-            let data = new FormData(e.target);
-
-            console.log(Object.fromEntries(data));
-            // axios.post('/perusahaan', data, {
-            //     'Content-Type': 'multipart/form-data'
-            // })
-            //     .then(() => {
-            //         $('#tambah-surat-modal').css('display', 'none')
-            //         swal.fire('Berhasil tambah data!', '', 'success').then(function () {
-            //             location.reload();
-            //         })
-            //     })
-            //     .catch(({response}) => {
-            //         let message = '';
-            //
-            //         Object.values(response.data.errors).flat().map((e) =>
-            //             message += `<strong class="text-danger d-block">${e}</strong>`
-            //         );
-            //
-            //         swal.fire('Gagal tambah data!', `${message}`, 'warning');
-            //     });
-        })
+        
     </script>
 @endsection

@@ -9,15 +9,15 @@ use Illuminate\Http\Request;
 
 class AuthController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('guest')->only('index');
+    }
     public function index()
     {
-        if (!Auth::user()) {
-            return view('login');
-        }
-
-        return redirect()->to('/dashboard');
+        return view('login');
     }
-    
+    /** */
     public function login(UserLoginRequest $request)
     {
         $data = $request->validated();
