@@ -107,13 +107,13 @@
                         <div class="d-flex gap-2">
                             <!-- Button trigger edit modal -->
                             <a href="" class="link-underline flex-shrink-1 link-underline-opacity-0">
-                                <h4><i class="bi bi-eye"></i></h4>
+                                <h4><i class="iconsax" type="linear" stroke-width="1.5" icon="eye"></i></h4>
                             </a>
                             <a href="" class="text-warning link-underline link-underline-opacity-0">
-                                <h4><i class="bi bi-pen"></i></h4>
+                                <h4><i class="iconsax" type="linear" stroke-width="1.5" icon="edit-1"></i></h4>
                             </a>
                             <a href="#" class="text-danger hapusBtn cursor-pointer link-underline link-underline-opacity-0">
-                                <h4><i class="bi bi-trash3-fill"></i></h4>
+                                <h4><i class="iconsax" type="linear" stroke-width="1.5" icon="trash"></i></h4>
 
                         </div>
                         </a>
@@ -165,11 +165,11 @@
                 .catch(({response}) => {
                     let message = '';
                     console.log(response)
-                
+
                     Object.values(response.data).flat().map((e) =>
                         message += `<strong class="text-danger d-block">${e}</strong>`
                     );
-                
+
                     swal.fire('Gagal tambah data!', `${message}`, 'warning');
                 });
         })

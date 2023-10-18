@@ -5,6 +5,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    <!-- Script for Iconsax -->
+    <script src="https://grxvityhj.github.io/iconsax/script.js"></script>
+
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
@@ -13,6 +16,9 @@
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Akshar&family=Bitter&display=swap" rel="stylesheet">
 
     <link rel="icon" href="{{asset('logo.svg')}}">
 
@@ -30,8 +36,9 @@
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
 <body class="bg-white">
-<div id="app" class="row vw-100">
-    <aside class="col-2 d-flex flex-column align-items-center p-0 border" style="width: 300px; height: 100vh">
+<div class="app" style="display: grid; grid-template-columns: auto 1fr">
+    <aside class="d-flex flex-column align-items-center p-0 border" style="width: 300px;
+    height:100vh">
         <img src="{{ asset('one-logo.svg') }}" alt="logo" width="80px">
 
         <div class="menu mt-3 rounded w-75">
@@ -44,13 +51,15 @@
             </a>
 
             <p class="mb-0 mt-3">Menu</p>
+
             <div class="dropdown">
                 <a href="{{url('/dashboard/user')}}" class="menu-item text-dark py-2 px-2 rounded d-flex gap-3
-                align-items-center link-underline link-underline-opacity-0 dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                align-items-center link-underline link-underline-opacity-0 dropdown-toggle" data-bs-toggle="dropdown"
+                   aria-expanded="false">
                     <h3 class="m-0"><i class="bi bi-person-fill"></i></h3>
                     <h5 class="m-0">User</h5>
                 </a>
-                {{-- Dropdwon menu for user --}}
+                Dropdwon menu for user
                 <ul class="dropdown-menu dropdown-menu-end">
                     <li><a class="dropdown-item" href="{{ url('/dashboard/user/siswa') }}">Siswa</a></li>
                     <li><a class="dropdown-item" href="{{ url('/dashboard/user/walas') }}">Wali Kelas</a></li>
@@ -58,7 +67,7 @@
                     <li><a class="dropdown-item" href="{{ url('/dashboard/user/hubin') }}">Hubin</a></li>
                     <li><a class="dropdown-item" href="{{ url('/dashboard/user/pembimbing') }}">Pembimbing</a></li>
                     <li><a class="dropdown-item" href="{{ url('/dashboard/user/tu') }}">Tata Usaha</a></li>
-                  </ul>
+                </ul>
             </div>
 
             <a href="{{url('/dashboard/perusahaan')}}" class="menu-item text-dark py-2 px-2 rounded d-flex gap-3
@@ -93,7 +102,8 @@
             </a>
         </div>
     </aside>
-    <div class="col p-0 ">
+
+    <main class="overflow-y-scroll" style="height: 100vh">
         <nav class="navbar px-0 navbar-expand-lg navbar-light border-bottom">
             <div class="container">
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -129,12 +139,8 @@
                 </div>
             </div>
         </nav>
-
-        <main class="pt-3 px-4 container-fluid">
-            @include('layouts.flash-message')
-            @yield('content')
-        </main>
-    </div>
+        <div style="height: 150%"></div>
+    </main>
 </div>
 
 @yield('footer')
