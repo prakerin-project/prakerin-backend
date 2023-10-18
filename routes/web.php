@@ -15,16 +15,17 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::controller(AuthController::class)->group(function() {
+Route::controller(AuthController::class)->group(function () {
     Route::get('/login', 'index')->name('login');
     Route::post('/login', 'login');
     Route::get('/logout', 'logout')->name('logout');
 });
 
-Route::prefix('/dashboard')->middleware('auth')->group(function() {
+Route::prefix('/dashboard')->middleware('auth')->group(function () {
     Route::controller(DashboardController::class)->group(function () {
         Route::get('/', 'index');
         Route::get('/user', 'user');
+        Route::get('/user/{id}', 'userDetail');
         Route::get('/perusahaan', 'perusahaan');
         Route::get('/prakerin', 'prakerin');
         Route::get('/pengajuan', 'pengajuan');

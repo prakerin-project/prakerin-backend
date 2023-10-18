@@ -24,6 +24,9 @@
     <link rel="icon" href="{{ asset("logo.svg") }}">
 
     <style>
+        body{
+            background-color: #eeeeee
+        }
         #dropdownToggle:hover {
             cursor: pointer;
         }
@@ -54,10 +57,9 @@
     @vite(["resources/sass/app.scss", "resources/js/app.js"])
 </head>
 
-<body class="bg-white">
+<body>
     <div class="app" style="display: grid; grid-template-columns: auto 1fr">
-        <aside class="d-flex flex-column align-items-center p-0 border" style="width: 300px;
-    height:100vh">
+        <aside class="d-flex flex-column align-items-center p-0 border" style="width: 300px; height:100vh">
             <img src="{{ asset("one-logo.svg") }}" alt="logo" width="80px">
 
             <div class="menu mt-3 rounded w-75">
@@ -157,6 +159,9 @@
                     </div>
                 </div>
             </nav>
+            <section class="container p-4 mb-5">
+                @yield('content')
+            </section>
         </main>
     </div>
 
