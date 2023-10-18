@@ -15,6 +15,14 @@ class JenisPerusahaanController extends Controller
 {
     use RequestTrait;
 
+    public function index()
+    {
+        $data = [
+            'jenis_perusahaan' => JenisPerusahaan::all()
+        ];
+
+        return view('dashboard.jenis-perusahaan.index', $data);
+    }
     public function getALl(Request $request): JsonResponse
     {
         $relation = $this->getRelation($request->input('relation', []), ['perusahaan']);

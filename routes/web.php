@@ -1,6 +1,9 @@
 <?php
 
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\Api\PerusahaanController;
+use App\Http\Controllers\Api\JenisPerusahaanController;
+use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Auth\AuthController;
 use Illuminate\Support\Facades\Route;
 
@@ -15,6 +18,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/', function () {
+    return redirect('/dashboard');
+});
+
 Route::controller(AuthController::class)->group(function() {
     Route::get('/login', 'index')->name('login');
     Route::post('/login', 'login');
@@ -22,12 +29,9 @@ Route::controller(AuthController::class)->group(function() {
 });
 
 Route::prefix('/dashboard')->middleware('auth')->group(function() {
-    Route::controller(DashboardController::class)->group(function () {
-        Route::get('/', 'index');
-        Route::get('/user', 'user');
-        Route::get('/perusahaan', 'perusahaan');
-        Route::get('/prakerin', 'prakerin');
-        Route::get('/pengajuan', 'pengajuan');
-        Route::get('/monitoring', 'monitoring');
-    });
+    Route::get('/', [DashboardController::class, 'index']);
+    Route::get('/user', [UserController::class, 'index']);
+    Route::get('/perusahaan', [PerusahaanController::class, 'index']);
+    Route::get('/perusahaan/jenis', [JenisPerusahaanController::class, 'index']);
+    Route::get('/perusahaan/{id}/detail', [PerusahaanController::class, 'detail']);
 });

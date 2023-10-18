@@ -2,11 +2,11 @@
 @section('title', 'User')
 @section('content')
     <div class="row">
-        <div class="col d-flex justify-content-between mb-3">
+        <div class="col d-flex align-items-center justify-content-between mb-3">
             <div>
                 <h1>User</h1>
             </div>
-            <button type="button" class="btn flex-grow btn-primary" data-bs-toggle="modal"
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                     data-bs-target="#tambah-user-modal"><i
                     class="bi bi-person-fill-add"></i> Tambah
             </button>
@@ -74,6 +74,7 @@
                 <th class="col-1 text-center">No</th>
                 <th>Username</th>
                 <th>Role</th>
+                <th>Action</th>
             </tr>
             </thead>
             <tbody>
@@ -87,14 +88,15 @@
                     <td>{{$user->role}}</td>
                     <td class="d-flex gap-2">
                         <!-- Button trigger edit modal -->
-                        <a href="" class="link-underline link-underline-opacity-0">
-                            <h4><i class="bi bi-eye"></i></h4>
+                        <a href="" class="link-underline flex-shrink-1 link-underline-opacity-0">
+                            <h4><i class="iconsax" type="linear" stroke-width="1.5" icon="eye"></i></h4>
                         </a>
-                        <a href="" class="text-warning link-underline link-underline-opacity-0">
-                            <h4><i class="bi bi-pen"></i></h4>
+                        <a href="" class="editBtn text-warning link-underline link-underline-opacity-0" data-bs-toggle="modal"
+                        data-bs-target="#edit-modal-{{$user->id}}">
+                            <h4><i class="iconsax" type="linear" stroke-width="1.5" icon="edit-1"></i></h4>
                         </a>
-                        <a href="" class="text-danger link-underline link-underline-opacity-0">
-                            <h4><i class="bi bi-trash3-fill"></i></h4>
+                        <a href="#" class="text-danger hapusBtn cursor-pointer link-underline link-underline-opacity-0">
+                            <h4><i class="iconsax" type="linear" stroke-width="1.5" icon="trash"></i></h4>
                         </a>
                     </td>
                 </tr>
@@ -108,7 +110,9 @@
 @endsection
 @section('footer')
     <script type="module">
-        $('.table').DataTable();
+        $('.table').DataTable({
+            paging:false
+        });
 
         let fotos = [];
         $('input[type=file]').on('change', function (e) {
@@ -126,9 +130,9 @@
         /*-------------------------- TAMBAH SURAT -------------------------- */
         $('#tambah-user-form').on('submit', function (e) {
             e.preventDefault();
-            let data = new FormData(e.target);
+            let data = Object.fromEntries(new FormData(e.target));
 
-            console.log(Object.fromEntries(data));
+            // console.log(Object.fromEntries(data));
             // axios.post('/perusahaan', data, {
             //     'Content-Type': 'multipart/form-data'
             // })

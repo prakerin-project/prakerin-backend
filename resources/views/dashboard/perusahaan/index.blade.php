@@ -2,13 +2,12 @@
 @section('title', 'Perusahaan')
 @section('content')
     <div class="row">
-        <div class="col d-flex justify-content-between mb-3">
+        <div class="col d-flex align-items-center justify-content-between mb-3">
             <div>
                 <h1>Perusahaan</h1>
             </div>
-            <button type="button" class="btn flex-grow btn-primary" data-bs-toggle="modal"
-                    data-bs-target="#tambah-ps-modal"><i
-                    class="bi bi-building-add"></i> Tambah
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                    data-bs-target="#tambah-ps-modal" ><i class="iconsax" type="linear" stroke-width="1.5" icon="buildings-1"></i> Tambah
             </button>
 
             <!-- Tambah Perusahaan Modal -->
@@ -74,22 +73,17 @@
         <table class="table table-bordered">
             <thead style="background-color: #f4f4f5; height: 50px" class="w-100 rounded">
             <tr>
-                <th class="text-center">No</th>
-                <th>Nama Perusahaan</th>
-                <th>Jenis Perusahaan</th>
-                <th>Email</th>
-                <th>Alamat</th>
-                <th>Foto</th>
-                <th>Action</th>
+                <th class="text-uppercase">Nama Perusahaan</th>
+                <th class="text-uppercase">Jenis Perusahaan</th>
+                <th class="text-uppercase">Email</th>
+                <th class="text-uppercase">Alamat</th>
+                <th class="text-uppercase">Foto</th>
+                <th class="text-uppercase">Action</th>
             </tr>
             </thead>
             <tbody>
-            <?php
-            $no = 1;
-            ?>
             @foreach($perusahaan as $p)
                 <tr idPerusahaan='{{ $p->id }}'>
-                    <td class="text-center">{{$no++}}</td>
                     <td>{{$p->nama_perusahaan}}</td>
                     <td>{{$p->jenis_perusahaan->nama}}</td>
                     <td>{{$p->email}}</td>
@@ -106,22 +100,69 @@
                     <td>
                         <div class="d-flex gap-2">
                             <!-- Button trigger edit modal -->
-                            <a href="" class="link-underline flex-shrink-1 link-underline-opacity-0">
+                            <a href="{{ url("/dashboard/perusahaan/$p->id/detail") }}" class="link-underline flex-shrink-1 link-underline-opacity-0">
                                 <h4><i class="iconsax" type="linear" stroke-width="1.5" icon="eye"></i></h4>
                             </a>
-                            <a href="" class="text-warning link-underline link-underline-opacity-0">
+                            <a href="" class="editBtn text-warning link-underline link-underline-opacity-0" data-bs-toggle="modal"
+                            data-bs-target="#edit-modal-{{$p->id}}" idPerusahaan="{{$p->id}}">
                                 <h4><i class="iconsax" type="linear" stroke-width="1.5" icon="edit-1"></i></h4>
                             </a>
                             <a href="#" class="text-danger hapusBtn cursor-pointer link-underline link-underline-opacity-0">
                                 <h4><i class="iconsax" type="linear" stroke-width="1.5" icon="trash"></i></h4>
-
+                            </a>
                         </div>
-                        </a>
                     </td>
                 </tr>
 
+                <!-- Edit Perusahaan Modal -->
+            <div class="modal fade" id="edit-modal-{{ $p->id }}" tabindex="-1"
+            aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+           <div class="modal-dialog modal-dialog-centered">
+               <div class="modal-content">
+                   <div class="modal-header">
+                       <h1 class="modal-title fs-5" id="exampleModalLabel">Tambah Perusahaan</h1>
+                   </div>
+                   <div class="modal-body">
+                       <form id="edit-ps-form-{{ $p->id }}" enctype="multipart/form-data">
+                           <div class="form-group">
+                               <label for="nama-perusahaan">Nama Perusahaan</label>
+                               <input type="text" id="nama-perusahaan" class="form-control mb-3"
+                                      autofocus
+                                      name="nama_perusahaan"
+                                      required
+                                      value="{{ $p->nama_perusahaan }}"
+                                      />
+                               <label for="j-perusahaan">Jenis Perusahaan</label>
+                               <select name="id_jenis_perusahaan" id="j-perusahaan" class="form-select mb-3"
+                                       required>
+                                   @foreach($jenis_perusahaan as $jp)
+                                   <option value="{{$jp->id}}"
+                                    @if($jp->id === $p->id_jenis_perusahaan) selected
+                                    @endif>{{$jp->nama}}</option>
+                                   @endforeach
+                               </select>
+                               <label for="email">Email</label>
+                               <input type="email" id="email" name="email"
+                                      class="form-control mb-3"
+                                      required autocomplete="off" value="{{ $p->email }}">
+                               <label for="alamat">Alamat</label>
+                               <textarea name="alamat" id="alamat" class="form-control" style="height:
+                               100px">{{ $p->alamat }}</textarea>
+                               @csrf
+                           </div>
+                       </form>
+                   </div>
+                   <div class="modal-footer">
+                       <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                           Cancel
+                       </button>
+                       <button type="submit" class="btn btn-primary submit-btn" form="edit-ps-form-{{ $p->id }}">Tambah</button>
+                   </div>
+               </div>
+           </div>
+       </div>
             @endforeach
-
             </tbody>
         </table>
 
@@ -129,7 +170,9 @@
 @endsection
 @section('footer')
     <script type="module">
-        $('.table').DataTable();
+        $('.table').DataTable({
+            paging:false
+        });
 
         let fotos = [];
         $('input[type=file]').on('change', function (e) {
@@ -172,6 +215,36 @@
 
                     swal.fire('Gagal tambah data!', `${message}`, 'warning');
                 });
+        })
+
+         /*-------------------------- EDIT PERUSAHAAN -------------------------- */
+         $('.editBtn').on('click', function (e) {
+            $('input[type=file]').trigger('change');
+
+            e.preventDefault();
+            let idPerusahaan = $(this).attr('idPerusahaan');
+            $(`#edit-ps-form-${idPerusahaan}`).on('submit', function (e) {
+                e.preventDefault(this);
+                let data = new FormData(e.target);
+                const value = Object.fromEntries(data.entries());
+                axios.put(`http://localhost:8000/api/perusahaan/${idPerusahaan}`, value)
+                    .then(() => {
+                        $(`#edit-modal-${idPerusahaan}`).css('display', 'none')
+                        swal.fire('Berhasil edit data!', '', 'success').then(function () {
+                            location.reload();
+                        })
+                    })
+                    .catch(({response}) => {
+                        console.log(response)
+                        let message = '';
+
+                        Object.values(response.data).flat().map((e) =>
+                            message += `<strong class="text-danger d-block">${e}</strong>`
+                        );
+
+                        swal.fire('Gagal tambah data!', `${message}`, 'warning');
+                    })
+            })
         })
 
         /*-------------------------- HAPUS PERUSAHAAN -------------------------- */

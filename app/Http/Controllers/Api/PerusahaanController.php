@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Perusahaan\CreatePerusahaanRequest;
 use App\Http\Requests\Perusahaan\UpdatePerusahaanRequest;
+use App\Models\JenisPerusahaan;
 use App\Models\Perusahaan;
 use App\Traits\FotoTrait;
 use Illuminate\Http\JsonResponse;
@@ -13,10 +14,29 @@ class PerusahaanController extends Controller
 {
     use FotoTrait;
 
-    public function getAll(): JsonResponse
+    public function index()
     {
-        $data = Perusahaan::with('jenis_perusahaan', 'foto')->get();
-        return response()->json($data, 200);
+        $data = [
+            'perusahaan' => $this->getAll(),
+            'jenis_perusahaan' => JenisPerusahaan::all()
+        ];
+
+        return view('dashboard.perusahaan.index', $data);
+    }
+
+    public function detail(int $id)
+    {
+        $data = [
+            'perusahaan' => $this->getById($id),
+        ];
+
+        return view('dashboard.perusahaan.detail', $data);
+    }
+
+    public function getAll()
+    {
+        $data = Perusahaan::with('jenis_perusahaan', 'foto')->orderBy('nama_perusahaan')->get();
+        return $data;
     }
 
     public function getById(int $id)

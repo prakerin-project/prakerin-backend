@@ -20,22 +20,4 @@ class DashboardController extends Controller
     {
         return view('dashboard.index');
     }
-
-    public function perusahaan()
-    {
-        $data = [
-            'perusahaan' => Perusahaan::with('jenis_perusahaan', 'foto')->get(),
-            'jenis_perusahaan' => JenisPerusahaan::all()
-        ];
-        return view('dashboard.perusahaan', $data);
-    }
-
-    public function user()
-    {
-        $data = [
-            'users' => User::all()
-        ];
-
-        return view('dashboard.user', $data);
-    }
 }
