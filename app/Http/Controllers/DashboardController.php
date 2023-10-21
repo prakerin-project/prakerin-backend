@@ -3,12 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Models\JenisPerusahaan;
+use App\Models\Jurusan;
+use App\Models\Kelas;
 use App\Models\Perusahaan;
+use App\Models\Siswa;
 use App\Models\User;
 use App\Traits\RoleToRelationTrait;
+use DB;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class DashboardController extends Controller
 {
@@ -35,7 +38,7 @@ class DashboardController extends Controller
     public function user()
     {
         $data = [
-            'users' => User::all()
+            'users' => User::all()->sortDesc()
         ];
 
         return view('dashboard.user.index', $data);
@@ -55,5 +58,24 @@ class DashboardController extends Controller
             'user_detail'     => $user->getRelation($relation[0])
         ];
         return view('dashboard.user.detail', $data);
+    }
+    public function jurusan()
+    {
+        $data = [
+            'all_jurusan' => Jurusan::all()
+        ];
+
+        return view('dashboard.jurusan.index', $data);
+    }
+    public function jurusanDetail($id)
+    {
+        // return Siswa::query()->getRelation('kelas')->whereIdJurusan($id)->with(['siswa','siswa.user'])->firstOrFail()->toArray()['siswa'];
+        $data = [
+            'jurusan'     => Jurusan::findOrFail($id),
+            'siswa'       => Siswa::query()->getRelation('kelas')->whereIdJurusan($id)->with(['siswa','siswa.user'])->firstOrFail()->toArray()['siswa'],
+            // 'siswa_count' => Siswa::query()->withWhereHas('kelas',fn($query)=>$query->where('id_jurusan',$id)->get()),
+        ];
+
+        return view('dashboard.jurusan.detail', $data);
     }
 }

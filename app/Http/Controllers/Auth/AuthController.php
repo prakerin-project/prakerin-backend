@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\User\UserLoginRequest;
-use Illuminate\Http\Request;
 
 class AuthController extends Controller
 {
@@ -21,7 +21,6 @@ class AuthController extends Controller
     public function login(UserLoginRequest $request)
     {
         $data = $request->validated();
-
         if (Auth::attempt($data)) {
             $request->session()->regenerate();
             return Auth::user();
@@ -33,9 +32,12 @@ class AuthController extends Controller
             ]
         ], 401);
     }
-    public function logout()
+    public function logout(Request $request)
     {
         Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
         return redirect('/login');
     }
 

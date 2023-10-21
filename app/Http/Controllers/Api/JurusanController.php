@@ -14,6 +14,12 @@ class JurusanController extends Controller
 {
     use RequestTrait;
 
+    /**
+     * Get all Data
+     *
+     * @param Request $request
+     * @return JsonResponse
+     */
     public function getAll(Request $request): JsonResponse
     {
         $relation = $this->getRelation($request->input('relation', []), ['kelas', 'kaprog', 'pembimbing']);
@@ -23,6 +29,14 @@ class JurusanController extends Controller
         return response()->json($jurusan, 200);
     }
 
+    /**
+     * Get one data by ID
+     *
+     * @param integer $id
+     * @param array $relation
+     * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model|array
+
+     */
     public function getById(int $id, $relation = [])
     {
         $relation = $this->getRelation($relation, ['kelas', 'kaprog', 'pembimbing']);
@@ -32,6 +46,13 @@ class JurusanController extends Controller
         return $jurusan;
     }
 
+    /**
+     * GetOne
+     *
+     * @param integer $id
+     * @param Request $request
+     * @return JsonResponse
+     */
     public function getOne(int $id, Request $request): JsonResponse
     {
         $jurusan = $this->getById($id, $request->input('relation', []));
@@ -39,6 +60,12 @@ class JurusanController extends Controller
         return response()->json($jurusan, 200);
     }
 
+    /**
+     * Create new record
+     *
+     * @param CreateJurusanRequest $request
+     * @return JsonResponse
+     */
     public function create(CreateJurusanRequest $request): JsonResponse
     {
         $data = $request->validated();
@@ -48,6 +75,13 @@ class JurusanController extends Controller
         return response()->json($jurusan, 201);
     }
 
+    /**
+     * Update existing record
+     *
+     * @param integer $id
+     * @param UpdateJurusanRequest $request
+     * @return JsonResponse
+     */
     public function update(int $id, UpdateJurusanRequest $request): JsonResponse
     {
         $data = $request->validated();
@@ -59,13 +93,19 @@ class JurusanController extends Controller
         return response()->json($jurusan, 200);
     }
 
+    /**
+     * Delete record from database
+     *
+     * @param integer $id
+     * @return JsonResponse
+     */
     public function delete(int $id): JsonResponse
     {
         $jurusan = $this->getById($id);
         $jurusan->delete();
 
         return response()->json([
-            'status' => 'success',
+            'status'  => 'success',
             'message' => 'Deleted successfully.'
         ], 200);
     }

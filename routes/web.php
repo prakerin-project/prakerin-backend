@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Auth\AuthController;
 use Illuminate\Support\Facades\Route;
@@ -20,6 +21,7 @@ Route::controller(AuthController::class)->group(function () {
     Route::post('/login', 'login');
     Route::get('/logout', 'logout')->name('logout');
 });
+Route::get('image/user/{uri}', [UserController::class,'displayImage'])->name('displayImage');
 
 Route::prefix('/dashboard')->middleware('auth')->group(function () {
     Route::controller(DashboardController::class)->group(function () {
@@ -30,5 +32,7 @@ Route::prefix('/dashboard')->middleware('auth')->group(function () {
         Route::get('/prakerin', 'prakerin');
         Route::get('/pengajuan', 'pengajuan');
         Route::get('/monitoring', 'monitoring');
+        Route::get('/jurusan', 'jurusan');
+        Route::get('/jurusan/{id}', 'jurusanDetail');
     });
 });

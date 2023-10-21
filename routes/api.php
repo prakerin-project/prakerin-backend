@@ -54,5 +54,6 @@ Route::controller(UserController::class)->group(function () {
     Route::get('/user/{role}/{id}', 'getOne')->whereIn('role', ['siswa', 'walas', 'kaprog', 'pembimbing', 'hubin', 'tata_usaha']);
     Route::post('/user/{role}', 'create')->whereIn('role', ['siswa', 'walas', 'kaprog', 'pb_industri', 'pb_sekolah', 'hubin', 'tu']);
     Route::put('/user/{role}/{id}', 'update')->whereIn('role', ['siswa', 'walas', 'kaprog', 'pb_industri', 'pb_sekolah', 'hubin', 'tu']);
+    Route::post('/user/{id}/upload', 'uploadFoto');
     Route::delete('/user/{id}', 'delete');
 });

@@ -44,4 +44,8 @@ class Kelas extends Model
     {
         return $this->hasOne(Walas::class, 'id_kelas');
     }
+    public function siswa()
+    {
+        return $this->hasMany(Siswa::class,'id_kelas');
+    }
 }

@@ -42,13 +42,13 @@ class CreateUserRequest extends FormRequest
             case 'walas':
                 $rules = array_merge($rules, [
                     'nip'      => ['required', 'max:20', 'unique:walas,nip'],
-                    'id_kelas' => ['required', 'integer', 'unique:walas,id_kelas']
+                    'id_kelas' => ['required', 'integer', 'unique:walas,id_kelas', 'exists:kelas,id']
                 ]);
                 break;
             case 'kaprog':
                 $rules = array_merge($rules, [
                     'nip'        => ['required', 'max:20', 'unique:kaprog,nip'],
-                    'id_jurusan' => ['required', 'integer', 'unique:kaprog,id_jurusan']
+                    'id_jurusan' => ['required', 'integer', 'unique:kaprog,id_jurusan', "exists:jurusan,id"]
                 ]);
                 break;
             case 'pb_sekolah':
@@ -56,14 +56,14 @@ class CreateUserRequest extends FormRequest
                 $rules = array_merge($rules, [
                     'nip_nik'    => ['required', 'max:20'],
                     'lingkup'    => ['required', 'in:sekolah,industri'],
-                    'id_jurusan' => ['required', 'integer'],
+                    'id_jurusan' => ['required', 'integer', 'exists:jurusan,id'],
                     'email'      => ['required', 'email', 'unique:pembimbing,email'],
                 ]);
                 break;
             case 'siswa':
                 $rules = array_merge($rules, [
                     'nis'           => ['required', 'max:12', 'unique:siswa,nis'],
-                    'id_kelas'      => ['required', 'integer'],
+                    'id_kelas'      => ['required', 'integer', 'exists:kelas,id'],
                     'email'         => ['required', 'email', 'unique:siswa,email'],
                     'tahun_masuk'   => ['required', 'date_format:Y'],
                     'tempat_lahir'  => ['required', 'max:30'],
@@ -80,6 +80,8 @@ class CreateUserRequest extends FormRequest
         return [
             'id_kelas.unique'   => 'One class can only have one Homeroom Teacher',
             'id_jurusan.unique' => 'One major can only have one Head of Major',
+            'id_kelas.exists'   => 'Selected jurusan don\'t exist',
+            'id_jurusan.exists' => 'Selected kelas don\'t exist',
         ];
     }
     protected function failedValidation(Validator $validator)

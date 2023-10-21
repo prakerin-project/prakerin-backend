@@ -26,8 +26,8 @@ class UpdateJurusanRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'nama_jurusan' => ['required', 'string', 'max:100', Rule::unique('jurusan', 'nama_jurusan')],
-            'akronim' => ['required', 'string', 'max:5', Rule::unique('jurusan', 'akronim')->ignore($this->id)],
+            'nama_jurusan' => ['required', 'string', 'max:100', Rule::unique('jurusan', 'nama_jurusan')->ignore($this->id)],
+            'akronim'      => ['required', 'string', 'max:5', Rule::unique('jurusan', 'akronim')->ignore($this->id)],
         ];
     }
 

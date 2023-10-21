@@ -24,9 +24,10 @@
     <link rel="icon" href="{{ asset("logo.svg") }}">
 
     <style>
-        body{
+        body {
             background-color: #eeeeee
         }
+
         #dropdownToggle:hover {
             cursor: pointer;
         }
@@ -123,6 +124,11 @@
                     <h3 class="m-0"><i class="iconsax" type="bold" stroke-width="1.5" icon="monitor"></i></h3>
                     <h5 class="m-0">Monitoring</h5>
                 </a>
+                <a href="{{ url("/dashboard/jurusan") }}"
+                    class="menu-item text-dark py-2 px-2 rounded d-flex gap-3 align-items-center link-underline link-underline-opacity-0">
+                    <h3 class="m-0"><i class="iconsax" type="bold" stroke-width="1.5" icon="bookmark"></i></h3>
+                    <h5 class="m-0">Jurusan</h5>
+                </a>
             </div>
         </aside>
 
@@ -160,7 +166,8 @@
                 </div>
             </nav>
             <section class="container p-4 mb-5">
-                @yield('content')
+                @include("layouts.errorFloat")
+                @yield("content")
             </section>
         </main>
     </div>
