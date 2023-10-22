@@ -6,9 +6,11 @@
             <div>
                 <h1>Perusahaan</h1>
             </div>
+            @if(auth()->user()->role == 'hubin')
             <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                    data-bs-target="#tambah-ps-modal" ><i class="iconsax" type="linear" stroke-width="1.5" icon="buildings-1"></i> Tambah
+                    data-bs-target="#tambah-ps-modal" ><i class="iconsax" type="linear" stroke-width="1.5" icon="buildings-2"></i> Tambah
             </button>
+            @endif
 
             <!-- Tambah Perusahaan Modal -->
             <div class="modal fade" id="tambah-ps-modal" tabindex="-1"
@@ -39,6 +41,10 @@
                                     <input type="email" id="email" name="email"
                                            class="form-control mb-3"
                                            required autocomplete="off">
+                                    <label for="link_website">Link website</label>
+                                    <input type="text" id="link_website" name="link_website"
+                                           class="form-control mb-3"
+                                        autocomplete="off">
                                     <label for="alamat">Alamat</label>
                                     <textarea name="alamat" id="alamat" class="form-control" style="height:
                                     100px"></textarea>
@@ -77,8 +83,11 @@
                 <th class="text-uppercase">Jenis Perusahaan</th>
                 <th class="text-uppercase">Email</th>
                 <th class="text-uppercase">Alamat</th>
+                <th class="text-uppercase">Link website</th>
                 <th class="text-uppercase">Foto</th>
+                @if(auth()->user()->role == 'hubin')
                 <th class="text-uppercase">Action</th>
+                @endif
             </tr>
             </thead>
             <tbody>
@@ -89,20 +98,24 @@
                     <td>{{$p->email}}</td>
                     <td>{{$p->alamat}}</td>
                     <td>
+                        <a href="//{{$p->link_website}}" target="_blank">{{$p->link_website}}</a>
+                    </td>
+                    <td>
                         <div class="d-flex align-items-center">
                             @if(isset($p->foto) && count($p->foto) > 0)
-                               <img src="{{url('storage/perusahaan/'.$p->foto[0]->path)}}" width="100px" alt="">
+                            <img src="{{url('storage/perusahaan/'.$p->foto[0]->path)}}" width="100px" height="100px" alt="Foto perusahaan" style="object-fit: cover;">
                             @else
-                                No data available
+                            No data available
                             @endif
                         </div>
                     </td>
+                    @if(auth()->user()->role == 'hubin')
                     <td>
                         <div class="d-flex gap-2">
-                            <!-- Button trigger edit modal -->
                             <a href="{{ url("/dashboard/perusahaan/$p->id/detail") }}" class="link-underline flex-shrink-1 link-underline-opacity-0">
                                 <h4><i class="iconsax" type="linear" stroke-width="1.5" icon="eye"></i></h4>
                             </a>
+                            <!-- Button trigger edit modal -->
                             <a href="" class="editBtn text-warning link-underline link-underline-opacity-0" data-bs-toggle="modal"
                             data-bs-target="#edit-modal-{{$p->id}}" idPerusahaan="{{$p->id}}">
                                 <h4><i class="iconsax" type="linear" stroke-width="1.5" icon="edit-1"></i></h4>
@@ -112,6 +125,7 @@
                             </a>
                         </div>
                     </td>
+                    @endif
                 </tr>
 
                 <!-- Edit Perusahaan Modal -->
@@ -146,6 +160,10 @@
                                <input type="email" id="email" name="email"
                                       class="form-control mb-3"
                                       required autocomplete="off" value="{{ $p->email }}">
+                                <label for="link_website">Link website</label>
+                                <input type="text" id="link_website" name="link_website"
+                                        class="form-control mb-3"
+                                        required autocomplete="off" value="{{ $p->link_website }}">
                                <label for="alamat">Alamat</label>
                                <textarea name="alamat" id="alamat" class="form-control" style="height:
                                100px">{{ $p->alamat }}</textarea>
@@ -165,7 +183,6 @@
             @endforeach
             </tbody>
         </table>
-
     </div>
 @endsection
 @section('footer')
@@ -174,33 +191,35 @@
             paging:false
         });
 
-        let fotos = [];
-        $('input[type=file]').on('change', function (e) {
-            for (let i = 0; i < this.files.length; i++) {
-                fotos.push(this.files[i]);
-            }
+        // Failed : function untuk upload multiple foto
+        // let fotos = [];
+        // $('input[type=file]').on('change', function (e) {
+        //     for (let i = 0; i < this.files.length; i++) {
+        //         fotos.push(this.files[i]);
+        //     }
 
-            console.log(fotos);
-            // fotos.map((f) => {
-            //     console.log(f.nama)
-            // })
-            // console.log(fotos)
-        })
+        //     console.log(fotos);
+        //     // fotos.map((f) => {
+        //     //     console.log(f.nama)
+        //     // })
+        //     // console.log(fotos)
+        // })
 
-        /*-------------------------- TAMBAH SURAT -------------------------- */
+        /*-------------------------- TAMBAH PERUSAHAAN -------------------------- */
         $('#tambah-ps-form').on('submit', function (e) {
             e.preventDefault(this);
             let data = new FormData(e.target);
+            // Untuk mendapatkan foto-foto yang diupload
             let file = $('#fileUpload')[0].files;
+
+            // Menggabungkan foto ke dalam data
             data.append('foto', file);
 
             console.log(Object.fromEntries(data));
-            axios.post('/api/perusahaan', data, {
-                'Content-Type': 'multipart/form-data'
-            })
+            axios.post('/api/perusahaan', data)
                 .then((res) => {
                     // console.log(res);
-                    $('#tambah-perusahaan-modal').css('display', 'none')
+                    $('#tambah-ps-modal').css('display', 'none')
                     swal.fire('Berhasil tambah data!', '', 'success').then(function () {
                         location.reload();
                     })
@@ -227,6 +246,7 @@
                 e.preventDefault(this);
                 let data = new FormData(e.target);
                 const value = Object.fromEntries(data.entries());
+                // Update perusahaan tidak termasuk foto
                 axios.put(`http://localhost:8000/api/perusahaan/${idPerusahaan}`, value)
                     .then(() => {
                         $(`#edit-modal-${idPerusahaan}`).css('display', 'none')

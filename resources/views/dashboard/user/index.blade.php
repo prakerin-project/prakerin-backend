@@ -11,7 +11,7 @@
                     class="bi bi-person-fill-add"></i> Tambah
             </button>
 
-            <!-- Tambah Perusahaan Modal -->
+            <!-- Tambah User Modal -->
             <div class="modal fade" id="tambah-user-modal" tabindex="-1"
                  aria-labelledby="exampleModalLabel"
                  aria-hidden="true">
@@ -127,7 +127,7 @@
             // console.log(fotos)
         })
 
-        /*-------------------------- TAMBAH SURAT -------------------------- */
+        /*-------------------------- TAMBAH USER -------------------------- */
         $('#tambah-user-form').on('submit', function (e) {
             e.preventDefault();
             let data = Object.fromEntries(new FormData(e.target));

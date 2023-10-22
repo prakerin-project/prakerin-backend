@@ -18,12 +18,22 @@ class JenisPerusahaanController extends Controller
     public function index()
     {
         $data = [
-            'jenis_perusahaan' => JenisPerusahaan::all()
+            'jenis_perusahaan' => JenisPerusahaan::with('perusahaan')->orderBy('nama')->get(),
         ];
 
         return view('dashboard.jenis-perusahaan.index', $data);
     }
-    public function getALl(Request $request): JsonResponse
+
+    public function detail(int $id)
+    {
+        $data = [
+            'jenis_perusahaan' => $this->getById($id),
+        ];
+
+        return view('dashboard.jenis-perusahaan.detail', $data);
+    }
+    
+    public function getAll(Request $request): JsonResponse
     {
         $relation = $this->getRelation($request->input('relation', []), ['perusahaan']);
 

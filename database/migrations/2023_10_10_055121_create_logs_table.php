@@ -15,7 +15,8 @@ return new class extends Migration
             $table->id();
             $table->enum('action', ['INSERT', 'UPDATE', 'DELETE'])->nullable(false);
             $table->text('activity')->nullable(false);
-            $table->string('user', 30)->nullable(false);
+            $table->string('user', 255)->nullable(false);
+            $table->string('ip_address')->nullable(false);
             $table->dateTime('created_at')->useCurrent();
         });
     }

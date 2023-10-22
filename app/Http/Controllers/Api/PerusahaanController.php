@@ -8,14 +8,22 @@ use App\Http\Requests\Perusahaan\UpdatePerusahaanRequest;
 use App\Models\JenisPerusahaan;
 use App\Models\Perusahaan;
 use App\Traits\FotoTrait;
+use Illuminate\Contracts\View\View;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\JsonResponse;
 
 class PerusahaanController extends Controller
 {
     use FotoTrait;
 
-    public function index()
+    /**
+     * Function for route 'dashboard/perusahaan'
+     *
+     * @return View
+     */
+    public function index(): View
     {
+        // Mengirim variable data ke view dengan isi array data perusahaan dan jenis perusahaan
         $data = [
             'perusahaan' => $this->getAll(),
             'jenis_perusahaan' => JenisPerusahaan::all()
@@ -24,7 +32,13 @@ class PerusahaanController extends Controller
         return view('dashboard.perusahaan.index', $data);
     }
 
-    public function detail(int $id)
+    /**
+     * function to show detail of perusahaan
+     *
+     * @param integer $id
+     * @return View
+     */
+    public function detail(int $id): View
     {
         $data = [
             'perusahaan' => $this->getById($id),
@@ -33,15 +47,26 @@ class PerusahaanController extends Controller
         return view('dashboard.perusahaan.detail', $data);
     }
 
-    public function getAll()
+    /**
+     * Function for get all perusahaan with the relations
+     *
+     * @return Collection | array
+     */
+    public function getAll(): Collection | array
     {
         $data = Perusahaan::with('jenis_perusahaan', 'foto')->orderBy('nama_perusahaan')->get();
         return $data;
     }
 
-    public function getById(int $id)
+    /**
+     * Undocumented function
+     *
+     * @param integer $id
+     * @return Perusahaan | null
+     */
+    public function getById(int $id): Perusahaan | null
     {
-        $perusahaan = Perusahaan::query()->with('jenis_perusahaan', 'foto')->findOrFail($id);
+        $perusahaan = Perusahaan::query()->with('jenis_perusahaan', 'foto')->findOrFail($id)->first();
 
         return $perusahaan;
     }
@@ -59,7 +84,9 @@ class PerusahaanController extends Controller
 
         $perusahaan = Perusahaan::query()->create($data);
 
+        // Cek apakah request terdapat foto atau tidak
         if ($request->hasFile('foto')) {
+            // jika terdapat foto maka akan dibuat datanya dan relasinya dengan perusahaan
             foreach ($request->foto as $foto) {
                 $this->uploadFoto($perusahaan->id, $foto);
             }

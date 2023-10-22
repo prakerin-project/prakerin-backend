@@ -9,13 +9,23 @@ use Illuminate\Http\Request;
 
 class AuthController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware("guest")->only('index');
+    }
+
     public function index()
     {
-        if (!Auth::user()) {
-            return view('login');
-        }
+        return view('login');
+    }
 
-        return redirect()->to('/dashboard');
+    public function profile()
+    {
+        $data = [
+            'user' => Auth::user()
+        ];
+
+        return view('dashboard.profile', $data);
     }
     
     public function login(UserLoginRequest $request)
