@@ -14,13 +14,22 @@ class KelasController extends Controller
 {
     use RequestTrait;
 
-    public function getAll(Request $request): JsonResponse
+    public function index()
     {
-        $relation = $this->getRelation($request->input('relation', []), ['jurusan', 'walas']);
+      $data = [
+          'angkatan' => Kelas::with('siswa')->orderByDesc('angkatan')->get()->groupBy('angkatan')
+      ];
 
-        $kelas = Kelas::query()->with($relation)->get();
+      return $data;
 
-        return response()->json($kelas, 200);
+      return view('dashboard.kelas.index', $data);
+    }
+
+    public function getAll()
+    {
+        $kelas = Kelas::query()->with(['jurusan', 'walas'])->get();
+
+        return $kelas;
     }
 
     public function getById(int $id, $relation = [])

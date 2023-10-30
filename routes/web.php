@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\JenisPerusahaanController;
+use App\Http\Controllers\Api\KelasController;
 use App\Http\Controllers\Api\PerusahaanController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Auth\AuthController;
@@ -32,6 +33,7 @@ Route::controller(AuthController::class)->group(function() {
 Route::prefix('/dashboard')->middleware('auth')->group(function() {
     Route::get('/', [DashboardController::class, 'index']);
     Route::get('/user', [UserController::class, 'index']);
+    Route::get('/kelas', [KelasController::class, 'index']);
     Route::get('/perusahaan', [PerusahaanController::class, 'index']);
     Route::get('/perusahaan/jenis', [JenisPerusahaanController::class, 'index']);
     Route::get('/perusahaan/jenis/{id}', [JenisPerusahaanController::class, 'detail']);

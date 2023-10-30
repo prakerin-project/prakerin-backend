@@ -64,7 +64,7 @@
 <body class="bg-white">
     <div class="app" style="display: grid; grid-template-columns: auto 1fr">
         <aside class="d-flex flex-column align-items-center p-0 border" style="width: 300px;
-    height:100vh">
+    height:auto">
             <img src="{{ asset('one-logo.svg') }}" alt="logo" width="80px">
 
             <div class="menu mt-3 rounded w-75">
@@ -79,7 +79,7 @@
 
                 <p class="mb-0 mt-3">Menu</p>
 
-                @if (in_array($user_role, ['hubin', 'kaprog', 'pb_sekolah', 'walas', 'tu']))
+                @if (!in_array($user_role, ['pb_industri', 'siswa']))
                     <div class="dropdown">
                         <div
                             class="d-flex justify-content-between menu-item text-dark py-2 px-2 rounded d-flex gap-3 align-items-center link-underline link-underline-opacity-0">
@@ -145,6 +145,12 @@
                     class="menu-item text-dark py-2 px-2 rounded d-flex gap-3 align-items-center link-underline link-underline-opacity-0">
                     <h3 class="m-0"><i class="iconsax" type="linear" stroke-width="1.5" icon="signpost"></i></h3>
                     <h5 class="m-0">Jurusan</h5>
+                </a>
+
+                <a href="{{ url('/dashboard/kelas') }}"
+                    class="menu-item text-dark py-2 px-2 rounded d-flex gap-3 align-items-center link-underline link-underline-opacity-0">
+                    <h3 class="m-0"><i class="iconsax" type="linear" stroke-width="1.5" icon="teacher"></i></h3>
+                    <h5 class="m-0">Kelas</h5>
                 </a>
 
                 <a href="{{ url('/dashboard/prakerin') }}"
@@ -225,7 +231,7 @@
                     </div>
                 </div>
             </nav>
-            <div class="container mt-3">
+            <div class="container p-4">
                 @include('layouts.flash-message')
                 @yield('content')
             </div>

@@ -100,10 +100,11 @@
                     <td>
                         <a href="//{{$p->link_website}}" target="_blank">{{$p->link_website}}</a>
                     </td>
-                    <td>
+                    <td class="justify-content-center">
                         <div class="d-flex align-items-center">
                             @if(isset($p->foto) && count($p->foto) > 0)
-                            <img src="{{url('storage/perusahaan/'.$p->foto[0]->path)}}" width="100px" height="100px" alt="Foto perusahaan" style="object-fit: cover;">
+                            <img src="{{url('storage/perusahaan/'.$p->foto[0]->path)}}" width="160px" height="150px"
+                                 alt="Foto perusahaan" style="object-fit: cover;">
                             @else
                             No data available
                             @endif

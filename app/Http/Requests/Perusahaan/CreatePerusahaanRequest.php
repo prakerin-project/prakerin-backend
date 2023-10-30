@@ -37,6 +37,13 @@ class CreatePerusahaanRequest extends FormRequest
         ];
     }
 
+    public function messages()
+    {
+        return [
+
+        ];
+    }
+
     protected function failedValidation(Validator $validator)
     {
         throw new HttpResponseException(response()->json($validator->getMessageBag(), 400));

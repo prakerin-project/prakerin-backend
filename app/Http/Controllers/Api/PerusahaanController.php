@@ -66,7 +66,7 @@ class PerusahaanController extends Controller
      */
     public function getById(int $id): Perusahaan | null
     {
-        $perusahaan = Perusahaan::query()->with('jenis_perusahaan', 'foto')->findOrFail($id)->first();
+        $perusahaan = Perusahaan::query()->with('jenis_perusahaan', 'foto')->findOrFail($id);
 
         return $perusahaan;
     }
