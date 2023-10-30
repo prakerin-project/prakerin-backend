@@ -38,6 +38,8 @@ class CreatePerusahaanRequest extends FormRequest
 
     protected function failedValidation(Validator $validator)
     {
-        throw new HttpResponseException(response()->json($validator->getMessageBag(), 400));
+        throw new HttpResponseException(response()->json([
+            'errors' => $validator->getMessageBag()
+        ], 400));
     }
 }
