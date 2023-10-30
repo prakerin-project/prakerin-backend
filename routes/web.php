@@ -28,6 +28,7 @@ Route::prefix('/dashboard')->middleware('auth')->group(function () {
         Route::get('/', 'index');
         Route::get('/user', 'user');
         Route::get('/user/{id}', 'userDetail');
+        Route::get('/user/edit/{id}', 'userEdit');
         Route::get('/perusahaan', 'perusahaan');
         Route::get('/prakerin', 'prakerin');
         Route::get('/pengajuan', 'pengajuan');

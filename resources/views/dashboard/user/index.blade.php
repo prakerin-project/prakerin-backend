@@ -11,11 +11,11 @@
         </button>
 
         <!-- Tambah User Modal -->
-        <div class="modal fade" data-bs-backdrop="static" id="tambah-user-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade" data-bs-backdrop="static" id="tambah-user-modal" tabindex="-1" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="exampleModalLabel">Tambah User</h1>
+                        <h1 class="modal-title fs-5">Tambah User</h1>
                     </div>
                     <div class="modal-body">
                         <form id="tambah-user-form" data-request-link="">
@@ -71,7 +71,7 @@
         </thead>
         <tbody>
             @foreach ($users as $user)
-                <tr user-id={{ $user->id }}>
+                <tr user-id="{{ $user->id }}" user-name="{{ $user->username }}">
                     <td class="text-center">{{ $loop->iteration }}</td>
                     <td>{{ $user->username }}</td>
                     <td>{{ $user->role }}</td>
@@ -81,11 +81,12 @@
                             <h4><i class="iconsax" type="linear" stroke-width="1.5" icon="eye"></i></h4>
                         </a>
                         <!-- Button trigger edit modal -->
-                        <a href="#edit" class="text-warning link-underline link-underline-opacity-0 editButton">
+                        <a href="{{ url("dashboard?role=$user->role", ["user", "edit", $user->id]) }}"
+                            class="text-warning link-underline link-underline-opacity-0 editButton">
                             <h4><i class="iconsax" type="linear" stroke-width="1.5" icon="edit-1"></i></h4>
                         </a>
                         <!-- Button trigger delete modal -->
-                        <a href="" class="text-danger link-underline link-underline-opacity-0">
+                        <a href="#delete" class="text-danger link-underline link-underline-opacity-0 deleteButton">
                             <h4><i class="iconsax" type="linear" stroke-width="1.5" icon="trash"></i></h4>
                         </a>
                     </td>
@@ -124,7 +125,7 @@
             }) => data)
             .catch(() => swal.fire("Something went wrong", "Please reload page", "error").finally(() => window.location.reload()))
 
-        const dataKelas = axios.get('/api/kelas?', {
+        const dataKelas = axios.get('/api/kelas', {
                 params: {
                     relation: ['jurusan']
                 }
@@ -133,13 +134,31 @@
                 data
             }) => data)
             .catch(() => swal.fire("Something went wrong", "Please reload page", "error").finally(() => window.location.reload()));
+
         $("#DataTable").DataTable({
             searching: false,
             info: false,
             paging: false,
         })
-        $(".editButton").click(function() {
-            console.log($(this).closest("tr").attr("user-id"));
+
+        $(".deleteButton").click(function(e) {
+            e.preventDefault()
+            let userId = $(this).closest("tr").attr("user-id")
+            swal.fire({
+                titleText: `Apakah anda yakin untukmenghapus ${$(this).closest("tr").attr("user-name")}`,
+                backdrop: false,
+                icon: "question",
+                showDenyButton: true,
+                confirmButtonText: "Ya, Hapus",
+                denyButtonText: "Tidak",
+            }).then(({
+                    isConfirmed
+                }) => isConfirmed &&
+                axios.delete(`/api/user/${userId}`)
+                .then(() => alertSuccess('hapus'))
+                .catch(({
+                    response
+                }) => alertResponse(response?.data)))
         })
         $("#role").on("change", async function() {
             renderForm(this, await dataJurusan, await dataKelas)
@@ -147,7 +166,6 @@
         $("#tambah-user-form").on("submit", function(e) {
             e.preventDefault()
             const toSend = new FormData(e.target)
-            // console.log(Object.fromEntries(toSend))
             axios.post($(this).data('request-link'), toSend, {
                     'Content-Type': "multipart/form-data"
                 })
@@ -159,7 +177,7 @@
                 }) => alertResponse(response?.data))
         })
 
-        function renderForm(e, jurusan = [], kelas = []) {
+        function renderForm(e, jurusan = [], kelas = [], val = {}) {
             $("button[form='tambah-user-form']").attr("disabled", false)
             if ($(e).val() === "")
                 $("button[form='tambah-user-form']").attr("disabled", true)

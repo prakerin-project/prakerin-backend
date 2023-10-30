@@ -26,51 +26,50 @@ class UpdateUserRequest extends FormRequest
     public function rules(): array
     {
         $rules = [
-            'username'      => ['required', 'string', 'max:20', new LowerCaseValidation],
-            'password'      => ['required', 'string'],
-            'nama'          => ['required', 'max:100', 'string'],
-            'no_telp'       => ['required', 'max:16'],
-            'jenis_kelamin' => ['required', 'in:L,P'],
+            'username'      => ['sometimes','string', 'max:20', new LowerCaseValidation],
+            'nama'          => ['sometimes','max:100', 'string'],
+            'no_telp'       => ['sometimes','max:16'],
+            'jenis_kelamin' => ['sometimes','in:L,P'],
         ];
         //add more rules according to role requested
         switch ($this->role) {
             case 'tu':
-                $rules = array_merge($rules, ['nip' => ['required', 'max:20']]);
+                $rules = array_merge($rules, ['nip' => ['sometimes','max:20']]);
                 break;
             case 'hubin':
-                $rules = array_merge($rules, ['nip' => ['required', 'max:20']]);
+                $rules = array_merge($rules, ['nip' => ['sometimes','max:20']]);
                 break;
             case 'walas':
                 $rules = array_merge($rules, [
-                    'nip'      => ['required', 'max:20'],
-                    'id_kelas' => ['required', 'integer']
+                    'nip'      => ['sometimes','max:20'],
+                    'id_kelas' => ['integer','sometimes'],
                 ]);
                 break;
             case 'kaprog':
                 $rules = array_merge($rules, [
-                    'nip'        => ['required', 'max:20'],
-                    'id_jurusan' => ['required', 'integer']
+                    'nip'        => ['sometimes','max:20'],
+                    'id_jurusan' => ['integer','sometimes'],
                 ]);
                 break;
             case 'pb_sekolah':
             case 'pb_industri':
                 $rules = array_merge($rules, [
-                    'nip_nik'    => ['required', 'max:20'],
-                    'lingkup'    => ['required', 'in:sekolah,industri'],
-                    'id_jurusan' => ['required', 'integer'],
-                    'email'      => ['required', 'email'],
+                    'nip_nik'    => ['sometimes','max:20'],
+                    'lingkup'    => ['sometimes','in:sekolah,industri'],
+                    'id_jurusan' => ['sometimes','integer','sometimes'],
+                    'email'      => ['sometimes','email'],
                 ]);
                 break;
             case 'siswa':
                 $rules = array_merge($rules, [
-                    'nis'           => ['required', 'max:12'],
-                    'id_kelas'      => ['required', 'integer'],
-                    'email'         => ['required', 'email'],
-                    'tahun_masuk'   => ['required', 'date_format:Y'],
-                    'tempat_lahir'  => ['required', 'max:30'],
-                    'tanggal_lahir' => ['required', 'date_format:Y-m-d'],
-                    'alamat'        => ['required', 'string'],
-                    'no_telp_wali'  => ['required', 'max:16'],
+                    'nis'           => ['sometimes','max:12'],
+                    'id_kelas'      => ['integer','sometimes'],
+                    'email'         => ['sometimes','email'],
+                    'tahun_masuk'   => ['sometimes','date_format:Y'],
+                    'tempat_lahir'  => ['sometimes','max:30'],
+                    'tanggal_lahir' => ['sometimes','date_format:Y-m-d'],
+                    'alamat'        => ['sometimes','string'],
+                    'no_telp_wali'  => ['sometimes','max:16'],
                 ]);
                 break;
         }

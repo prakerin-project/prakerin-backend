@@ -8,7 +8,8 @@
             <div class="card w-100 bg-white">
                 @isset($user->foto_profil)
                     <div class="d-flex justify-content-center">
-                        <img src="{{ route("displayImage", ["uri" => $user->foto_profil]) }}" class="pt-2 rounded-2 w-50 card-img-top" style="aspect-ratio:1/1;object-fit:cover" alt="{{ $user_detail->nama }}">
+                        <img src="{{ route("displayImage", ["uri" => $user->foto_profil]) }}" class="mt-2 rounded-3 w-50"
+                            style="aspect-ratio:1/1;object-fit:cover" alt="{{ $user_detail->nama }}">
                     </div>
                 @endisset
                 <div class="mt-4 px-3">
@@ -49,10 +50,11 @@
                     </div>
                     <div class="row mx-1 mt-3">
                         <div class="col p-0">
-                            <a href="#" class="col w-100 rounded-start-pill btn btn-primary">Edit</a>
+                            <a href="{{ url("dashboard?role=$user->role", ["user", "edit", $user->id]) }}"
+                                class="col w-100 rounded-start-pill btn btn-primary">Edit</a>
                         </div>
                         <div class="col-auto p-0">
-                            <a href="#" class=" d-flex align-items-center gap-2 w-100 rounded-end-pill btn btn-danger">
+                            <a href="#" class="deleteButton d-flex align-items-center gap-2 w-100 rounded-end-pill btn btn-danger">
                                 <i class="iconsax text-light" type="linear" icon="trash" style="zoom: 0.8"></i>Delete</a>
                         </div>
                     </div>
@@ -64,31 +66,30 @@
 @endsection
 @section("footer")
     <script type="module">
+        function alertResponse(data) {
+            let message = '';
+            console.error(data)
+            Object.values(data).flat().map((e) =>
+                message += `<strong class="text-danger d-block">${e}</strong>`
+            );
+
+            swal.fire({
+                titleText: "Gagal",
+                icon: "error",
+                html: message,
+            })
+        }
+
+        function alertSuccess(type, toShow = '', redirectLocation = null) {
+            swal.fire({
+                titleText: `Data berhasil di${type}`,
+                icon: "success",
+                text: `${toShow} Berhasil di${type}`,
+            }).finally(() => redirectLocation ? window.location = redirectLocation : window.location.reload())
+        }
+
         $("#uploadFoto").on("submit", function(e) {
             e.preventDefault()
-
-            function alertResponse(data) {
-                let message = '';
-                console.error(data)
-                Object.values(data).flat().map((e) =>
-                    message += `<strong class="text-danger d-block">${e}</strong>`
-                );
-
-                swal.fire({
-                    titleText: "Gagal",
-                    icon: "error",
-                    html: message,
-                })
-            }
-
-            function alertSuccess(type, toShow = '') {
-                swal.fire({
-                    titleText: `Data berhasil di${type}`,
-                    icon: "success",
-                    text: `${toShow} Berhasil di${type}`,
-                }).finally(() => window.location.reload())
-            }
-
             let toSend = new FormData(e.target)
             // console.log(Object.fromEntries(toSend));
             axios.post("/api/user/<?php echo $user->id; ?>/upload", toSend, {
@@ -101,6 +102,24 @@
                 .catch(({
                     response
                 }) => alertResponse(response?.data?.errors))
+        })
+        $(".deleteButton").click(function(e) {
+            swal.fire({
+                titleText: `Apakah anda yakin untukmenghapus <?= $user_detail->nama ?>`,
+                backdrop: false,
+                icon: "question",
+                showDenyButton: true,
+                confirmButtonText: "Ya, Hapus",
+                denyButtonText: "Tidak",
+            }).then(({
+                    isConfirmed
+                }) => isConfirmed &&
+                axios.delete(`/api/user/<?= $user->id ?>`)
+                .then(() => alertSuccess('hapus', "<?= $user_detail->nama ?>", "/dashboard/user"))
+                .catch(({
+                    response
+                }) => alertResponse(response?.data))
+            )
         })
     </script>
 @endsection

@@ -59,6 +59,22 @@ class DashboardController extends Controller
         ];
         return view('dashboard.user.detail', $data);
     }
+    public function userEdit(Request $request)
+    {
+        $relation = $this->roleToRelation($request->role);
+        $user = User::with($relation)->has($relation[0])->findOrFail($request->id);
+
+        foreach ($user->getRelation($relation[0])->makeHidden(['id_user', 'id_kelas', 'id_jurusan'])->toArray() as $key => $value) {
+            $user_detail[] = $key;
+        }
+
+        $data = [
+            'user'            => $user,
+            'user_detail_key' => $user_detail,
+            'user_detail'     => $user->getRelation($relation[0])
+        ];
+        return view('dashboard.user.edit', $data);
+    }
     public function jurusan()
     {
         $data = [

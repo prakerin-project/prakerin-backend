@@ -14,6 +14,7 @@ use App\Models\TataUsaha;
 use App\Models\User;
 use App\Models\Walas;
 use App\Traits\RequestTrait;
+use App\Traits\RoleToRelationTrait;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\JsonResponse;
@@ -22,7 +23,7 @@ use Storage;
 
 class UserController extends Controller
 {
-    use RequestTrait;
+    use RequestTrait, RoleToRelationTrait;
     private Model $Model;
     /**
      * Change model to current requested model
@@ -119,22 +120,23 @@ class UserController extends Controller
     public function update(UpdateUserRequest $request): JsonResponse
     {
         $this->useModel($request->role);
-        $user = User::with($request->role)->has($request->role)->findOrFail($request->id);
-        $role = $user->getRelation($request->role);
+        $role = $this->roleToRelation($request->role)[0];
+        $user = User::with($role)->has($role)->findOrFail($request->id);
+        $currRoleKey = $user->getRelation($role)->getKey();
+        // return response()->json($request);
+        $roleModel = $this->Model::query()->findOrFail($currRoleKey);
+        $user->fill($request->only(['username', 'password']))->save();
+        $roleModel->fill($request->except(['username', 'password']))->save();
 
-        $user->fill($request->only(['username', 'password']));
-        $role->fill($request->except(['username', 'password']));
-        $user->save();
-        $role->save();
-
-        $res = $user->getChanges();
-        unset($res['password']);
+        $res[] = $user->getChanges();
+        $res[] = $roleModel->getChanges();
+        // unset($res['password']);
 
         return response()->json($res);
     }
     /**
      * Delete record from databse
-     *
+     * TODO: KNOWN UNHANDLED VULNERABILITIES, DELETE IMAGE AMONG USER DELETION
      * @param Request $request
      * @return JsonResponse
      */
@@ -153,7 +155,7 @@ class UserController extends Controller
         $currDate = Carbon::now(16)->format("Y-m-d");
         $currUser = User::query()->findOrFail($request->id);
         $oldFile = $currUser->foto_profil;
-        if (Storage::disk('public')->exists($oldFile)) {
+        if (!empty($oldFile) && Storage::disk('public')->exists($oldFile)) {
             Storage::disk('public')->delete($oldFile);
         }
 
@@ -169,9 +171,10 @@ class UserController extends Controller
     }
     public function displayImage(Request $filename)
     {
-        if(!Storage::disk('public')->exists("user/$filename->uri")){
+        if (!Storage::disk('public')->exists("user/$filename->uri")) {
             abort(404);
-        };
+        }
+        ;
         return Storage::disk('public')->response("user/$filename->uri");
     }
 }
