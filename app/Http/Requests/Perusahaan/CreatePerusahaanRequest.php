@@ -31,8 +31,16 @@ class CreatePerusahaanRequest extends FormRequest
             'nama_perusahaan' => ['required', 'string', 'max:100', Rule::unique('perusahaan', 'nama_perusahaan')],
             'email' => ['required', 'email', Rule::unique('perusahaan', 'email')],
             'alamat' => ['required'],
+            'link_website' => ['nullable', 'string'],
             'foto.*' => ['mimes:jpeg,jpg,png', 'max:5120'],
             'foto' => ['nullable'],
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+
         ];
     }
 

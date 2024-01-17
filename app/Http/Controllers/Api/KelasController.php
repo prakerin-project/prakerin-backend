@@ -6,21 +6,28 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Kelas\CreateKelasRequest;
 use App\Http\Requests\Kelas\UpdateKelasRequest;
 use App\Models\Kelas;
+use App\Models\Siswa;
 use App\Traits\RequestTrait;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use DB;
 
 class KelasController extends Controller
 {
     use RequestTrait;
 
-    public function getAll(Request $request): JsonResponse
+    public function index()
     {
-        $relation = $this->getRelation($request->input('relation', []), ['jurusan', 'walas']);
+        $data = DB::select('SELECT * FROM angkatan_view');
 
-        $kelas = Kelas::query()->with($relation)->get();
+        return view('dashboard.kelas.index', ['data' => $data]);
+    }
 
-        return response()->json($kelas, 200);
+    public function getAll()
+    {
+        $kelas = Kelas::query()->with(['jurusan', 'walas'])->get();
+
+        return $kelas;
     }
 
     public function getById(int $id, $relation = [])
@@ -64,7 +71,7 @@ class KelasController extends Controller
         $kelas->delete();
 
         return response()->json([
-            'status'  => 'success',
+            'status' => 'success',
             'message' => 'Deleted successfully.'
         ], 200);
     }

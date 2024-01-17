@@ -27,9 +27,10 @@ class UpdatePerusahaanRequest extends FormRequest
     {
         return [
             'id_jenis_perusahaan' => ['required', 'integer', Rule::exists('jenis_perusahaan', 'id')],
-            'nama_perusahaan' => ['required', 'string', Rule::unique('perusahaan', 'nama_perusahaan')],
+            'nama_perusahaan' => ['required', 'string', Rule::unique('perusahaan', 'nama_perusahaan')->ignore($this->id)],
             'email' => ['required', 'email', Rule::unique('perusahaan', 'email')->ignore($this->id)],
-            'alamat' => ['required']
+            'alamat' => ['required'],
+            'link_website' => ['nullable', 'string'],
         ];
     }
 

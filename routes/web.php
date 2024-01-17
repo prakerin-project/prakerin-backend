@@ -1,8 +1,12 @@
 <?php
 
+use App\Http\Controllers\Api\JenisPerusahaanController;
+use App\Http\Controllers\Api\KelasController;
+use App\Http\Controllers\Api\PengajuanController;
+use App\Http\Controllers\Api\PerusahaanController;
 use App\Http\Controllers\Api\UserController;
-use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,6 +19,10 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
+Route::get('/', function () {
+    return redirect('/dashboard');
+});
 
 Route::controller(AuthController::class)->group(function () {
     Route::get('/login', 'index')->name('login');

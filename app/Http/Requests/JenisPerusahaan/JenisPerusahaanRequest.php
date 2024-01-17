@@ -30,6 +30,13 @@ class JenisPerusahaanRequest extends FormRequest
         ];
     }
 
+    public function messages()
+    {
+        return [
+            'nama.unique' => 'Jenis perusahaan :input already exists'
+        ];
+    }
+
     protected function failedValidation(Validator $validator)
     {
         throw new HttpResponseException(response()->json($validator->getMessageBag(), 400));

@@ -46,6 +46,15 @@ class UserController extends Controller
         if ($role === 'hubin')
             $this->Model = new Hubin;
     }
+
+    public function index()
+    {
+        $data = [
+            'users' => User::all()
+        ];
+
+        return view('dashboard.user.index', $data);
+    }
     /**
      * Create role after user
      *

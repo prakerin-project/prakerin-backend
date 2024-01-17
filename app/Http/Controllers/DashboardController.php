@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\JenisPerusahaan;
 use App\Models\Jurusan;
 use App\Models\Kelas;
+use App\Models\Logs;
 use App\Models\Perusahaan;
 use App\Models\Siswa;
 use App\Models\User;
@@ -25,25 +26,14 @@ class DashboardController extends Controller
     {
         return view('dashboard.index');
     }
-    public function log() {
-        
-    }
-    public function perusahaan()
+
+    public function log()
     {
         $data = [
-            'perusahaan'       => Perusahaan::with('jenis_perusahaan', 'foto')->get(),
-            'jenis_perusahaan' => JenisPerusahaan::all()
-        ];
-        return view('dashboard.perusahaan', $data);
-    }
-
-    public function user()
-    {
-        $data = [
-            'users' => User::all()->sortDesc()
+            'logs' => Logs::orderBy('created_at')->get()
         ];
 
-        return view('dashboard.user.index', $data);
+        return view('dashboard.log', $data);
     }
     public function userDetail(Request $request)
     {
