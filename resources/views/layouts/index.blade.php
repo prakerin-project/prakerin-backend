@@ -122,16 +122,14 @@
 
                 @if (in_array($user_role, ['hubin', 'siswa', 'pb_sekolah', 'kaprog']))
                     <a href="{{ url('/dashboard/perusahaan/jenis') }}"
-                        class="menu-item text-dark py-2 px-2 rounded d-flex gap-3
-                align-items-center link-underline link-underline-opacity-0">
+                        class="menu-item text-dark py-2 px-2 rounded d-flex gap-3 align-items-center link-underline link-underline-opacity-0">
                         <h3 class="m-0"><i class="iconsax" type="linear" stroke-width="1.5" icon="buildings-1"></i>
                         </h3>
                         <h5 class="m-0">Jenis Perusahaan</h5>
                     </a>
 
                     <a href="{{ url('/dashboard/perusahaan') }}"
-                        class="menu-item text-dark py-2 px-2 rounded d-flex gap-3
-            align-items-center link-underline link-underline-opacity-0">
+                        class="menu-item text-dark py-2 px-2 rounded d-flex gap-3 align-items-center link-underline link-underline-opacity-0">
                         <h3 class="m-0"><i class="iconsax" type="linear" stroke-width="1.5" icon="buildings-2"></i>
                         </h3>
                         <h5 class="m-0">Perusahaan</h5>
@@ -158,8 +156,7 @@
                 </a>
 
                 <a href="{{ url('/dashboard/pengajuan') }}"
-                    class="menu-item text-dark py-2 px-2 rounded d-flex gap-3
-            align-items-center link-underline link-underline-opacity-0">
+                    class="menu-item text-dark py-2 px-2 rounded d-flex gap-3 align-items-center link-underline link-underline-opacity-0">
                     <h3 class="m-0"><i class="iconsax" type="linear" stroke-width="1.5"
                             icon="clipboard-text"></i>
                     </h3>
@@ -168,8 +165,7 @@
 
                 @if (in_array($user_role, ['hubin', 'pb_sekolah', 'kaprog']))
                     <a href="{{ url('/dashboard/monitoring') }}"
-                        class="menu-item text-dark py-2 px-2 rounded d-flex gap-3
-                align-items-center link-underline link-underline-opacity-0">
+                        class="menu-item text-dark py-2 px-2 rounded d-flex gap-3 align-items-center link-underline link-underline-opacity-0">
                         <h3 class="m-0"><i class="iconsax" type="linear" stroke-width="1.5" icon="monitor"></i>
                         </h3>
                         <h5 class="m-0">Monitoring</h5>
@@ -177,8 +173,7 @@
                 @endif
                 @if ($user_role == 'hubin')
                     <a href="{{ url('/dashboard/log') }}"
-                        class="menu-item text-dark py-2 px-2 rounded d-flex gap-3
-            align-items-center link-underline link-underline-opacity-0">
+                        class="menu-item text-dark py-2 px-2 rounded d-flex gap-3 align-items-center link-underline link-underline-opacity-0">
                         <h3 class="m-0"><i class="iconsax" type="linear" stroke-width="1.5"
                                 icon="menu-board"></i>
                         </h3>
