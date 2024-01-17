@@ -6,9 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Kelas\CreateKelasRequest;
 use App\Http\Requests\Kelas\UpdateKelasRequest;
 use App\Models\Kelas;
+use App\Models\Siswa;
 use App\Traits\RequestTrait;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use DB;
 
 class KelasController extends Controller
 {
@@ -16,13 +18,9 @@ class KelasController extends Controller
 
     public function index()
     {
-      $data = [
-          'angkatan' => Kelas::with('siswa')->orderByDesc('angkatan')->get()->groupBy('angkatan')
-      ];
+        $data = DB::select('SELECT * FROM angkatan_view');
 
-      return $data;
-
-      return view('dashboard.kelas.index', $data);
+        return view('dashboard.kelas.index', ['data' => $data]);
     }
 
     public function getAll()
@@ -73,7 +71,7 @@ class KelasController extends Controller
         $kelas->delete();
 
         return response()->json([
-            'status'  => 'success',
+            'status' => 'success',
             'message' => 'Deleted successfully.'
         ], 200);
     }

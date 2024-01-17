@@ -85,7 +85,8 @@
                             class="d-flex justify-content-between menu-item text-dark py-2 px-2 rounded d-flex gap-3 align-items-center link-underline link-underline-opacity-0">
                             <a href="{{ url('/dashboard/user') }}"
                                 class="text-dark d-flex gap-3 align-items-center link-underline link-underline-opacity-0">
-                                <h3 class="m-0"><i class="iconsax" type="bold" icon="user"></i></h3>
+                                <h3 class="m-0"><i class="iconsax" type="linear" stroke-width="1.5"
+                                        icon="user"></i></h3>
                                 <h5 class="m-0">User</h5>
                             </a>
                             <div id="dropdownToggle" class="h-100">
@@ -155,7 +156,8 @@
 
                 <a href="{{ url('/dashboard/prakerin') }}"
                     class="menu-item text-dark py-2 px-2 rounded d-flex gap-3 align-items-center link-underline link-underline-opacity-0">
-                    <h3 class="m-0"><i class="iconsax" type="linear" stroke-width="1.5" icon="book-open"></i></h3>
+                    <h3 class="m-0"><i class="iconsax" type="linear" stroke-width="1.5" icon="book-open"></i>
+                    </h3>
                     <h5 class="m-0">Prakerin</h5>
                 </a>
 
