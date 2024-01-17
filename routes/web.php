@@ -29,10 +29,16 @@ Route::prefix('/dashboard')->middleware('auth')->group(function () {
         Route::get('/user', 'user');
         Route::get('/user/{id}', 'userDetail');
         Route::get('/user/edit/{id}', 'userEdit');
+
         Route::get('/perusahaan', 'perusahaan');
+
         Route::get('/prakerin', 'prakerin');
+
         Route::get('/pengajuan', 'pengajuan');
+
         Route::get('/monitoring', 'monitoring');
+        Route::get('/kelas','kelas');
+
         Route::get('/jurusan', 'jurusan');
         Route::get('/jurusan/{id}', 'jurusanDetail');
     });

@@ -25,7 +25,9 @@ class DashboardController extends Controller
     {
         return view('dashboard.index');
     }
-
+    public function log() {
+        
+    }
     public function perusahaan()
     {
         $data = [
@@ -46,7 +48,7 @@ class DashboardController extends Controller
     public function userDetail(Request $request)
     {
         $relation = $this->roleToRelation($request->role);
-        $user = User::with($relation)->has($relation[0])->findOrFail($request->id);
+        $user     = User::with($relation)->has($relation[0])->findOrFail($request->id);
 
         foreach ($user->getRelation($relation[0])->makeHidden(['id_user', 'id_kelas', 'id_jurusan'])->toArray() as $key => $value) {
             $user_detail[] = $key;
@@ -62,7 +64,7 @@ class DashboardController extends Controller
     public function userEdit(Request $request)
     {
         $relation = $this->roleToRelation($request->role);
-        $user = User::with($relation)->has($relation[0])->findOrFail($request->id);
+        $user     = User::with($relation)->has($relation[0])->findOrFail($request->id);
 
         foreach ($user->getRelation($relation[0])->makeHidden(['id_user', 'id_kelas', 'id_jurusan'])->toArray() as $key => $value) {
             $user_detail[] = $key;
@@ -86,12 +88,24 @@ class DashboardController extends Controller
     public function jurusanDetail($id)
     {
         // return Siswa::query()->getRelation('kelas')->whereIdJurusan($id)->with(['siswa','siswa.user'])->firstOrFail()->toArray()['siswa'];
+        $siswa = Siswa::query()->getRelation('kelas')->whereIdJurusan($id)->with(['siswa', 'siswa.user'])->first() ?? [];
+        if ($siswa) {
+            $siswa = $siswa->toArray()['siswa'];
+        }
         $data = [
-            'jurusan'     => Jurusan::findOrFail($id),
-            'siswa'       => Siswa::query()->getRelation('kelas')->whereIdJurusan($id)->with(['siswa','siswa.user'])->firstOrFail()->toArray()['siswa'],
+            'jurusan' => Jurusan::findOrFail($id),
+            'siswa'   => $siswa,
             // 'siswa_count' => Siswa::query()->withWhereHas('kelas',fn($query)=>$query->where('id_jurusan',$id)->get()),
         ];
 
         return view('dashboard.jurusan.detail', $data);
+    }
+    function kelas()
+    {
+        $data = [
+            'angkatan' => Kelas::with('siswa')->orderByDesc('angkatan')->get()->groupBy('angkatan')
+        ];
+
+        return view('dashboard.kelas.index', $data);
     }
 }

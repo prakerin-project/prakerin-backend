@@ -125,7 +125,7 @@
             swal.fire({
                 titleText: `Data berhasil di${type}`,
                 icon: "success",
-                text: `${toShow} Berhasil di${type}`,
+                text: `${toShow} berhasil di${type}`,
             }).finally(() => window.location.reload())
         }
 

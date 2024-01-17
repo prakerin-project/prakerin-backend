@@ -15,7 +15,7 @@ class JenisPerusahaanController extends Controller
 {
     use RequestTrait;
 
-    public function getALl(Request $request): JsonResponse
+    public function getAll(Request $request): JsonResponse
     {
         $relation = $this->getRelation($request->input('relation', []), ['perusahaan']);
 
