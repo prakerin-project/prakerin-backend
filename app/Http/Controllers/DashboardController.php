@@ -5,10 +5,10 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Api\UserController;
 use App\Models\JenisPerusahaan;
 use App\Models\Jurusan;
-use App\Models\Kelas;
 use App\Models\Logs;
 use App\Models\PengajuanSiswa;
 use App\Models\Perusahaan;
+use App\Models\Prakerin;
 use App\Models\Siswa;
 use App\Models\User;
 use App\Traits\RequestTrait;
@@ -28,6 +28,10 @@ class DashboardController extends Controller
      */
     public function index(): View
     {
+        $data = [
+          'prakerin' => Prakerin::all(),
+          'pengajuan_siswa' => PengajuanSiswa::all(),
+        ];
         return view('dashboard.index');
     }
     public function perusahaan()
@@ -154,5 +158,10 @@ class DashboardController extends Controller
     {
         $data = ['data' => PengajuanSiswa::with('pengajuan', 'siswa')->get()];
         return view('dashboard.pengajuan.index', $data);
+    }
+    public function prngajuan(){
+         $data = PengajuanSiswa::with('pengajuan', 'siswa')->get();
+ 
+         return view('dashboard.pengajuan.index', $data);
     }
 }
