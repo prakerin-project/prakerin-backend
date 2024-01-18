@@ -1,15 +1,18 @@
-@extends("layouts.index")
-@section("title", "Jurusan")
+@extends('layouts.index')
+@section('title', 'Jurusan')
 
-@section("content")
+@section('content')
     <div class="d-flex align-items-center justify-content-between">
         <div>
             <h1>Jurusan</h1>
         </div>
-        <button type="button" class="btn rounded-4 btn-primary" data-bs-toggle="modal" data-bs-target="#tambah-jurusan-modal">
-            <i class="iconsax" type="linear" stroke-width="1.5" icon="user-add" width="10px"></i>
-            Tambah
-        </button>
+        @if (auth()->user()->role == 'hubin')
+            <button type="button" class="btn rounded-4 btn-primary" data-bs-toggle="modal"
+                data-bs-target="#tambah-jurusan-modal">
+                <i class="iconsax" type="linear" stroke-width="1.5" icon="user-add" width="10px"></i>
+                Tambah
+            </button>
+        @endif
 
         <!-- Tambah Jurusan Modal -->
         <div class="modal fade" id="tambah-jurusan-modal" data-bs-backdrop="static" tabindex="-1" aria-hidden="true">
@@ -23,7 +26,8 @@
                             <div class="form-group">
                                 @csrf
                                 <label for="nama_jurusan">Nama Jurusan</label>
-                                <input type="text" id="nama_jurusan" class="form-control" autofocus name="nama_jurusan" />
+                                <input type="text" id="nama_jurusan" class="form-control" autofocus
+                                    name="nama_jurusan" />
                                 <label for="akronim">Akronim</label>
                                 <input type="text" id="akronim" class="form-control" name="akronim" />
                             </div>
@@ -50,7 +54,8 @@
                             <div class="form-group">
                                 @csrf
                                 <label for="nama_jurusan">Nama Jurusan</label>
-                                <input type="text" id="nama_jurusan" class="form-control" autofocus name="nama_jurusan" />
+                                <input type="text" id="nama_jurusan" class="form-control" autofocus
+                                    name="nama_jurusan" />
                                 <label for="akronim">Akronim</label>
                                 <input type="text" id="akronim" class="form-control" name="akronim" />
                             </div>
@@ -78,22 +83,26 @@
         </thead>
         <tbody>
             @foreach ($all_jurusan as $jurusan)
-                <tr data-jurusan-id="{{ $jurusan->id }}" data-jurusan-nama="{{ $jurusan->nama_jurusan }}" data-jurusan-akronim="{{ $jurusan->akronim }}">
+                <tr data-jurusan-id="{{ $jurusan->id }}" data-jurusan-nama="{{ $jurusan->nama_jurusan }}"
+                    data-jurusan-akronim="{{ $jurusan->akronim }}">
                     <td class="text-center">{{ $loop->iteration }}</td>
                     <td class="text-center">{{ $jurusan->nama_jurusan }}</td>
                     <td class="text-center">{{ $jurusan->akronim }}</td>
                     <td class="d-flex gap-3">
                         <!-- Button trigger detail modal -->
-                        <a href="{{ url("dashboard", ["jurusan","$jurusan->id"]) }}" class="link-underline link-underline-opacity-0">
+                        <a href="{{ url('dashboard', ['jurusan', "$jurusan->id"]) }}"
+                            class="link-underline link-underline-opacity-0">
                             <h4><i class="iconsax" type="linear" stroke-width="1.5" icon="eye"></i></h4>
                         </a>
                         <!-- Button trigger edit modal -->
-                        <a href="#edit-{{ $jurusan->id }}" data-bs-toggle="modal" data-button="edit" data-bs-target="#edit-jurusan-modal"
+                        <a href="#edit-{{ $jurusan->id }}" data-bs-toggle="modal" data-button="edit"
+                            data-bs-target="#edit-jurusan-modal"
                             class="text-warning link-underline link-underline-opacity-0 editButton">
                             <h4><i class="iconsax" type="linear" stroke-width="1.5" icon="edit-1"></i></h4>
                         </a>
                         <!-- Button trigger delete modal -->
-                        <a href="#delete-{{ $jurusan->id }}" data-button="delete" class="text-danger link-underline link-underline-opacity-0">
+                        <a href="#delete-{{ $jurusan->id }}" data-button="delete"
+                            class="text-danger link-underline link-underline-opacity-0">
                             <h4><i class="iconsax" type="linear" stroke-width="1.5" icon="trash"></i></h4>
                         </a>
                     </td>
@@ -104,7 +113,7 @@
     </table>
 @endsection
 
-@section("footer")
+@section('footer')
     <script type="module">
         let id;
 
@@ -146,7 +155,10 @@
                 })
                 .then(({
                     data
-                }) => alertSuccess('tambah', data?.nama_jurusan))
+                }) => {
+                    $("#tambah-jurusan-modal").css("display", "none")
+                    alertSuccess('tambah', data?.nama_jurusan)
+                })
                 .catch(({
                     response
                 }) => alertResponse(response?.data))

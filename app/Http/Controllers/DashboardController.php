@@ -126,8 +126,10 @@ class DashboardController extends Controller
     }
     function kelas()
     {
+        // $angkatan = DB::select('SELECT * FROM angkatan_view');
         $data = [
-            'data' => DB::select('SELECT * FROM angkatan_view')
+            'kelas' => Kelas::with('jurusan')->orderByDesc('angkatan')->get(),
+            'jurusan' => Jurusan::all()
         ];
 
         return view('dashboard.kelas.index', $data);
