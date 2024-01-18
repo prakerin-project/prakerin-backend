@@ -39,14 +39,25 @@ class UserController extends Controller
             $this->Model = new Siswa;
         if ($role === 'kaprog')
             $this->Model = new Kaprog;
-        if ($role === 'pb_sekolah' || $role === 'pb_industri')
+        if ($role === 'pembimbing')
             $this->Model = new Pembimbing;
         if ($role === 'walas')
             $this->Model = new Walas;
         if ($role === 'hubin')
             $this->Model = new Hubin;
     }
-
+    /**
+     * Retrieves the role model for the given role.
+     *
+     * @param string $role The role for which to retrieve the model.
+     * @return Model The role model.
+     */
+    public static function getRoleModel(string $role)
+    {
+        $retVal = (new static);
+        $retVal->useModel($role);
+        return $retVal->Model;
+    }
     public function index()
     {
         $data = [
@@ -111,6 +122,7 @@ class UserController extends Controller
      */
     public function create(CreateUserRequest $request): JsonResponse
     {
+        //TODO: Change pembimbing to only pembimbing, no p_se.. or pb_in.. upon creation (Check blade!)
         $this->useModel($request->role);
         $user = User::query()->create(
             $request->merge(['role' => $request->role])->only(['role', 'username', 'password'])
@@ -129,28 +141,26 @@ class UserController extends Controller
     public function update(UpdateUserRequest $request): JsonResponse
     {
         $this->useModel($request->role);
-        $role = $this->roleToRelation($request->role)[0];
-        $user = User::with($role)->has($role)->findOrFail($request->id);
+        $role        = $this->roleToRelation($request->role)[0];
+        $user        = User::with($role)->has($role)->findOrFail($request->id);
         $currRoleKey = $user->getRelation($role)->getKey();
-        // return response()->json($request);
-        $roleModel = $this->Model::query()->findOrFail($currRoleKey);
+        $roleModel   = $this->Model::query()->findOrFail($currRoleKey);
         $user->fill($request->only(['username', 'password']))->save();
         $roleModel->fill($request->except(['username', 'password']))->save();
 
         $res[] = $user->getChanges();
         $res[] = $roleModel->getChanges();
-        // unset($res['password']);
 
         return response()->json($res);
     }
     /**
      * Delete record from databse
-     * TODO: KNOWN UNHANDLED VULNERABILITIES, DELETE IMAGE AMONG USER DELETION
      * @param Request $request
      * @return JsonResponse
      */
     public function delete(Request $request): JsonResponse
     {
+        //TODO: KNOWN UNHANDLED VULNERABILITIES, DELETE IMAGE AMONG USER DELETION
         $user = User::findOrFail($request->id);
         $user->delete();
 
@@ -163,13 +173,13 @@ class UserController extends Controller
     {
         $currDate = Carbon::now(16)->format("Y-m-d");
         $currUser = User::query()->findOrFail($request->id);
-        $oldFile = $currUser->foto_profil;
+        $oldFile  = $currUser->foto_profil;
         if (!empty($oldFile) && Storage::disk('public')->exists($oldFile)) {
             Storage::disk('public')->delete($oldFile);
         }
 
-        $file = $request->file('foto_profil');
-        $ext = $file->getClientOriginalExtension();
+        $file     = $request->file('foto_profil');
+        $ext      = $file->getClientOriginalExtension();
         $fileName = $currUser->username . "_" . $currDate . "." . $ext;
         $file->storePubliclyAs("user", $fileName, "public");
 
@@ -177,13 +187,5 @@ class UserController extends Controller
         return $currUser->saveOrFail()
             ? response()->json(["foto_profil" => $file->getClientOriginalName()])
             : response()->json(["errors" => ["message" => "Foto profil $currUser->username gagal diupload"]], 422);
-    }
-    public function displayImage(Request $filename)
-    {
-        if (!Storage::disk('public')->exists("user/$filename->uri")) {
-            abort(404);
-        }
-        ;
-        return Storage::disk('public')->response("user/$filename->uri");
     }
 }

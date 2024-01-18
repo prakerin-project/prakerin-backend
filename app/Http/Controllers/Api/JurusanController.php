@@ -69,7 +69,6 @@ class JurusanController extends Controller
     public function create(CreateJurusanRequest $request): JsonResponse
     {
         $data = $request->validated();
-
         $jurusan = Jurusan::query()->create($data);
 
         return response()->json($jurusan, 201);

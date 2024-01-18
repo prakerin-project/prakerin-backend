@@ -96,7 +96,7 @@
                         <td class="justify-content-center">
                             <div class="d-flex align-items-center justify-content-center">
                                 @if (isset($p->foto) && count($p->foto) > 0)
-                                    <img src="{{ url('storage/perusahaan/' . $p->foto[0]->path) }}" width="160px"
+                                    <img src="{{ route('displayImage' ,['uri'=>$p->foto[0]->path,'folder'=>'perusahaan']) }}" width="160px"
                                         height="150px" alt="Foto perusahaan" style="object-fit: cover;">
                                 @else
                                     No data available
@@ -106,7 +106,7 @@
                         @if (auth()->user()->role == 'hubin')
                             <td>
                                 <div class="d-flex gap-2">
-                                    <a href="{{ url("/dashboard/perusahaan/$p->id/detail") }}"
+                                    <a href="{{ url("/dashboard/perusahaan/$p->id") }}"
                                         class="link-underline flex-shrink-1 link-underline-opacity-0">
                                         <h4><i class="iconsax" type="linear" stroke-width="1.5" icon="eye"></i></h4>
                                     </a>

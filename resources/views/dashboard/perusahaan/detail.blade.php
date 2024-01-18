@@ -1,11 +1,11 @@
 @extends('layouts.index')
 @section('title', "$perusahaan->nama_perusahaan")
 @section('content')
-    <div class="row d-flex gap-1">
+    <div class="row d-flex gap-1 flex-row-reverse">
         @if ($perusahaan->foto->count() >= 1)
             <div class="col-7 foto-wrapper d-flex flex-column">
-                <img src="{{ asset('storage/perusahaan/' . $perusahaan->foto[0]->path) }}" style="object-fit: cover;"
-                    class="main-foto rounded" alt="first-image" height="430px">
+                <img src="{{ route('displayImage', ['uri' => $perusahaan->foto[0]->path, 'folder' => 'perusahaan']) }}"
+                    style="object-fit: cover;" class="main-foto rounded" alt="first-image" height="430px">
                 <div class="small-foto d-flex mt-2 gap-2">
                     @foreach ($perusahaan->foto as $key => $foto)
                         {{-- Get all the foto except the first one --}}
@@ -14,7 +14,7 @@
                                 continue;
                             }
                         @endphp
-                        <img alt="foto-perusahaan" src="{{ asset('storage/perusahaan/' . $foto->path) }}"
+                        <img alt="foto-perusahaan" src="{{ route('displayImage', ['uri' => $foto->path, 'folder' => 'perusahaan']) }}"
                             style="object-fit: cover;" width="120px" height="100px" class="rounded">
                     @endforeach
                 </div>

@@ -6,7 +6,7 @@
             <div>
                 <h1>Logs</h1>
             </div>
-           
+
         </div>
         <table class="table table-bordered">
             <thead style="background-color: #f4f4f5; height: 50px" class="w-100 rounded">
@@ -36,7 +36,8 @@
 @section('footer')
     <script type="module">
         $('.table').DataTable({
-            paging: false
+            paging: false,
+            order: [-1, 'desc']
         });
     </script>
 @endsection

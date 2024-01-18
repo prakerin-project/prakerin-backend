@@ -2,21 +2,25 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Api\UserController;
 use App\Models\JenisPerusahaan;
 use App\Models\Jurusan;
 use App\Models\Kelas;
 use App\Models\Logs;
+use App\Models\PengajuanSiswa;
 use App\Models\Perusahaan;
 use App\Models\Siswa;
 use App\Models\User;
+use App\Traits\RequestTrait;
 use App\Traits\RoleToRelationTrait;
-use DB;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
+use DB;
 
 class DashboardController extends Controller
 {
     use RoleToRelationTrait;
+    use RequestTrait;
     /**
      * Index function
      *
@@ -26,7 +30,23 @@ class DashboardController extends Controller
     {
         return view('dashboard.index');
     }
+    public function perusahaan()
+    {
+        $data = [
+            'perusahaan'       => Perusahaan::with('jenis_perusahaan', 'foto')->orderBy('nama_perusahaan')->get(),
+            'jenis_perusahaan' => JenisPerusahaan::all()
+        ];
 
+        return view('dashboard.perusahaan.index', $data);
+    }
+    public function perusahaanDetail($id)
+    {
+        $data = [
+            'perusahaan' => Perusahaan::query()->with('jenis_perusahaan', 'foto')->findOrFail($id)
+        ];
+
+        return view('dashboard.perusahaan.detail', $data);
+    }
     public function log()
     {
         $data = [
@@ -34,6 +54,14 @@ class DashboardController extends Controller
         ];
 
         return view('dashboard.log', $data);
+    }
+    public function user()
+    {
+        $data = [
+            'users' => User::all()->sortDesc()
+        ];
+
+        return view('dashboard.user.index', $data);
     }
     public function userDetail(Request $request)
     {
@@ -67,6 +95,12 @@ class DashboardController extends Controller
         ];
         return view('dashboard.user.edit', $data);
     }
+    public function userRole(string $role)
+    {
+        $data = ['data' => UserController::getRoleModel($role)->newQuery()->with('user')->get()];
+        // return $data;
+        return view('dashboard.role.index', $data);
+    }
     public function jurusan()
     {
         $data = [
@@ -93,9 +127,30 @@ class DashboardController extends Controller
     function kelas()
     {
         $data = [
-            'angkatan' => Kelas::with('siswa')->orderByDesc('angkatan')->get()->groupBy('angkatan')
+            'data' => DB::select('SELECT * FROM angkatan_view')
         ];
 
         return view('dashboard.kelas.index', $data);
+    }
+    function jenisPerusahaan()
+    {
+        $data = [
+            'jenis_perusahaan' => JenisPerusahaan::with('perusahaan')->orderBy('nama')->get(),
+        ];
+
+        return view('dashboard.jenis-perusahaan.index', $data);
+    }
+    function jenisPerusahaanDetail(int $id, $relation = [])
+    {
+        $data = [
+            'jenis_perusahaan' => JenisPerusahaan::with('perusahaan')->findOrFail($id),
+        ];
+
+        return view('dashboard.jenis-perusahaan.detail', $data);
+    }
+    function pengajuan()
+    {
+        $data = ['data' => PengajuanSiswa::with('pengajuan', 'siswa')->get()];
+        return view('dashboard.pengajuan.index', $data);
     }
 }

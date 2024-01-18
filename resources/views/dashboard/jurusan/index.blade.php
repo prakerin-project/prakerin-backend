@@ -138,6 +138,7 @@
             e.preventDefault()
             const toSend = new FormData(e.target)
             const submitButton = $(this).parents().find('button')
+            console.log(Object.fromEntries(toSend));
 
             submitButton.attr("disabled", true)
             axios.post('/api/jurusan', toSend, {

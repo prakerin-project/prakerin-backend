@@ -10,10 +10,19 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        DB::unprepared("
-        CREATE OR REPLACE TRIGGER t_after_insert_jurusan 
+        DB::unprepared(
+        "CREATE OR REPLACE TRIGGER t_after_insert_jurusan 
         AFTER INSERT ON jurusan FOR EACH ROW
-        CALL logger(NEW.id,NEW.nama_jurusan,NEW.akronim,'INSERT');
+        BEGIN
+            DECLARE Activity TEXT;
+
+            SELECT CONCAT(
+                'id_jurusan: ',NEW.id,
+                ', nama_jurusan: ',NEW.nama_jurusan,
+                ', akronim: ',NEW.akronim) INTO Activity;
+                
+            CALL store_log_procedure('INSERT', Activity);
+        END;
         ");
     }
 
