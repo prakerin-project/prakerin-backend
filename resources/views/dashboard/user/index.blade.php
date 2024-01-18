@@ -1,6 +1,6 @@
-@extends("layouts.index")
-@section("title", "User")
-@section("content")
+@extends('layouts.index')
+@section('title', 'User')
+@section('content')
     <div class="d-flex align-items-center justify-content-between">
         <div>
             <h1>User</h1>
@@ -39,8 +39,7 @@
                                 <select name="role" id="role" class="form-select">
                                     <option value="">Select Role</option>
                                     <option value="kaprog">Kaprog</option>
-                                    <option value="pb_sekolah">Pembimbing Sekolah</option>
-                                    <option value="pb_industri">Pembimbing Industri</option>
+                                    <option value="pembimbing">Pembimbing</option>
                                     <option value="walas">Walas</option>
                                     <option value="tu">Tata Usaha</option>
                                     <option value="siswa">Siswa</option>
@@ -77,11 +76,12 @@
                     <td>{{ $user->role }}</td>
                     <td class="d-flex gap-3">
                         <!-- Button trigger detail modal -->
-                        <a href="{{ url("dashboard?role=$user->role", ["user", $user->id]) }}" class="link-underline link-underline-opacity-0">
+                        <a href="{{ url("dashboard?role=$user->role", ['user', $user->id]) }}"
+                            class="link-underline link-underline-opacity-0">
                             <h4><i class="iconsax" type="linear" stroke-width="1.5" icon="eye"></i></h4>
                         </a>
                         <!-- Button trigger edit modal -->
-                        <a href="{{ url("dashboard?role=$user->role", ["user", "edit", $user->id]) }}"
+                        <a href="{{ url("dashboard?role=$user->role", ['user', 'edit', $user->id]) }}"
                             class="text-warning link-underline link-underline-opacity-0 editButton">
                             <h4><i class="iconsax" type="linear" stroke-width="1.5" icon="edit-1"></i></h4>
                         </a>
@@ -96,7 +96,7 @@
         </tbody>
     </table>
 @endsection
-@section("footer")
+@section('footer')
     <script type="module">
         function alertResponse(data) {
             let message = '';
@@ -123,7 +123,8 @@
             .then(({
                 data
             }) => data)
-            .catch(() => swal.fire("Something went wrong", "Please reload page", "error").finally(() => window.location.reload()))
+            .catch(() => swal.fire("Something went wrong", "Please reload page", "error").finally(() => window.location
+                .reload()))
 
         const dataKelas = axios.get('/api/kelas', {
                 params: {
@@ -133,7 +134,8 @@
             .then(({
                 data
             }) => data)
-            .catch(() => swal.fire("Something went wrong", "Please reload page", "error").finally(() => window.location.reload()));
+            .catch(() => swal.fire("Something went wrong", "Please reload page", "error").finally(() => window.location
+                .reload()));
 
         $("#DataTable").DataTable({
             searching: false,
@@ -198,19 +200,23 @@
                         .append("<label for='nip'>NIP Kaprog</label>")
                         .append("<input class='form-control' id='nip' name='nip'/>")
                         .append("<label for='id_jurusan'>Pilih jurusan</label>")
-                        .append("<select class='form-select' id='id_jurusan' name='id_jurusan'>" + "<option value=''>Pilih jurusan</option>" +
+                        .append("<select class='form-select' id='id_jurusan' name='id_jurusan'>" +
+                            "<option value=''>Pilih jurusan</option>" +
                             optJurusan + "</select>")
                     break;
-                case "pb_sekolah":
-                case "pb_industri":
+                case "pembimbing":
                     $("#tambah-user-form")
+                        .append("<label for='lingkup'>Lingkup</label>")
+                        .append(
+                            "<select class='form-select' id='lingkup' name='lingkup'><option value=''>Pilih lingkup</option><option value='sekolah'>Sekolah</option><option value='industri'>Industri</option></select>"
+                            )
                         .append("<label for='nip_nik'>NIP/NIK Pembimbing</label>")
                         .append("<input class='form-control' id='nip_nik' name='nip_nik'/>")
                         .append("<label for='email'>Email Pembimbing</label>")
                         .append("<input type='email' class='form-control' id='email' name='email'/>")
-                        .append(`<input type='hidden' name='lingkup' value='${$(e).val() === 'pb_sekolah'?'sekolah':'industri'}'/>`)
                         .append("<label for='id_jurusan'>Pilih jurusan</label>")
-                        .append("<select class='form-select' id='id_jurusan' name='id_jurusan'>" + "<option value=''>Pilih jurusan</option>" +
+                        .append("<select class='form-select' id='id_jurusan' name='id_jurusan'>" +
+                            "<option value=''>Pilih jurusan</option>" +
                             optJurusan + "</select>")
                     break;
                 case "walas":
@@ -218,7 +224,8 @@
                         .append("<label for='nip'>NIP Walas</label>")
                         .append("<input class='form-control' id='nip' name='nip'/>")
                         .append("<label for='id_kelas'>Pilih kelas</label>")
-                        .append("<select class='form-select' id='id_kelas' name='id_kelas'>" + "<option value=''>Pilih kelas</option>" +
+                        .append("<select class='form-select' id='id_kelas' name='id_kelas'>" +
+                            "<option value=''>Pilih kelas</option>" +
                             optKelas + "</select>")
                     break;
                 case 'tu':
@@ -232,7 +239,8 @@
                         .append("<label for='nis'>NIS Siswa</label>")
                         .append("<input class='form-control' id='nis' name='nis'/>")
                         .append("<label for='id_kelas'>Pilih kelas</label>")
-                        .append("<select class='form-select' id='id_kelas' name='id_kelas'>" + "<option value=''>Pilih kelas</option>" +
+                        .append("<select class='form-select' id='id_kelas' name='id_kelas'>" +
+                            "<option value=''>Pilih kelas</option>" +
                             optKelas + "</select>")
                         .append("<label for='email'>Email Siswa</label>")
                         .append("<input type='email' class='form-control' id='email' name='email'/>")

@@ -51,8 +51,7 @@ class CreateUserRequest extends FormRequest
                     'id_jurusan' => ['required', 'integer', 'unique:kaprog,id_jurusan', "exists:jurusan,id"]
                 ]);
                 break;
-            case 'pb_sekolah':
-            case 'pb_industri':
+            case 'pembimbing':
                 $rules = array_merge($rules, [
                     'nip_nik'    => ['required', 'max:20'],
                     'lingkup'    => ['required', 'in:sekolah,industri'],
