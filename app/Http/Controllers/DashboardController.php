@@ -33,7 +33,7 @@ class DashboardController extends Controller
     public function perusahaan()
     {
         $data = [
-            'perusahaan'       => Perusahaan::with('jenis_perusahaan', 'foto')->orderBy('nama_perusahaan')->get(),
+            'perusahaan' => Perusahaan::with('jenis_perusahaan', 'foto')->orderBy('nama_perusahaan')->get(),
             'jenis_perusahaan' => JenisPerusahaan::all()
         ];
 
@@ -50,7 +50,7 @@ class DashboardController extends Controller
     public function log()
     {
         $data = [
-            'logs' => Logs::orderBy('created_at')->get()
+            'logs' => Logs::orderBy('created_at', 'desc')->get()
         ];
 
         return view('dashboard.log', $data);
@@ -66,32 +66,32 @@ class DashboardController extends Controller
     public function userDetail(Request $request)
     {
         $relation = $this->roleToRelation($request->role);
-        $user     = User::with($relation)->has($relation[0])->findOrFail($request->id);
+        $user = User::with($relation)->has($relation[0])->findOrFail($request->id);
 
         foreach ($user->getRelation($relation[0])->makeHidden(['id_user', 'id_kelas', 'id_jurusan'])->toArray() as $key => $value) {
             $user_detail[] = $key;
         }
 
         $data = [
-            'user'            => $user,
+            'user' => $user,
             'user_detail_key' => $user_detail,
-            'user_detail'     => $user->getRelation($relation[0])
+            'user_detail' => $user->getRelation($relation[0])
         ];
         return view('dashboard.user.detail', $data);
     }
     public function userEdit(Request $request)
     {
         $relation = $this->roleToRelation($request->role);
-        $user     = User::with($relation)->has($relation[0])->findOrFail($request->id);
+        $user = User::with($relation)->has($relation[0])->findOrFail($request->id);
 
         foreach ($user->getRelation($relation[0])->makeHidden(['id_user', 'id_kelas', 'id_jurusan'])->toArray() as $key => $value) {
             $user_detail[] = $key;
         }
 
         $data = [
-            'user'            => $user,
+            'user' => $user,
             'user_detail_key' => $user_detail,
-            'user_detail'     => $user->getRelation($relation[0])
+            'user_detail' => $user->getRelation($relation[0])
         ];
         return view('dashboard.user.edit', $data);
     }
@@ -118,7 +118,7 @@ class DashboardController extends Controller
         }
         $data = [
             'jurusan' => Jurusan::findOrFail($id),
-            'siswa'   => $siswa,
+            'siswa' => $siswa,
             // 'siswa_count' => Siswa::query()->withWhereHas('kelas',fn($query)=>$query->where('id_jurusan',$id)->get()),
         ];
 

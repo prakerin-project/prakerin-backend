@@ -6,10 +6,11 @@
             <div>
                 <h1>Jenis Perusahaan</h1>
             </div>
-            @if(auth()->user()->role == 'hubin')
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#tambah-jp-modal"><i
-                    class="iconsax" type="linear" stroke-width="1.5" icon="buildings-1"></i> Tambah
-            </button>
+            @if (auth()->user()->role == 'hubin')
+                <button type="button" class="btn btn-primary rounded-4" data-bs-toggle="modal"
+                    data-bs-target="#tambah-jp-modal"><i class="iconsax" type="linear" stroke-width="1.5"
+                        icon="buildings-1"></i> Tambah
+                </button>
             @endif
 
             <!-- Tambah Jenis Perusahaan Modal -->
@@ -59,26 +60,27 @@
                         <td>{{ $jp->nama }}</td>
                         <td>{{ $jp->perusahaan->count() }}</td>
                         <td class="d-flex gap-2">
-                            <a href="{{ url("/dashboard/perusahaan/jenis/$jp->id") }}" class="link-underline flex-shrink-1 link-underline-opacity-0">
+                            <a href="{{ url("/dashboard/perusahaan/jenis/$jp->id") }}"
+                                class="link-underline flex-shrink-1 link-underline-opacity-0">
                                 <h4><i class="iconsax" type="linear" stroke-width="1.5" icon="eye"></i></h4>
                             </a>
-                            @if(auth()->user()->role == 'hubin')
-                            <a href="" class="editBtn text-warning link-underline link-underline-opacity-0"
-                                data-bs-toggle="modal" data-bs-target="#edit-modal-{{ $jp->id }}"
-                                idJp="{{ $jp->id }}">
-                                <h4><i class="iconsax" type="linear" stroke-width="1.5" icon="edit-1"></i></h4>
-                            </a>
-                            <a href="#"
-                                class="text-danger hapusBtn cursor-pointer link-underline link-underline-opacity-0">
-                                <h4><i class="iconsax" type="linear" stroke-width="1.5" icon="trash"></i></h4>
-                            </a>
+                            @if (auth()->user()->role == 'hubin')
+                                <a href="" class="editBtn text-warning link-underline link-underline-opacity-0"
+                                    data-bs-toggle="modal" data-bs-target="#edit-modal-{{ $jp->id }}"
+                                    idJp="{{ $jp->id }}">
+                                    <h4><i class="iconsax" type="linear" stroke-width="1.5" icon="edit-1"></i></h4>
+                                </a>
+                                <a href="#"
+                                    class="text-danger hapusBtn cursor-pointer link-underline link-underline-opacity-0">
+                                    <h4><i class="iconsax" type="linear" stroke-width="1.5" icon="trash"></i></h4>
+                                </a>
                             @endif
                         </td>
                     </tr>
 
                     <!-- Edit Jenis Perusahaan Modal -->
-                    <div class="modal fade" id="edit-modal-{{ $jp->id }}" tabindex="-1" aria-labelledby="exampleModalLabel"
-                        aria-hidden="true">
+                    <div class="modal fade" id="edit-modal-{{ $jp->id }}" tabindex="-1"
+                        aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered">
                             <div class="modal-content">
                                 <div class="modal-header">
@@ -89,7 +91,7 @@
                                         <div class="form-group">
                                             <label for="nama">Nama jenis perusahaan</label>
                                             <input type="text" id="nama" class="form-control mb-3" autofocus
-                                                name="nama" value="{{ $jp->nama }}"/>
+                                                name="nama" value="{{ $jp->nama }}" />
                                             @csrf
                                         </div>
                                     </form>
@@ -98,7 +100,8 @@
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                                         Cancel
                                     </button>
-                                    <button type="submit" class="btn btn-primary" form="edit-jp-form-{{ $jp->id }}">Simpan</button>
+                                    <button type="submit" class="btn btn-primary"
+                                        form="edit-jp-form-{{ $jp->id }}">Simpan</button>
                                 </div>
                             </div>
                         </div>
@@ -144,21 +147,23 @@
         })
 
         /*-------------------------- EDIT JENIS PERUSAHAAN -------------------------- */
-        $('.editBtn').on('click', function (e) {
+        $('.editBtn').on('click', function(e) {
             e.preventDefault();
             let idJp = $(this).attr('idJp');
-            $(`#edit-jp-form-${idJp}`).on('submit', function (e) {
+            $(`#edit-jp-form-${idJp}`).on('submit', function(e) {
                 e.preventDefault(this);
                 let data = new FormData(e.target);
                 const value = Object.fromEntries(data.entries());
                 axios.put(`http://localhost:8000/api/perusahaan/jenis/${idJp}`, value)
                     .then(() => {
                         $(`#edit-modal-${idJp}`).css('display', 'none')
-                        swal.fire('Berhasil edit data!', '', 'success').then(function () {
+                        swal.fire('Berhasil edit data!', '', 'success').then(function() {
                             location.reload();
                         })
                     })
-                    .catch(({response}) => {
+                    .catch(({
+                        response
+                    }) => {
                         console.log(response)
                         let message = '';
 

@@ -1,6 +1,11 @@
 @extends('layouts.index')
 @section('title', 'Daftar Kelas')
 @section('content')
+    <div class="d-flex justify-content-end">
+        <button type="button" class="btn btn-primary rounded-4" data-bs-toggle="modal" data-bs-target="#tambah-kelas-modal"><i
+                class="iconsax" type="linear" stroke-width="1.5" icon="teacher"></i> Tambah
+        </button>
+    </div>
     <div class="row row-gap-4">
         @foreach ($data as $value)
             <div class="col-3">
