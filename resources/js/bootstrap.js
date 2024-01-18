@@ -3,6 +3,7 @@ import axios from 'axios';
 import DataTable from 'datatables.net-bs5';
 import jQuery from 'jquery';
 import Swal from 'sweetalert2';
+import ApexCharts from 'apexcharts'
 
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests
@@ -14,6 +15,7 @@ window.DataTable = DataTable;
 window.axios = axios;
 window.$ = window.jQuery = jQuery;
 window.swal = Swal;
+window.ApexChart = ApexCharts;
 
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
