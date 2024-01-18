@@ -7,8 +7,9 @@
                 <h1>Perusahaan</h1>
             </div>
             @if (auth()->user()->role == 'hubin')
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#tambah-ps-modal"><i
-                        class="iconsax" type="linear" stroke-width="1.5" icon="buildings-2"></i> Tambah
+                <button type="button" class="btn btn-primary rounded-4" data-bs-toggle="modal"
+                    data-bs-target="#tambah-ps-modal"><i class="iconsax" type="linear" stroke-width="1.5"
+                        icon="buildings-2"></i> Tambah
                 </button>
             @endif
 
@@ -96,8 +97,8 @@
                         <td class="justify-content-center">
                             <div class="d-flex align-items-center justify-content-center">
                                 @if (isset($p->foto) && count($p->foto) > 0)
-                                    <img src="{{ route('displayImage' ,['uri'=>$p->foto[0]->path,'folder'=>'perusahaan']) }}" width="160px"
-                                        height="150px" alt="Foto perusahaan" style="object-fit: cover;">
+                                    <img src="{{ route('displayImage', ['uri' => $p->foto[0]->path, 'folder' => 'perusahaan']) }}"
+                                        width="160px" height="150px" alt="Foto perusahaan" style="object-fit: cover;">
                                 @else
                                     No data available
                                 @endif

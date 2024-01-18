@@ -20,8 +20,27 @@
             </thead>
             <tbody>
                 @foreach ($logs as $log)
+                    @php
+                        $type = '';
+                        switch ($log->action) {
+                            case 'UPDATE':
+                                $type = 'warning';
+                                break;
+                            case 'INSERT':
+                                $type = 'primary';
+                                break;
+                            case 'DELETE':
+                                $type = 'danger';
+                                break;
+                            default:
+                                $type = 'secondary';
+                        }
+                    @endphp
                     <tr idlog='{{ $log->id }}'>
-                        <td>{{ $log->action }}</td>
+                        <td>
+                            <div class="rounded text-center p-1 text-bg-{{ $type }} bg-{{ $type }}">
+                                {{ $log->action }}</div>
+                        </td>
                         <td>{{ $log->activity }}</td>
                         <td>{{ $log->user }}</td>
                         <td>{{ $log->ip_address }}</td>

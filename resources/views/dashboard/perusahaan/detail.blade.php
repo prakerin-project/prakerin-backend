@@ -14,7 +14,8 @@
                                 continue;
                             }
                         @endphp
-                        <img alt="foto-perusahaan" src="{{ route('displayImage', ['uri' => $foto->path, 'folder' => 'perusahaan']) }}"
+                        <img alt="foto-perusahaan"
+                            src="{{ route('displayImage', ['uri' => $foto->path, 'folder' => 'perusahaan']) }}"
                             style="object-fit: cover;" width="120px" height="100px" class="rounded">
                     @endforeach
                 </div>
