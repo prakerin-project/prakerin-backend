@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Api\UserController;
 use App\Models\JenisPerusahaan;
 use App\Models\Jurusan;
+use App\Models\Kelas;
 use App\Models\Logs;
 use App\Models\PengajuanSiswa;
 use App\Models\Perusahaan;
