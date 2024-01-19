@@ -176,7 +176,7 @@ class DashboardController extends Controller
                 $data = ['data' => PengajuanSiswa::with('pengajuan', 'siswa')->get()];
                 return view('dashboard.pengajuan.hubin.index', $data);
             case 'siswa':
-                $data = ['data' => PengajuanSiswa::with('pengajuan', 'siswa')->where('id_siswa', auth()->user()->id)->get()];
+                $data = ['data' => PengajuanSiswa::with('pengajuan', 'siswa')->where('nis_siswa', auth()->user()->id)->get()];
                 return view('dashboard.pengajuan.siswa.index', $data);
             case 'walas':
                 $data = ['data' => PengajuanSiswa::with('pengajuan', 'siswa')->where('nip_walas', auth()->user()->id)->get()];
