@@ -168,13 +168,18 @@ class DashboardController extends Controller
     }
     public function pengajuan()
     {
-        $data = ['data' => PengajuanSiswa::with('pengajuan', 'siswa')->get()];
-        return view('dashboard.pengajuan.index', $data);
-    }
-    public function prngajuan()
-    {
-        $data = PengajuanSiswa::with('pengajuan', 'siswa')->get();
+        $userRole = auth()->user()->role;
 
-        return view('dashboard.pengajuan.index', $data);
+        switch ($userRole) {
+            case 'hubin':
+                $data = ['data' => PengajuanSiswa::with('pengajuan', 'siswa')->get()];
+                return view('dashboard.pengajuan.hubin.index', $data);
+            case 'siswa':
+                $data = ['data' => PengajuanSiswa::with('pengajuan', 'siswa')->where('id_siswa', auth()->user()->id)->get()];
+                return view('dashboard.pengajuan.siswa.index', $data);
+            case 'walas':
+                $data = ['data' => PengajuanSiswa::with('pengajuan', 'siswa')->where('nip_walas', auth()->user()->id)->get()];
+                return view('dashboard.pengajuan.walas.index', $data);
+        }
     }
 }

@@ -49,8 +49,6 @@ Route::prefix('/dashboard')->middleware('auth')->group(function () {
 
         Route::get('/prakerin', 'prakerin');
 
-        Route::get('/penagjuan', 'pengajuan');
-
         Route::get('/pengajuan', 'pengajuan');
 
         Route::get('/monitoring', 'monitoring');

@@ -83,11 +83,16 @@
                          <th>Siswa</th>
                          <th>Perusahaan</th>
                          <th>Alamat</th>
-                         <th>Kontak perusahaan</th>
                      </tr>
                  </thead>
                  <tbody>
-
+                     <tr>
+                         <td></td>
+                         <td></td>
+                         <td></td>
+                         <td></td>
+                         <td></td>
+                     </tr>
                  </tbody>
              </table>
          </div>
