@@ -24,13 +24,11 @@ class CreatePengajuanSiswaRequest extends FormRequest
     {
         return [
             /* -------------------------- INSTANCE OF PENGAJUAN ------------------------- */
-            'nip_walas'         => ['required', 'string', 'max:20', Rule::unique('pengajuan_siswa', 'nip_walas')],
-            'nip_kaprog'        => ['required', 'string', 'max:20', Rule::unique('pengajuan_siswa', 'nip_kaprog')],
             'tanggal_pengajuan' => ['required', 'date'],
             'nama_industri'     => ['required', 'string', 'max:100'],
             'alamat'            => ['required', 'string'],
             //TODO: Add phone number regex
-            'kontak_indsutri'   => ['required', 'string'],
+            'kontak_indsutri'   => ['required', 'string','regex:^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$'],
             /* ---------------------------- INSTANCE OF SISWA --------------------------- */
             'nis_siswa'         => ['array', 'required']
         ];

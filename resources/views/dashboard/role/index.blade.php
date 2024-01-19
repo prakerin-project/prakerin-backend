@@ -11,11 +11,11 @@
             </div>
         </div>
     </div>
-    <div style="columns: 16rem;">
+    <div style="columns: 20rem;">
         @forelse ($data as $role)
             <a href="{{ url('dashboard/user/' . $role->id_user . '?role=' . $role->user->role) }}"
                 class="text-dark link-underline link-underline-opacity-0">
-                <div class="card" style="break-inside: avoid-column">
+                <div class="card mb-3" style="break-inside: avoid-column">
                     <div class="card-header">
                         <h1>{{ $role->user->username }}</h1>
                     </div>
@@ -24,8 +24,8 @@
                             alt="User photo">
                     @endisset
                     <div class="card-body text-capitalize">
-                        <p class="text-decoration-underline mb-0"> Click to see detail</p>
                         <p>Been here since, {{ $role->user->created_at }}</p>
+                        <p class="text-decoration-underline mb-0"> Click to see detail</p>
                     </div>
                 </div>
             </a>

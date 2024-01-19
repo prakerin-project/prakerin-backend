@@ -14,6 +14,7 @@ use App\Models\Siswa;
 use App\Models\User;
 use App\Traits\RequestTrait;
 use App\Traits\RoleToRelationTrait;
+use Auth;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use DB;
@@ -30,15 +31,15 @@ class DashboardController extends Controller
     public function index(): View
     {
         $data = [
-          'prakerin' => Prakerin::all(),
-          'pengajuan_siswa' => PengajuanSiswa::all(),
+            'prakerin'        => Prakerin::all(),
+            'pengajuan_siswa' => PengajuanSiswa::all(),
         ];
         return view('dashboard.index');
     }
     public function perusahaan()
     {
         $data = [
-            'perusahaan' => Perusahaan::with('jenis_perusahaan', 'foto')->orderBy('nama_perusahaan')->get(),
+            'perusahaan'       => Perusahaan::with('jenis_perusahaan', 'foto')->orderBy('nama_perusahaan')->get(),
             'jenis_perusahaan' => JenisPerusahaan::all()
         ];
 
@@ -71,32 +72,32 @@ class DashboardController extends Controller
     public function userDetail(Request $request)
     {
         $relation = $this->roleToRelation($request->role);
-        $user = User::with($relation)->has($relation[0])->findOrFail($request->id);
+        $user     = User::with($relation)->has($relation[0])->findOrFail($request->id);
 
         foreach ($user->getRelation($relation[0])->makeHidden(['id_user', 'id_kelas', 'id_jurusan'])->toArray() as $key => $value) {
             $user_detail[] = $key;
         }
 
         $data = [
-            'user' => $user,
+            'user'            => $user,
             'user_detail_key' => $user_detail,
-            'user_detail' => $user->getRelation($relation[0])
+            'user_detail'     => $user->getRelation($relation[0])
         ];
         return view('dashboard.user.detail', $data);
     }
     public function userEdit(Request $request)
     {
         $relation = $this->roleToRelation($request->role);
-        $user = User::with($relation)->has($relation[0])->findOrFail($request->id);
+        $user     = User::with($relation)->has($relation[0])->findOrFail($request->id);
 
         foreach ($user->getRelation($relation[0])->makeHidden(['id_user', 'id_kelas', 'id_jurusan'])->toArray() as $key => $value) {
             $user_detail[] = $key;
         }
 
         $data = [
-            'user' => $user,
+            'user'            => $user,
             'user_detail_key' => $user_detail,
-            'user_detail' => $user->getRelation($relation[0])
+            'user_detail'     => $user->getRelation($relation[0])
         ];
         return view('dashboard.user.edit', $data);
     }
@@ -123,7 +124,7 @@ class DashboardController extends Controller
         }
         $data = [
             'jurusan' => Jurusan::findOrFail($id),
-            'siswa' => $siswa,
+            'siswa'   => $siswa,
             // 'siswa_count' => Siswa::query()->withWhereHas('kelas',fn($query)=>$query->where('id_jurusan',$id)->get()),
         ];
 
@@ -133,7 +134,7 @@ class DashboardController extends Controller
     {
         // $angkatan = DB::select('SELECT * FROM angkatan_view');
         $data = [
-            'kelas' => Kelas::with('jurusan')->orderByDesc('angkatan')->get(),
+            'kelas'   => Kelas::with('jurusan')->orderByDesc('angkatan')->get(),
             'jurusan' => Jurusan::all()
         ];
 
@@ -155,14 +156,13 @@ class DashboardController extends Controller
 
         return view('dashboard.jenis-perusahaan.detail', $data);
     }
-    function pengajuan()
+    public function pengajuan(Request $request)
     {
-        $data = ['data' => PengajuanSiswa::with('pengajuan', 'siswa')->get()];
+        return Auth::user()->load('siswa.kelas.jurusan.kaprog');
+        $data        = [
+            'data'  => PengajuanSiswa::with('pengajuan', 'siswa')->get(),
+        ];
+
         return view('dashboard.pengajuan.index', $data);
-    }
-    public function prngajuan(){
-         $data = PengajuanSiswa::with('pengajuan', 'siswa')->get();
- 
-         return view('dashboard.pengajuan.index', $data);
     }
 }
