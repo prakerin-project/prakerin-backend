@@ -44,6 +44,6 @@ class Jurusan extends Model
     }
     public function kaprog()
     {
-        return $this->hasOne(Kaprog::class, 'id_jurursan');
+        return $this->hasOne(Kaprog::class, 'id_jurusan');
     }
 }

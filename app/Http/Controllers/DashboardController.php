@@ -15,6 +15,7 @@ use App\Models\User;
 use App\Models\Walas;
 use App\Traits\RequestTrait;
 use App\Traits\RoleToRelationTrait;
+use Auth;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use DB;
@@ -31,7 +32,7 @@ class DashboardController extends Controller
     public function index(): View
     {
         $data = [
-            'prakerin' => Prakerin::all(),
+            'prakerin'        => Prakerin::all(),
             'pengajuan_siswa' => PengajuanSiswa::all(),
         ];
         return view('dashboard.index');
@@ -39,7 +40,7 @@ class DashboardController extends Controller
     public function perusahaan()
     {
         $data = [
-            'perusahaan' => Perusahaan::with('jenis_perusahaan', 'foto')->orderBy('nama_perusahaan')->get(),
+            'perusahaan'       => Perusahaan::with('jenis_perusahaan', 'foto')->orderBy('nama_perusahaan')->get(),
             'jenis_perusahaan' => JenisPerusahaan::all()
         ];
 
@@ -72,32 +73,32 @@ class DashboardController extends Controller
     public function userDetail(Request $request)
     {
         $relation = $this->roleToRelation($request->role);
-        $user = User::with($relation)->has($relation[0])->findOrFail($request->id);
+        $user     = User::with($relation)->has($relation[0])->findOrFail($request->id);
 
         foreach ($user->getRelation($relation[0])->makeHidden(['id_user', 'id_kelas', 'id_jurusan'])->toArray() as $key => $value) {
             $user_detail[] = $key;
         }
 
         $data = [
-            'user' => $user,
+            'user'            => $user,
             'user_detail_key' => $user_detail,
-            'user_detail' => $user->getRelation($relation[0])
+            'user_detail'     => $user->getRelation($relation[0])
         ];
         return view('dashboard.user.detail', $data);
     }
     public function userEdit(Request $request)
     {
         $relation = $this->roleToRelation($request->role);
-        $user = User::with($relation)->has($relation[0])->findOrFail($request->id);
+        $user     = User::with($relation)->has($relation[0])->findOrFail($request->id);
 
         foreach ($user->getRelation($relation[0])->makeHidden(['id_user', 'id_kelas', 'id_jurusan'])->toArray() as $key => $value) {
             $user_detail[] = $key;
         }
 
         $data = [
-            'user' => $user,
+            'user'            => $user,
             'user_detail_key' => $user_detail,
-            'user_detail' => $user->getRelation($relation[0])
+            'user_detail'     => $user->getRelation($relation[0])
         ];
         return view('dashboard.user.edit', $data);
     }
@@ -124,7 +125,7 @@ class DashboardController extends Controller
         }
         $data = [
             'jurusan' => Jurusan::findOrFail($id),
-            'siswa' => $siswa,
+            'siswa'   => $siswa,
             // 'siswa_count' => Siswa::query()->withWhereHas('kelas',fn($query)=>$query->where('id_jurusan',$id)->get()),
         ];
 
@@ -134,7 +135,7 @@ class DashboardController extends Controller
     {
         // $angkatan = DB::select('SELECT * FROM angkatan_view');
         $data = [
-            'kelas' => Kelas::with('jurusan')->orderByDesc('angkatan')->get(),
+            'kelas'   => Kelas::with('jurusan')->orderByDesc('angkatan')->get(),
             'jurusan' => Jurusan::all()
         ];
 
@@ -143,8 +144,8 @@ class DashboardController extends Controller
     public function kelasDetail(int $id)
     {
         $data = [
-            'kelas' => Kelas::with(['jurusan', 'siswa'])->findOrFail($id),
-            'walas' => Walas::with(['kelas', 'user'])->where('id_kelas', $id)->first(),
+            'kelas'   => Kelas::with(['jurusan', 'siswa'])->findOrFail($id),
+            'walas'   => Walas::with(['kelas', 'user'])->where('id_kelas', $id)->first(),
             'jurusan' => Jurusan::all()
         ];
 
