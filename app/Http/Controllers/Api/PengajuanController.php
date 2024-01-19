@@ -55,6 +55,7 @@ class PengajuanController extends Controller
          * TODO: omit extra validation by fixing database,
          * fix changing the flow upon kelas creation and jurusan creation;
          * add walas or kaprog in one creation flow of both.
+         * will also fix vulnerability
          */
         if (!$walas_siswa || !$kaprog_siswa) {
             return response()->json(['message' => 'Jurusan atau kelas ada yang tidak lengkap. Tolong segera hubungi admin.'], 400);

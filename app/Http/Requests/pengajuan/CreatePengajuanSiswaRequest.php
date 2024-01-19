@@ -24,7 +24,6 @@ class CreatePengajuanSiswaRequest extends FormRequest
     {
         return [
             /* -------------------------- INSTANCE OF PENGAJUAN ------------------------- */
-            'tanggal_pengajuan' => ['required', 'date'],
             'nama_industri'     => ['required', 'string', 'max:100'],
             'alamat'            => ['required', 'string'],
             //TODO: Add phone number regex
