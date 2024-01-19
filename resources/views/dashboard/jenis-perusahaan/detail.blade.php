@@ -1,8 +1,8 @@
 @extends('layouts.index')
 @section('title', "Jenis Perusahaan $jenis_perusahaan->nama")
 @section('content')
-    <h1>Detail {{ $jenis_perusahaan->nama }}</h1>
-    <h4>Jumlah perusahaan: {{ $jenis_perusahaan->perusahaan->count() }}</h4>
+    <h1>{{ $jenis_perusahaan->nama }}</h1>
+    <h4>Jumlah perusahaan: <span class="text-primary">{{ $jenis_perusahaan->perusahaan->count() }}</span></h4>
 
     {{-- <h5 class="mt-4">List perusahaan</h5> --}}
     <table class="table table-bordered">

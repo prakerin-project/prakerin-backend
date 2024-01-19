@@ -5,12 +5,14 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Api\UserController;
 use App\Models\JenisPerusahaan;
 use App\Models\Jurusan;
+use App\Models\Kelas;
 use App\Models\Logs;
 use App\Models\PengajuanSiswa;
 use App\Models\Perusahaan;
 use App\Models\Prakerin;
 use App\Models\Siswa;
 use App\Models\User;
+use App\Models\Walas;
 use App\Traits\RequestTrait;
 use App\Traits\RoleToRelationTrait;
 use Illuminate\Contracts\View\View;
@@ -29,8 +31,8 @@ class DashboardController extends Controller
     public function index(): View
     {
         $data = [
-          'prakerin' => Prakerin::all(),
-          'pengajuan_siswa' => PengajuanSiswa::all(),
+            'prakerin' => Prakerin::all(),
+            'pengajuan_siswa' => PengajuanSiswa::all(),
         ];
         return view('dashboard.index');
     }
@@ -128,7 +130,7 @@ class DashboardController extends Controller
 
         return view('dashboard.jurusan.detail', $data);
     }
-    function kelas()
+    public function kelas()
     {
         // $angkatan = DB::select('SELECT * FROM angkatan_view');
         $data = [
@@ -138,7 +140,17 @@ class DashboardController extends Controller
 
         return view('dashboard.kelas.index', $data);
     }
-    function jenisPerusahaan()
+    public function kelasDetail(int $id)
+    {
+        $data = [
+            'kelas' => Kelas::with(['jurusan', 'siswa'])->findOrFail($id),
+            'walas' => Walas::with(['kelas', 'user'])->where('id_kelas', $id)->first(),
+            'jurusan' => Jurusan::all()
+        ];
+
+        return view('dashboard.kelas.detail', $data);
+    }
+    public function jenisPerusahaan()
     {
         $data = [
             'jenis_perusahaan' => JenisPerusahaan::with('perusahaan')->orderBy('nama')->get(),
@@ -146,7 +158,7 @@ class DashboardController extends Controller
 
         return view('dashboard.jenis-perusahaan.index', $data);
     }
-    function jenisPerusahaanDetail(int $id, $relation = [])
+    public function jenisPerusahaanDetail(int $id)
     {
         $data = [
             'jenis_perusahaan' => JenisPerusahaan::with('perusahaan')->findOrFail($id),
@@ -154,14 +166,15 @@ class DashboardController extends Controller
 
         return view('dashboard.jenis-perusahaan.detail', $data);
     }
-    function pengajuan()
+    public function pengajuan()
     {
         $data = ['data' => PengajuanSiswa::with('pengajuan', 'siswa')->get()];
         return view('dashboard.pengajuan.index', $data);
     }
-    public function prngajuan(){
-         $data = PengajuanSiswa::with('pengajuan', 'siswa')->get();
- 
-         return view('dashboard.pengajuan.index', $data);
+    public function prngajuan()
+    {
+        $data = PengajuanSiswa::with('pengajuan', 'siswa')->get();
+
+        return view('dashboard.pengajuan.index', $data);
     }
 }

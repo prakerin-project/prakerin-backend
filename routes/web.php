@@ -55,6 +55,7 @@ Route::prefix('/dashboard')->middleware('auth')->group(function () {
 
         Route::get('/monitoring', 'monitoring');
         Route::get('/kelas', 'kelas');
+        Route::get('/kelas/{id}', 'kelasDetail');
 
         Route::get('/jurusan', 'jurusan');
         Route::get('/jurusan/{id}', 'jurusanDetail');

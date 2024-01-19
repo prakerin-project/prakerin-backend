@@ -188,7 +188,7 @@
             }).join('\n');
             const optKelas = kelas.map((kelas, i) => {
                 return kelas[i] =
-                    `<option value="${kelas.id}">${kelas.angkatan} - ${kelas.tingkat} ${kelas.jurusan.akronim} ${kelas.kelompok}</option>`
+                    `<option value="${kelas.id}">${kelas.angkatan} - ${kelas.tingkat} ${kelas.jurusan.akronim} ${kelas.kelompok ? kelas.kelompok : ''}</option>`
             }).join('\n');
 
             $("#tambah-user-form>*").not(".form-group").remove()
@@ -209,7 +209,7 @@
                         .append("<label for='lingkup'>Lingkup</label>")
                         .append(
                             "<select class='form-select' id='lingkup' name='lingkup'><option value=''>Pilih lingkup</option><option value='sekolah'>Sekolah</option><option value='industri'>Industri</option></select>"
-                            )
+                        )
                         .append("<label for='nip_nik'>NIP/NIK Pembimbing</label>")
                         .append("<input class='form-control' id='nip_nik' name='nip_nik'/>")
                         .append("<label for='email'>Email Pembimbing</label>")

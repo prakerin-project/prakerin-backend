@@ -40,7 +40,7 @@
                         <div class="form-group">
                             <label for="kelompok-select">Kelompok</label>
                             <select name="kelompok" id="kelompok-select" class="form-select">
-                                <option value="" selected hidden>Pilih kelompok</option>
+                                <option value="" selected>Pilih kelompok</option>
                                 <option value="A">A</option>
                                 <option value="B">B</option>
                                 <option value="C">C</option>
@@ -90,10 +90,10 @@
                 </a>
 
                 @if (auth()->user()->role == 'hubin')
-                    <div class="p-1 card-footer d-flex">
+                    <div class="p-1 card-footer d-flex btn-hapus" idKelas="{{ $k->id }}">
                         <button type="button"
                             class="bg-transparent border-0 text-danger w-100 d-flex justify-content-center gap-1">
-                            <div><i class="iconsax" type="bold" stroke-width="1.5" icon="trash"></i></div>
+                            <div><i class="iconsax" type="bold" icon="trash"></i>Delete</div>
                         </button>
                     </div>
                 @endif
@@ -158,6 +158,39 @@
 
                     swal.fire('Gagal tambah data!', `${message}`, 'warning');
                 });
+        })
+        $('.btn-hapus').on('click', function(e) {
+            let idKelas = $(this).attr('idKelas');
+
+            swal.fire({
+                title: "Apakah anda ingin menghapus data ini?",
+                showCancelButton: true,
+                confirmButtonText: 'Setuju',
+                cancelButtonText: `Batal`,
+                confirmButtonColor: 'red'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    //dilakukan proses hapus
+                    axios.delete(`http://localhost:8000/api/kelas/${idKelas}`)
+                        .then(function(response) {
+                            console.log(response);
+                            if (response.data.status == 'success') {
+                                swal.fire('Berhasil di hapus!', '', 'success').then(function() {
+                                    //Refresh Halaman
+                                    location.reload();
+                                });
+                            } else {
+                                swal.fire('Gagal di hapus!', '', 'warning');
+                            }
+                        }).catch(function() {
+                            swal.fire('Data gagal di hapus!', '', 'error').then(function() {
+                                //Refresh Halaman
+                                location.reload();
+                            });
+                        });
+                }
+            });
+
         })
     </script>
 @endsection

@@ -70,6 +70,7 @@
                 </div>
             </div>
         </div>
+        {{-- Edit Jurusan Modal --}}
     </div>
 
     <table class="table table-bordered" id="DataTable">

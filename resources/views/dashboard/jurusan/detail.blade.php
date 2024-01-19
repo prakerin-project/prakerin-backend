@@ -31,7 +31,8 @@
                 </div> --}}
                 <div class="card-body">
                     <div class="px-3 d-flex justify-content-center align-items-center">
-                        <i class="iconsax text-primary" style="zoom: 4;" type="bold" stroke-width="1.5" icon="user"></i>
+                        <i class="iconsax text-primary" style="zoom: 4;" type="bold" stroke-width="1.5"
+                            icon="user"></i>
                         <div class="text-primary" style="font-size:10rem;line-height:10rem">
                             @php echo $siswa ?sizeOf($siswa):0 @endphp</div>
                     </div>
@@ -40,7 +41,7 @@
         </div>
         <div class="col-12">
             <div class="row">
-                <div class="card">
+                <div class="card p-0">
                     <div class="card-header">
                         <h1>Data siswa jurusan {{ $jurusan->nama_jurusan }}</h1>
                     </div>
