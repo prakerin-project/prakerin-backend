@@ -64,22 +64,28 @@
                             <h4 class="m-0">Pengajuan ditolak</h4>
                         </div>
                         <div class="d-flex justify-content-end">
-                            <i class="iconsax" style="zoom: 2" type="linear" stroke-width="1.5"
-                                icon="clipboard-close"></i>
+                            <i class="iconsax" style="zoom: 2" type="linear" stroke-width="1.5" icon="clipboard-close"></i>
                         </div>
                     </div>
                 </div>
             </a>
         </div>
     </div>
+    <div class="row"><p>
+        Pengajuan anda
+        </p>
+    </div>
     <div class="row">
-        <div class="col">Pengajuan anda</div>
         <div class="col">
-            @for ($i = 0; $i < 10; $i++)
-                <div class="card">
-                    <div class="card-body"></div>
-                </div>
-            @endfor
+            <div style="columns: 12rem; column-gap: 10px">
+                @for ($i = 0; $i < 10; $i++)
+                    <div class="card mb-3" style="break-inside: avoid-column">
+                        <div class="card-body">
+                            test
+                        </div>
+                    </div>
+                @endfor
+            </div>
         </div>
     </div>
 
