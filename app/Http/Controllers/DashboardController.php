@@ -18,8 +18,8 @@ use App\Traits\RequestTrait;
 use App\Traits\RoleToRelationTrait;
 use Auth;
 use Illuminate\Contracts\View\View;
-use Illuminate\Http\Request;
 use DB;
+use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
@@ -30,13 +30,18 @@ class DashboardController extends Controller
      *
      * @return View
      */
-    public function index(): View
+    public function index(Request $request): View
     {
-        $data = [
-            'prakerin'        => Prakerin::all(),
-            'pengajuan_siswa' => PengajuanSiswa::all(),
-        ];
-        return view('dashboard.index');
+        $data = [];
+        if ($request->user()->role == 'siswa') {
+            $data = [
+                // 'prakerin'   => Prakerin::where('nis_siswa', $request->user()->id)->get(),
+                'perusahaan' => Perusahaan::inRandomOrder()->limit(5)->get()
+            ];
+        }
+        return $request->user()->role == 'siswa'
+            ? view('dashboard.siswa', $data)
+            : view('dashboard.index', $data);
     }
     public function perusahaan()
     {
