@@ -122,9 +122,9 @@ class DashboardController extends Controller
             'all_jurusan' => Jurusan::all(),
         ];
 
-        if(auth()->user()->role == 'siswa')
+        if (auth()->user()->role == 'siswa')
         {
-            $user = Siswa::where('id_user', auth()->user()->id)->first();
+            $user           = Siswa::where('id_user', auth()->user()->id)->first();
             $siswaInJurusan = Siswa::query()->getRelation('kelas')->whereIdJurusan($user->kelas->jurusan->id)->with(['siswa', 'siswa.user'])->first() ?? [];
             if ($siswaInJurusan)
             {
@@ -132,7 +132,7 @@ class DashboardController extends Controller
             }
             $data = [
                 'jurusan' => Jurusan::where('id', $user->kelas->jurusan->id)->firstOrFail(),
-                'siswa' => $siswaInJurusan,
+                'siswa'   => $siswaInJurusan,
             ];
 
             return view('dashboard.jurusan.siswa', $data);
@@ -166,7 +166,7 @@ class DashboardController extends Controller
         if (auth()->user()->role == 'siswa')
         {
             $siswa = Siswa::where('id_user', auth()->user()->id)->first();
-            $data = [
+            $data  = [
                 'kelas'   => Kelas::with(['jurusan', 'siswa'])->findOrFail($siswa->kelas->id),
                 'walas'   => Walas::with(['kelas', 'user'])->where('id_kelas', $siswa->kelas->id)->first(),
                 'jurusan' => Jurusan::all(),
@@ -180,7 +180,8 @@ class DashboardController extends Controller
     public function kelasDetail(int $id)
     {
         $data = [
-            'kelas'   => Kelas::with(['jurusan', 'siswa'])->findOrFail($id),
+            'kelas'   => Kelas::with(['jurusan', 'siswa' => function ($query) {
+                $query->orderBy('nama'); }])->findOrFail($id),
             'walas'   => Walas::with(['kelas', 'user'])->where('id_kelas', $id)->first(),
             'jurusan' => Jurusan::all(),
         ];
@@ -214,7 +215,7 @@ class DashboardController extends Controller
                 $data = [
                     'data'           => PengajuanSiswa::with([
                         'siswa',
-                        'pengajuan'  => function ($q) {
+                        'pengajuan' => function ($q) {
                             $q->where('created_at' == now()->subDay())->orderBy('created_at', 'desc');
                         }
                     ])->get(),
@@ -287,18 +288,18 @@ class DashboardController extends Controller
     {
         $userRole = auth()->user()->role;
 
-        switch($userRole)
+        switch ($userRole)
         {
-            case 'hubin' : 
+            case 'hubin':
                 $data = [
-                    'data' => Prakerin::query()
-                                        ->with(['siswa', 'pembimbing_sekolah', 'pengajuan'])
-                                        ->orderByDesc('tanggal_mulai')
-                                        ->limit(10)
-                                        ->get(),
-                    'all_prakerin' => Prakerin::all()->count(),
+                    'data'                => Prakerin::query()
+                        ->with(['siswa', 'pembimbing_sekolah', 'pengajuan'])
+                        ->orderByDesc('tanggal_mulai')
+                        ->limit(10)
+                        ->get(),
+                    'all_prakerin'        => Prakerin::all()->count(),
                     'prakerinBerlangsung' => Prakerin::where('status', 'berlangsung')->count(),
-                    'prakerinSelesai' => Prakerin::where('status', 'selesai')->count(),
+                    'prakerinSelesai'     => Prakerin::where('status', 'selesai')->count(),
                 ];
 
                 return view('dashboard.prakerin.hubin.index', $data);

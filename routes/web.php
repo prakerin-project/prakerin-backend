@@ -35,7 +35,7 @@ Route::get('image/{uri}', [DisplayImage::class, 'displayImage'])->name('displayI
 Route::prefix('/dashboard')->middleware('auth')->group(function () {
     Route::controller(DashboardController::class)->group(function () {
         Route::get('/', 'index');
-        Route::get('/user', 'user');
+        Route::get('/user', 'user')->middleware('role:tu,kaprog,pembimbing,walas,hubin');
         Route::get('/user/{role}', 'userRole')->whereIn('role', ['tu', 'siswa', 'kaprog', 'pembimbing', 'walas', 'hubin',]);
         Route::get('/user/{id}', 'userDetail');
         Route::get('/user/edit/{id}', 'userEdit');
