@@ -61,10 +61,10 @@
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
 
-<body class="bg-white">
-    <div class="app" style="display: grid; grid-template-columns: auto 1fr">
-        <aside class="d-flex flex-column align-items-center p-0 border" style="width: 300px;
-    height:auto">
+<body class="bg-white" @style(['overflow-y-hidden'])>
+    <div class="app" style="display: grid; grid-template-columns: auto 1fr; max-height: 100vh">
+        <aside class="d-flex flex-column align-items-center p-0 border"
+            style="width: 300px; max-height:inherit; overflow-y: auto">
             <img src="{{ asset('one-logo.svg') }}" alt="logo" width="80px">
 
             <div class="menu mt-3 rounded w-75">
