@@ -50,6 +50,10 @@ Route::prefix('/dashboard')->middleware('auth')->group(function () {
         Route::get('/prakerin', 'prakerin');
 
         Route::get('/pengajuan', 'pengajuan');
+        Route::get('/pengajuan/semua', 'semuaPengajuan');
+        Route::get('/pengajuan/pending', 'pengajuanPending');
+        Route::get('/pengajuan/diterima', 'pengajuanDiterima');
+        Route::get('/pengajuan/ditolak', 'pengajuanDitolak');
 
         Route::get('/monitoring', 'monitoring');
         Route::get('/kelas', 'kelas');

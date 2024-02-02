@@ -5,7 +5,7 @@
         @if ($perusahaan->foto->count() >= 1)
             <div class="col-7 foto-wrapper d-flex flex-column">
                 <img src="{{ route('displayImage', ['uri' => $perusahaan->foto[0]->path, 'folder' => 'perusahaan']) }}"
-                    style="object-fit: cover;" class="main-foto rounded" alt="first-image" height="430px">
+                    style="object-fit: contain;" class="main-foto rounded" alt="first-image" height="430px">
                 <div class="small-foto d-flex mt-2 gap-2">
                     @foreach ($perusahaan->foto as $key => $foto)
                         {{-- Get all the foto except the first one --}}
@@ -16,7 +16,7 @@
                         @endphp
                         <img alt="foto-perusahaan"
                             src="{{ route('displayImage', ['uri' => $foto->path, 'folder' => 'perusahaan']) }}"
-                            style="object-fit: cover;" width="120px" height="100px" class="rounded">
+                            style="object-fit: contain;" width="120px" height="100px" class="rounded">
                     @endforeach
                 </div>
             </div>

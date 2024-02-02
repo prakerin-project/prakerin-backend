@@ -78,7 +78,6 @@
                     <th class="text-uppercase">Email</th>
                     <th class="text-uppercase">Link website</th>
                     <th class="text-uppercase">Alamat</th>
-                    <th class="text-uppercase">Foto</th>
                     @if (auth()->user()->role == 'hubin')
                         <th class="text-uppercase">Action</th>
                     @endif
@@ -94,16 +93,7 @@
                             <a href="//{{ $p->link_website }}" target="_blank">{{ $p->link_website }}</a>
                         </td>
                         <td>{{ $p->alamat }}</td>
-                        <td class="justify-content-center">
-                            <div class="d-flex align-items-center justify-content-center">
-                                @if (isset($p->foto) && count($p->foto) > 0)
-                                    <img src="{{ route('displayImage', ['uri' => $p->foto[0]->path, 'folder' => 'perusahaan']) }}"
-                                        width="160px" height="150px" alt="Foto perusahaan" style="object-fit: cover;">
-                                @else
-                                    No data available
-                                @endif
-                            </div>
-                        </td>
+
                         @if (auth()->user()->role == 'hubin')
                             <td>
                                 <div class="d-flex gap-2">
@@ -187,20 +177,6 @@
         $('.table').DataTable({
             paging: false
         });
-
-        // Failed : function untuk upload multiple foto
-        // let fotos = [];
-        // $('input[type=file]').on('change', function (e) {
-        //     for (let i = 0; i < this.files.length; i++) {
-        //         fotos.push(this.files[i]);
-        //     }
-
-        //     console.log(fotos);
-        //     // fotos.map((f) => {
-        //     //     console.log(f.nama)
-        //     // })
-        //     // console.log(fotos)
-        // })
 
         /*-------------------------- TAMBAH PERUSAHAAN -------------------------- */
         $('#tambah-ps-form').on('submit', function(e) {

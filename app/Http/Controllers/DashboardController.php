@@ -7,6 +7,7 @@ use App\Models\JenisPerusahaan;
 use App\Models\Jurusan;
 use App\Models\Kelas;
 use App\Models\Logs;
+use App\Models\Pengajuan;
 use App\Models\PengajuanSiswa;
 use App\Models\Perusahaan;
 use App\Models\Prakerin;
@@ -46,15 +47,20 @@ class DashboardController extends Controller
     {
         $data = [
             'perusahaan'       => Perusahaan::with('jenis_perusahaan', 'foto')->orderBy('nama_perusahaan')->get(),
-            'jenis_perusahaan' => JenisPerusahaan::all()
+            'jenis_perusahaan' => JenisPerusahaan::all(),
         ];
+
+        if (auth()->user()->role == 'siswa')
+        {
+            return view('dashboard.perusahaan.siswa', $data);
+        }
 
         return view('dashboard.perusahaan.index', $data);
     }
     public function perusahaanDetail($id)
     {
         $data = [
-            'perusahaan' => Perusahaan::query()->with('jenis_perusahaan', 'foto')->findOrFail($id)
+            'perusahaan' => Perusahaan::query()->with('jenis_perusahaan', 'foto')->findOrFail($id),
         ];
 
         return view('dashboard.perusahaan.detail', $data);
@@ -62,7 +68,7 @@ class DashboardController extends Controller
     public function log()
     {
         $data = [
-            'logs' => Logs::orderBy('created_at', 'desc')->get()
+            'logs' => Logs::orderBy('created_at', 'desc')->get(),
         ];
 
         return view('dashboard.log', $data);
@@ -70,7 +76,7 @@ class DashboardController extends Controller
     public function user()
     {
         $data = [
-            'users' => User::all()->sortDesc()
+            'users' => User::all()->sortDesc(),
         ];
 
         return view('dashboard.user.index', $data);
@@ -80,14 +86,15 @@ class DashboardController extends Controller
         $relation = $this->roleToRelation($request->role);
         $user     = User::with($relation)->has($relation[0])->findOrFail($request->id);
 
-        foreach ($user->getRelation($relation[0])->makeHidden(['id_user', 'id_kelas', 'id_jurusan'])->toArray() as $key => $value) {
+        foreach ($user->getRelation($relation[0])->makeHidden(['id_user', 'id_kelas', 'id_jurusan'])->toArray() as $key => $value)
+        {
             $user_detail[] = $key;
         }
 
         $data = [
             'user'            => $user,
             'user_detail_key' => $user_detail,
-            'user_detail'     => $user->getRelation($relation[0])
+            'user_detail'     => $user->getRelation($relation[0]),
         ];
         return view('dashboard.user.detail', $data);
     }
@@ -96,14 +103,15 @@ class DashboardController extends Controller
         $relation = $this->roleToRelation($request->role);
         $user     = User::with($relation)->has($relation[0])->findOrFail($request->id);
 
-        foreach ($user->getRelation($relation[0])->makeHidden(['id_user', 'id_kelas', 'id_jurusan'])->toArray() as $key => $value) {
+        foreach ($user->getRelation($relation[0])->makeHidden(['id_user', 'id_kelas', 'id_jurusan'])->toArray() as $key => $value)
+        {
             $user_detail[] = $key;
         }
 
         $data = [
             'user'            => $user,
             'user_detail_key' => $user_detail,
-            'user_detail'     => $user->getRelation($relation[0])
+            'user_detail'     => $user->getRelation($relation[0]),
         ];
         return view('dashboard.user.edit', $data);
     }
@@ -116,8 +124,24 @@ class DashboardController extends Controller
     public function jurusan()
     {
         $data = [
-            'all_jurusan' => Jurusan::all()
+            'all_jurusan' => Jurusan::all(),
         ];
+
+        if(auth()->user()->role == 'siswa')
+        {
+            $user = Siswa::where('id_user', auth()->user()->id)->first();
+            $siswaInJurusan = Siswa::query()->getRelation('kelas')->whereIdJurusan($user->kelas->jurusan->id)->with(['siswa', 'siswa.user'])->first() ?? [];
+            if ($siswaInJurusan)
+            {
+                $siswaInJurusan = $siswaInJurusan->toArray()['siswa'];
+            }
+            $data = [
+                'jurusan' => Jurusan::where('id', $user->kelas->jurusan->id)->firstOrFail(),
+                'siswa' => $siswaInJurusan,
+            ];
+
+            return view('dashboard.jurusan.siswa', $data);
+        }
 
         return view('dashboard.jurusan.index', $data);
     }
@@ -125,7 +149,8 @@ class DashboardController extends Controller
     {
         // return Siswa::query()->getRelation('kelas')->whereIdJurusan($id)->with(['siswa','siswa.user'])->firstOrFail()->toArray()['siswa'];
         $siswa = Siswa::query()->getRelation('kelas')->whereIdJurusan($id)->with(['siswa', 'siswa.user'])->first() ?? [];
-        if ($siswa) {
+        if ($siswa)
+        {
             $siswa = $siswa->toArray()['siswa'];
         }
         $data = [
@@ -138,11 +163,22 @@ class DashboardController extends Controller
     }
     public function kelas()
     {
-        // $angkatan = DB::select('SELECT * FROM angkatan_view');
         $data = [
             'kelas'   => Kelas::with('jurusan')->orderByDesc('angkatan')->get(),
-            'jurusan' => Jurusan::all()
+            'jurusan' => Jurusan::all(),
         ];
+
+        if (auth()->user()->role == 'siswa')
+        {
+            $siswa = Siswa::where('id_user', auth()->user()->id)->first();
+            $data = [
+                'kelas'   => Kelas::with(['jurusan', 'siswa'])->findOrFail($siswa->kelas->id),
+                'walas'   => Walas::with(['kelas', 'user'])->where('id_kelas', $siswa->kelas->id)->first(),
+                'jurusan' => Jurusan::all(),
+            ];
+
+            return view('dashboard.kelas.siswa', $data);
+        }
 
         return view('dashboard.kelas.index', $data);
     }
@@ -151,7 +187,7 @@ class DashboardController extends Controller
         $data = [
             'kelas'   => Kelas::with(['jurusan', 'siswa'])->findOrFail($id),
             'walas'   => Walas::with(['kelas', 'user'])->where('id_kelas', $id)->first(),
-            'jurusan' => Jurusan::all()
+            'jurusan' => Jurusan::all(),
         ];
 
         return view('dashboard.kelas.detail', $data);
@@ -174,11 +210,24 @@ class DashboardController extends Controller
     }
     public function pengajuan()
     {
-        $userRole = auth()->user()->role;
+        $userRole       = auth()->user()->role;
+        $allowedPending = ['belum_diterima', 'diterima', 'diajukan'];
 
-        switch ($userRole) {
+        switch ($userRole)
+        {
             case 'hubin':
-                $data = ['data' => PengajuanSiswa::with('pengajuan', 'siswa')->get()];
+                $data = [
+                    'data'           => PengajuanSiswa::with([
+                        'siswa',
+                        'pengajuan'  => function ($q) {
+                            $q->where('created_at' == now()->subDay())->orderBy('created_at', 'desc');
+                        }
+                    ])->get(),
+                    'totalPengajuan' => PengajuanSiswa::count(),
+                    'totalPending'   => Pengajuan::whereIn('status', $allowedPending)->count(),
+                    'totalDiterima'  => Pengajuan::where('status', 'diterima')->count(),
+                    'totalDitolak'   => Pengajuan::where('status', 'ditolak')->count(),
+                ];
                 return view('dashboard.pengajuan.hubin.index', $data);
             case 'siswa':
                 $data = ['data' => PengajuanSiswa::with('pengajuan', 'siswa')->where('nis_siswa', auth()->user()->id)->get()];
@@ -187,5 +236,88 @@ class DashboardController extends Controller
                 $data = ['data' => PengajuanSiswa::with('pengajuan', 'siswa')->where('nip_walas', auth()->user()->id)->get()];
                 return view('dashboard.pengajuan.walas.index', $data);
         }
+    }
+    public function semuaPengajuan()
+    {
+        $data = [
+            'data' => PengajuanSiswa::with([
+                'siswa',
+                'pengajuan' => function ($q) {
+                    $q->orderBy('created_at', 'desc');
+                }
+            ])->get(),
+        ];
+        return view('dashboard.pengajuan.hubin.semuaPengajuan', $data);
+    }
+    public function pengajuanPending()
+    {
+        $allowedStatus = ['belum_disetujui', 'disetujui', 'diajukan'];
+        $data          = [
+            'data' => PengajuanSiswa::with([
+                'siswa',
+                'pengajuan' => function ($q) use ($allowedStatus) {
+                    $q->whereIn('status', $allowedStatus)->orderBy('created_at', 'desc');
+                }
+            ])->get(),
+        ];
+        return view('dashboard.pengajuan.hubin.pengajuanPending', $data);
+    }
+    public function pengajuanDiterima()
+    {
+        $data = [
+            'data' => PengajuanSiswa::with([
+                'siswa',
+                'pengajuan' => function ($q) {
+                    $q->where('status', 'diterima')->orderBy('created_at', 'desc');
+                }
+            ]),
+        ];
+
+        return view('dashboard.pengajuan.hubin.pengajuanDiterima', $data);
+    }
+    public function pengajuanDitolak()
+    {
+        $data = [
+            'data' => PengajuanSiswa::with([
+                'siswa',
+                'pengajuan' => function ($q) {
+                    $q->where('status', 'ditolak')->orderBy('created_at', 'desc');
+                }
+            ]),
+        ];
+
+        return view('dashboard.pengajuan.hubin.pengajuanDitolak', $data);
+    }
+    public function prakerin()
+    {
+        $userRole = auth()->user()->role;
+
+        switch($userRole)
+        {
+            case 'hubin' : 
+                $data = [
+                    'data' => Prakerin::query()
+                                        ->with(['siswa', 'pembimbing_sekolah', 'pengajuan'])
+                                        ->orderByDesc('tanggal_mulai')
+                                        ->limit(10)
+                                        ->get(),
+                    'all_prakerin' => Prakerin::all()->count(),
+                    'prakerinBerlangsung' => Prakerin::where('status', 'berlangsung')->count(),
+                    'prakerinSelesai' => Prakerin::where('status', 'selesai')->count(),
+                ];
+
+                return view('dashboard.prakerin.hubin.index', $data);
+            case 'siswa':
+                $data = [
+                    'data' => Prakerin::with('siswa')->where('nis', auth()->user()->id)->get(),
+                ];
+                return view('dashboard.prakerin.siswa.index', $data);
+            case 'walas':
+                $data = [
+                    'data' => Prakerin::with('siswa')->where('nip_walas', auth()->user()->id)->get(),
+                ];
+                return view('dashboard.prakerin.walas.index', $data);
+        }
+
     }
 }
