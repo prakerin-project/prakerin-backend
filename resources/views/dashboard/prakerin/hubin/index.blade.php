@@ -62,10 +62,10 @@
             <table class="table table-bordered rounded overflow-hidden">
                 <thead class="table-secondary">
                     <tr>
-                        <th>ID</th>
-                        <th>ID Pengajuan</th>
-                        <th>Siswa</th>
-                        <th>Pembimbing sekolah</th>
+                        <th>ID Prakerin</th>
+                        <th>NIS</th>
+                        <th>Nama siswa</th>
+                        <th>Pembimbing</th>
                         <th>Status</th>
                         <th>Tanggal mulai</th>
                     </tr>

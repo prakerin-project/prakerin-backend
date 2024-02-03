@@ -71,8 +71,9 @@
             </a>
         </div>
     </div>
-    <div class="row"><p>
-        Pengajuan anda
+    <div class="row">
+        <p>
+            Pengajuan anda
         </p>
     </div>
     <div class="row">

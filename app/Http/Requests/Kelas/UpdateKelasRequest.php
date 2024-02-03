@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Kelas;
 
+use App\Models\Kelas;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
@@ -27,9 +28,29 @@ class UpdateKelasRequest extends FormRequest
     {
         return [
             'id_jurusan' => ['required', 'integer', Rule::exists('jurusan', 'id')],
-            'kelompok' => ['nullable', 'max:1', 'string'],
-            'tingkat' => ['required', Rule::in(['10', '11', '12'])],
-            'angkatan' => ['required', 'integer']
+            'kelompok'   => ['nullable', 'max:1', 'string'],
+            'tingkat'    => ['required', Rule::in(['10', '11', '12'])],
+            'angkatan'   => ['required', 'integer'],
+        ];
+    }
+
+    public function after()
+    {
+        return [
+            // Unique one of Kelas columns
+            function (Validator $validator) {
+                if (
+                    Kelas::query()
+                        ->where('id_jurusan', $this->id_jurusan)
+                        ->where('kelompok', $this->kelompok)
+                        ->where('tingkat', $this->tingkat)
+                        ->where('angkatan', $this->angkatan)
+                        ->get()->count() > 0
+                )
+                {
+                    $validator->errors()->add('kelas', "Kelas already exist.");
+                }
+            }
         ];
     }
 
