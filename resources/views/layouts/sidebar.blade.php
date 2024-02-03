@@ -1,4 +1,4 @@
-<div class="btn rounded btn-primary position-absolute" @style(['right: 10px', 'bottom: 10px']) id="sidebar-toggle">
+<div class="btn rounded btn-primary position-absolute" title="Toggle Sidebar" @style(['right: 10px', 'bottom: 10px']) id="sidebar-toggle">
     <i class="iconsax" type="linear" stroke-width="1.5" icon="menu-1"></i>
 </div>
 <aside class="position-relative position-fixed z-3 h-100 bg-white flex-column align-items-center p-0 border"
@@ -119,7 +119,8 @@
     </div>
 </aside>
 <script type="module" defer>
-    $('#sidebar-toggle').click(function() {
+    $("document").ready(() => void $("#sidebar-toggle").trigger('click'));
+    $('#sidebar-toggle').click(function() {    
         $("#sidebar").animate({
             width: "toggle",
             display: "none"
