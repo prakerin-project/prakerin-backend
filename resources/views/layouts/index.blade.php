@@ -30,32 +30,7 @@
 
     <link rel="icon" href="{{ asset('logo.svg') }}">
 
-    <style>
-        #dropdownToggle:hover {
-            cursor: pointer;
-        }
-
-        #dropdownToggle {
-            rotate: 90deg;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-        }
-
-        #dropdownList {
-            display: none;
-        }
-
-        .menu-item:hover {
-            background-color: #CFE2FF;
-            color: #CFE2FF;
-        }
-
-        .dropdown-toggle::after {
-            margin-left: 6em;
-        }
-    </style>
+    <link rel="stylesheet" href="/css/main.css">
 
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
@@ -95,12 +70,6 @@
                                         </div>
                                     </li>
                                 </a>
-
-                                <li class="nav-item">
-                                    <a class="btn logout btn-danger" href="{{ route('logout') }}"><i class="iconsax"
-                                            type="linear" stroke-width="1.5"
-                                            icon="logout-1"></i>{{ __('Logout') }}</a>
-                                </li>
                             @endguest
                         </ul>
                     </div>

@@ -1,0 +1,28 @@
+#dropdownToggle:hover {
+  cursor: pointer;
+}
+
+#dropdownToggle {
+  rotate: 90deg;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+#dropdownList {
+  display: none;
+}
+
+.menu-item:hover {
+  background-color: #CFE2FF;
+  color: #CFE2FF;
+}
+
+.logout:hover {
+  background-color: rgb(255, 195, 195);
+}
+
+.dropdown-toggle::after {
+  margin-left: 6em;
+}
