@@ -14,15 +14,31 @@
   display: none;
 }
 
+.menu-item {
+  color: black;
+}
+
+.menu-item .user-item {
+  color: black;
+}
+
 .menu-item:hover {
-  background-color: #CFE2FF;
-  color: #CFE2FF;
+  background-color: #0B5EF3;
+  color: #ffffff;
+}
+
+.menu-item:hover .user-item {
+  color: #ffffff;
 }
 
 .logout:hover {
-  background-color: rgb(255, 195, 195);
+  background-color: rgb(255, 171, 171);
 }
 
 .dropdown-toggle::after {
   margin-left: 6em;
+}
+
+aside {
+  background-color: #13192C;
 }

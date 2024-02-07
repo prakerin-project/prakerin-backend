@@ -60,6 +60,7 @@
                         <td>NIS</td>
                         <td>Nama</td>
                         <td>Jenis kelamin</td>
+                        <td>Email</td>
                     </tr>
                 </thead>
                 <tbody>
@@ -77,6 +78,7 @@
                             <td>{{ $s->nis }}</td>
                             <td>{{ $s->nama }}</td>
                             <td>{{ $s->jenis_kelamin }}</td>
+                            <td>{{ $s->email }}</td>
                         </tr>
                     @endforeach
                 </tbody>

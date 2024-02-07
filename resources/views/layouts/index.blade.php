@@ -42,37 +42,43 @@
 
         <main class="overflow-y-auto" style="height: 100vh">
             <nav class="navbar px-0 navbar-expand-lg navbar-light border-bottom">
-                <div class="container">
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
 
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                        <!-- Right Side Of Navbar -->
-                        <ul class="navbar-nav ms-auto align-items-center">
-                            <!-- Authentication Links -->
-                            @guest
-                                @if (Route::has('login'))
-                                    <li class="nav-item">
-                                        <a class="nav-link">{{ __('Login') }}</a>
-                                    </li>
-                                @endif
-                            @else
-                                <a href="{{ url('profile/' . auth()->user()->id) }}"
-                                    class="text-dark link-underline link-underline-opacity-0">
-                                    <li class="nav-item mx-4 d-flex align-items-center">
-                                        <p class="m-0">Hello, {{ auth()->user()->username }}</p>
-                                        <h1 class="m-auto mx-2"><i class="bi bi-person-circle"></i></h1>
-                                        <div>
-                                            <p class="text-capitalize m-0 text-secondary"></p>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <!-- Right Side Of Navbar -->
+                    <ul class="navbar-nav ms-auto align-items-center">
+                        <!-- Authentication Links -->
+                        @guest
+                            @if (Route::has('login'))
+                                <li class="nav-item">
+                                    <a class="nav-link">{{ __('Login') }}</a>
+                                </li>
+                            @endif
+                        @else
+                            <a href="{{ url('profile/' . auth()->user()->id) }}"
+                                class="text-dark link-underline link-underline-opacity-0">
+                                <li class="nav-item mx-4 d-flex align-items-center">
+                                    <p class="m-0">Hello, {{ auth()->user()->username }}</p>
+                                    <div class="me-2">
+                                        <p class="text-capitalize m-0 text-secondary"></p>
+                                    </div>
+                                    @if (auth()->user()->foto_profil)
+                                        <img src="{{ route('displayImage', ['uri' => auth()->user()->foto_profil, 'folder' => 'user']) }}"
+                                            alt="user-profil" class="rounded-circle object-fit-cover" width="40"
+                                            height="40">
+                                    @else
+                                        <div style="zoom: 1.5"><i class="iconsax" type="bold" stroke-width="1.5"
+                                                icon="user-circle"></i>
                                         </div>
-                                    </li>
-                                </a>
-                            @endguest
-                        </ul>
-                    </div>
+                                    @endif
+                                </li>
+                            </a>
+                        @endguest
+                    </ul>
                 </div>
             </nav>
             <div class="container p-4 px-sm-2 px-3 w-100 mx-auto ">

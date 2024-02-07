@@ -62,6 +62,6 @@ Route::prefix('/dashboard')->middleware('auth')->group(function () {
         Route::get('/jurusan', 'jurusan');
         Route::get('/jurusan/{id}', 'jurusanDetail');
 
-        Route::get('/log', [DashboardController::class, 'log'])->middleware('checkRole:hubin');
+        Route::get('/log', [DashboardController::class, 'log'])->middleware('role:hubin');
     });
 });
