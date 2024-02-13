@@ -33,10 +33,11 @@ class DashboardController extends Controller
     public function index(Request $request): View
     {
         $data = [];
-        if ($request->user()->role == 'siswa') {
+        if ($request->user()->role == 'siswa')
+        {
             $data = [
                 // 'prakerin'   => Prakerin::where('nis_siswa', $request->user()->id)->get(),
-                'perusahaan' => Perusahaan::inRandomOrder()->limit(5)->get()
+                'perusahaan' => Perusahaan::inRandomOrder()->limit(5)->get(),
             ];
         }
         return $request->user()->role == 'siswa'
@@ -185,8 +186,12 @@ class DashboardController extends Controller
     public function kelasDetail(int $id)
     {
         $data = [
-            'kelas'   => Kelas::with(['jurusan', 'siswa' => function ($query) {
-                $query->orderBy('nama'); }])->findOrFail($id),
+            'kelas'   => Kelas::with([
+                'jurusan',
+                'siswa' => function ($query) {
+                    $query->orderBy('nama');
+                }
+            ])->findOrFail($id),
             'walas'   => Walas::with(['kelas', 'user'])->where('id_kelas', $id)->first(),
             'jurusan' => Jurusan::all(),
         ];
@@ -237,6 +242,14 @@ class DashboardController extends Controller
                 $data = ['data' => PengajuanSiswa::with('pengajuan', 'siswa')->where('nip_walas', auth()->user()->id)->get()];
                 return view('dashboard.pengajuan.walas.index', $data);
         }
+    }
+    public function tambahPengajuan()
+    {
+        $data = [
+            'siswa' => Siswa::query()->where('id_kelas', auth()->user()->siswa->id_kelas)->get(),
+        ];
+
+        return view('dashboard.pengajuan.siswa.tambah', $data);
     }
     public function semuaPengajuan()
     {
