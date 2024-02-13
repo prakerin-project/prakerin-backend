@@ -8,8 +8,7 @@
     <div class="row mb-4">
         <div class="col-4">
             <a href="{{ url('/dashboard/prakerin/semua') }}" class="text-decoration-none">
-                <div class="card border-0"
-                    style="background-image: linear-gradient(to right top, #009eff, #0087ff, #006cff, #004cff, #080fff);">
+                <div class="card border-0" style="background-color: #006fee">
                     <div class="card-body d-flex text-white" style="height: 120px">
                         <div class="w-100 d-flex flex-column justify-content-center">
                             <h1>{{ $all_prakerin }}</h1>
@@ -24,8 +23,7 @@
         </div>
         <div class="col-4">
             <a href="{{ url('/dashboard/prakerin/berlangsung') }}" class="text-decoration-none">
-                <div class="card border-0"
-                    style="background-image: linear-gradient(to right top, #fbff00, #ffe300, #ffc700, #ffab00, #ff9000);">
+                <div class="card border-0" style="background-color: #7828c8">
                     <div class="card-body d-flex text-white" style="height: 120px">
                         <div class="w-100 d-flex flex-column justify-content-center">
                             <h1>{{ $prakerinBerlangsung }}</h1>
@@ -40,8 +38,7 @@
         </div>
         <div class="col-4">
             <a href="{{ url('/dashboard/prakerin/selesai') }}" class="text-decoration-none">
-                <div class="card border-0"
-                    style="background-image: linear-gradient(to right top, #53ff00, #40e814, #2dd21c, #19bc20, #00a621);">
+                <div class="card border-0" style="background-color: #17c964">
                     <div class="card-body d-flex text-white" style="height: 120px">
                         <div class="w-100 d-flex flex-column justify-content-center">
                             <h1>{{ $prakerinSelesai }}</h1>

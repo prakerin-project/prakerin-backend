@@ -2,40 +2,39 @@
 @section('title', 'List Perusahaan')
 
 @section('content')
-    <div class="row">
-
+    <div class="row gap-3">
         @foreach ($perusahaan as $p)
-            <div class="col-6">
-                <a href="{{ url('dashboard/perusahaan/' . $p->id) }}"
-                    class="border p-3 text-decoration-none color gap-3 text-black rounded d-flex">
-                    @if ($p->foto->count() >= 1)
+            <div class="card bg-white p-0" style="width: 18rem; display: inline-block">
+                <div style="height: 250px" class="d-flex border-bottom object-fit-contain">
+                    @if ($p->foto->count() > 0)
                         <img src="{{ route('displayImage', ['uri' => $p->foto[0]->path, 'folder' => 'perusahaan']) }}"
-                            class="rounded object-fit-contain" width="150px" height="150px" alt="Perusahaan Image">
+                            class="card-img-top object-fit-contain" alt="foto_perusahaan">
                     @else
-                        <img src="{{ asset('bg.png') }}" class="rounded object-fit-cover" width="150px" height="150px"
-                            alt="Perusahaan Image">
+                        <img src="{{ asset('perusahaan_default.png') }}" class="card-img-top" alt="foto_perusahaan">
                     @endif
-                    <div>
-                        <h1 class="fs-3">{{ $p->nama_perusahaan }}</h1>
-                        <div class="d-flex gap-1" style="color: rgb(105, 105, 105)">
-                            <i class="iconsax" type="linear" style="zoom: 0.7" stroke-width="1.5" icon="buildings-1"></i>
-                            <p class="m-0">{{ $p->jenis_perusahaan->nama }}</p>
+                </div>
+                <div class="card-body p-3">
+                    <h3 class="card-title fw-semibold">{{ $p->nama_perusahaan }}</h3>
+                    <div style="color: rgb(94, 94, 94)">
+                        <div class="d-flex gap-1">
+                            <i class="iconsax" type="linear" style="zoom: 0.8" stroke-width="1.5" icon="buildings-2"></i>
+                            <p class="card-text">{{ $p->jenis_perusahaan->nama }}</p>
                         </div>
-                        <div class="d-flex gap-1" style="color: rgb(105, 105, 105)">
-                            <i class="iconsax" type="linear" style="zoom: 0.7" stroke-width="1.5" icon="mail"></i>
-                            <p class="m-0">{{ $p->email }}</p>
+                        <div class="d-flex gap-1">
+                            <i class="iconsax" type="linear" style="zoom: 0.8" stroke-width="1.5" icon="mail"></i>
+                            <p class="card-text m-0">{{ $p->email }}</p>
                         </div>
-                        <div class="text-primary d-flex gap-1">
-                            <i class="iconsax" type="linear" style="zoom: 0.7" stroke-width="1.5" icon="global"></i>
-                            <p class="m-0">{{ $p->link_website }}</p>
-                        </div>
-                        <div class="d-flex gap-1 mt-3">
-                            <i class="iconsax text-danger" type="linear" style="zoom: 0.7" stroke-width="1.5"
-                                icon="location-pin"></i>
-                            <p class="m-0">{{ $p->alamat }}</p>
+                        <div class="d-flex gap-1">
+                            <i class="iconsax" type="linear" style="zoom: 0.8" stroke-width="1.5" icon="global"></i>
+                            <a href="{{ $p->link_website }}"
+                                class="card-text text-decoration-none">{{ $p->link_website }}</a>
                         </div>
                     </div>
-                </a>
+                </div>
+                <div class="p-2">
+                    <a href="{{ url("/dashboard/perusahaan/$p->id") }}"
+                        class="btn w-100 btn-primary text-bg-primary">Detail</a>
+                </div>
             </div>
         @endforeach
     </div>

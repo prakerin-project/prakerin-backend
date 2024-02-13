@@ -1,0 +1,81 @@
+#dropdownToggle:hover {
+  cursor: pointer;
+}
+
+#dropdownToggle {
+  rotate: 90deg;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+#dropdownList {
+  display: none;
+}
+
+.menu-item {
+  color: black;
+}
+
+.menu-item .user-item {
+  color: black;
+}
+
+.menu-item:hover {
+  background-color: #0B5EF3;
+  color: #ffffff;
+}
+
+.menu .active {
+  background-color: #0B5EF3;
+  color: #ffffff;
+}
+
+.menu-item:hover .user-item {
+  color: #ffffff;
+}
+
+.logout:hover {
+  background-color: rgb(255, 171, 171);
+}
+
+.dropdown-toggle::after {
+  margin-left: 6em;
+}
+
+aside {
+  background-color: #13192C;
+}
+
+#sidebar::-webkit-scrollbar {
+  display: none;
+}
+
+.navbar {
+  min-height: 80px;
+}
+
+/* Adjust the width of the sidebar according to your needs */
+#sidebar {
+  width: 250px;
+  height: calc(100vh - 80px);
+  /* 80px is the height of the navbar */
+  position: fixed;
+  top: 80px;
+  /* 80px is the height of the navbar */
+  left: 0;
+  bottom: 0;
+  z-index: 1000;
+  /* Ensure the sidebar is above other content */
+  overflow-y: auto;
+  /* Add scroll if needed */
+}
+
+/* Adjust the margin and padding of the main content */
+#main-content {
+  margin-top: 70px;
+  margin-left: 270px;
+  /* Adjust according to the sidebar width */
+  padding: 20px;
+}

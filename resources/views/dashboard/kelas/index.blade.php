@@ -24,7 +24,8 @@
                             <select name="id_jurusan" id="jurusan-select" class="form-select" required>
                                 <option value="" selected hidden>Pilih jurusan</option>
                                 @foreach ($jurusan as $j)
-                                    <option value="{{ $j->id }}">{{ $j->nama_jurusan }}</option>
+                                    <option value="{{ $j->id }}">{{ $j->nama_jurusan }} ({{ $j->akronim }})
+                                    </option>
                                 @endforeach
                             </select>
                         </div>
@@ -100,7 +101,8 @@
                             </div>
                             <div class="col-auto p-0">
                                 <button type="button"
-                                    class="btn-hapus d-flex align-items-center gap-2 w-100 rounded-end-pill btn btn-danger">
+                                    class="btn-hapus d-flex align-items-center gap-2 w-100 rounded-end-pill btn btn-danger"
+                                    idKelas="{{ $k->id }}">
                                     <i class="iconsax text-light" type="linear" icon="trash"
                                         style="zoom: 0.8"></i>Delete</button>
                             </div>
@@ -124,7 +126,7 @@
                                         @foreach ($jurusan as $j)
                                             <option value="{{ $j->id }}"
                                                 @if ($k->id_jurusan === $j->id) selected @endif>
-                                                {{ $j->nama_jurusan }}
+                                                {{ $j->nama_jurusan }} ({{ $j->akronim }})
                                             </option>
                                         @endforeach
                                     </select>

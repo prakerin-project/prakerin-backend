@@ -1,7 +1,7 @@
 @extends('layouts.index')
 @section('title', "$perusahaan->nama_perusahaan")
 @section('content')
-    <div class="row d-flex gap-1 flex-row-reverse">
+    <div class="row d-flex gap-1 flex-row">
         @if ($perusahaan->foto->count() >= 1)
             <div class="col-7 foto-wrapper d-flex flex-column">
                 <img src="{{ route('displayImage', ['uri' => $perusahaan->foto[0]->path, 'folder' => 'perusahaan']) }}"
