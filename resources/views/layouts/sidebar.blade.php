@@ -1,4 +1,4 @@
-<aside class="position-fixed z-3 h-100 bg-white flex-column align-items-center p-0 border rounded-3" id="sidebar"
+<aside class="position-fixed z-3 h-100 bg-white flex-column align-items-center p-0 border rounded-end-3" id="sidebar"
     style="width: 300px;display: none;max-height: 100vh; overflow-y: auto;">
 
     <div class="h-100 mb-3 rounded w-100 p-3 position-relative">
@@ -115,14 +115,6 @@
                 @endif
             </div>
 
-            @auth
-                <a href="{{ route('logout') }}"
-                    class="text-danger logout py-2 px-2 rounded d-flex gap-3 align-items-center link-underline link-underline-opacity-0">
-                    <h3 class="m-0"><i class="iconsax" type="linear" stroke-width="1.5" icon="logout-1"></i>
-                    </h3>
-                    <h5 class="m-0">Logout</h5>
-                </a>
-            @endauth
         </div>
     </div>
 </aside>
