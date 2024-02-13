@@ -5,35 +5,41 @@
     <div class="row mt-3">
         <div class="col-4">
             <div class="card">
-                <div class="card-header bg-white d-flex flex-column text-center justify-content-center">
-                    <h3>Wali Kelas</h3>
-                    @if ($walas)
+                @if ($walas)
+                    <div class="card-header bg-white d-flex flex-column text-center justify-content-center">
                         @if ($walas->user->foto_profil)
                             <img src="{{ route('displayImage', ['uri' => $walas->user->foto_profil, 'folder' => 'user']) }}"
                                 width="300px" height="300px" alt="foto-profil" style="object-position: top"
                                 class="align-self-center rounded-circle">
                         @endif
                         <h5 class="mt-3 mb-0">{{ $walas->nama }}</h5>
-                    @endif
-                </div>
+                    </div>
+                @endif
                 <div class="card-body bg-white rounded">
                     <table>
                         <tr>
+                            <td>Wali kelas</td>
+                            <td class="px-2">:</td>
+                            <td class="px-2">{{ $walas ? $walas->nama : '-' }}</td>
+                        </tr>
+                        <tr>
                             <td>Angkatan</td>
                             <td class="px-2">:</td>
-                            <td class="px-2 text-primary">{{ $kelas->angkatan }}</td>
+                            <td class="px-2">{{ $kelas->angkatan }}</td>
                         </tr>
                         @if (count($kelas->siswa) > 0)
                             <tr>
                                 <td>Tahun masuk</td>
                                 <td class="px-2">:</td>
-                                <td class="px-2 text-primary">{{ $kelas->siswa[0]->tahun_masuk }}</td>
+                                <td class="px-2">{{ $kelas->siswa[0]->tahun_masuk }}</td>
                             </tr>
                         @endif
                         <tr>
                             <td>Jurusan</td>
                             <td class="px-2">:</td>
-                            <td class="px-2">{{ $kelas->jurusan->nama_jurusan }}</td>
+                            <td class="px-2"><a
+                                    href="/dashboard/jurusan/{{ $kelas->jurusan->id }}">{{ $kelas->jurusan->nama_jurusan }}</a>
+                            </td>
                         </tr>
                         <tr>
                             <td>Jumlah siswa</td>
