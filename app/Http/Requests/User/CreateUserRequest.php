@@ -32,7 +32,8 @@ class CreateUserRequest extends FormRequest
             'jenis_kelamin' => ['required', 'in:L,P'],
         ];
         //add more rules according to role requested
-        switch ($this->role) {
+        switch ($this->role)
+        {
             case 'tu':
                 $rules = array_merge($rules, ['nip' => ['required', 'max:20', 'unique:tata_usaha,nip']]);
                 break;
@@ -41,14 +42,13 @@ class CreateUserRequest extends FormRequest
                 break;
             case 'walas':
                 $rules = array_merge($rules, [
-                    'nip'      => ['required', 'max:20', 'unique:walas,nip'],
-                    'id_kelas' => ['required', 'integer', 'unique:walas,id_kelas', 'exists:kelas,id']
+                    'nip' => ['required', 'max:20', 'unique:walas,nip'],
                 ]);
                 break;
             case 'kaprog':
                 $rules = array_merge($rules, [
                     'nip'        => ['required', 'max:20', 'unique:kaprog,nip'],
-                    'id_jurusan' => ['required', 'integer', 'unique:kaprog,id_jurusan', "exists:jurusan,id"]
+                    'id_jurusan' => ['required', 'integer', 'unique:kaprog,id_jurusan', "exists:jurusan,id"],
                 ]);
                 break;
             case 'pembimbing':

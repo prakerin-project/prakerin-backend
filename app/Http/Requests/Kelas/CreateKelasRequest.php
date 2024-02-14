@@ -27,10 +27,11 @@ class CreateKelasRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'nip_walas'  => ['required', 'string', Rule::exists('walas', 'nip')],
             'id_jurusan' => ['required', 'integer', Rule::exists('jurusan', 'id')],
             'kelompok'   => ['nullable', 'max:1', 'string'],
             'tingkat'    => ['required', Rule::in(['10', '11', '12'])],
-            'angkatan'   => ['required', 'integer']
+            'angkatan'   => ['required', 'integer'],
         ];
     }
 
@@ -41,12 +42,14 @@ class CreateKelasRequest extends FormRequest
             function (Validator $validator) {
                 if (
                     Kelas::query()
+                        ->where('nip_walas', $this->nip_walas)
                         ->where('id_jurusan', $this->id_jurusan)
                         ->where('kelompok', $this->kelompok)
                         ->where('tingkat', $this->tingkat)
                         ->where('angkatan', $this->angkatan)
                         ->get()->count() > 0
-                ) {
+                )
+                {
                     $validator->errors()->add('kelas', "Kelas already exist.");
                 }
             }

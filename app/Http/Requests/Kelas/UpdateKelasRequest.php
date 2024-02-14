@@ -27,6 +27,7 @@ class UpdateKelasRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'nip_walas'  => ['required', 'string', Rule::exists('walas', 'nip')],
             'id_jurusan' => ['required', 'integer', Rule::exists('jurusan', 'id')],
             'kelompok'   => ['nullable', 'max:1', 'string'],
             'tingkat'    => ['required', Rule::in(['10', '11', '12'])],
@@ -41,6 +42,7 @@ class UpdateKelasRequest extends FormRequest
             function (Validator $validator) {
                 if (
                     Kelas::query()
+                        ->where('nip_walas', $this->nip_walas)
                         ->where('id_jurusan', $this->id_jurusan)
                         ->where('kelompok', $this->kelompok)
                         ->where('tingkat', $this->tingkat)

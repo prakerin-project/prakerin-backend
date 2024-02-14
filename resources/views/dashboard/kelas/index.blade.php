@@ -20,6 +20,15 @@
                 <div class="modal-body">
                     <form id="tambah-kelas-form" class="d-flex flex-column gap-3">
                         <div class="form-group">
+                            <label for="walas">Wali Kelas</label>
+                            <select name="nip_walas" id="walas" class="form-select">
+                                <option value="" selected hidden disabled>Pilih wali kelas</option>
+                                @foreach ($walas as $w)
+                                    <option value="{{ $w->nip }}">{{ $w->nama }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group">
                             <label for="jurusan-select">Jurusan</label>
                             <select name="id_jurusan" id="jurusan-select" class="form-select" required>
                                 <option value="" selected hidden>Pilih jurusan</option>

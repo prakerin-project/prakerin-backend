@@ -223,10 +223,6 @@
                     $("#tambah-user-form")
                         .append("<label for='nip'>NIP Walas</label>")
                         .append("<input class='form-control' id='nip' name='nip'/>")
-                        .append("<label for='id_kelas'>Pilih kelas</label>")
-                        .append("<select class='form-select' id='id_kelas' name='id_kelas'>" +
-                            "<option value=''>Pilih kelas</option>" +
-                            optKelas + "</select>")
                     break;
                 case 'tu':
                     $("#tambah-user-form")

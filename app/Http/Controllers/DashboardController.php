@@ -167,6 +167,7 @@ class DashboardController extends Controller
         $data = [
             'kelas'   => Kelas::with('jurusan')->orderByDesc('angkatan')->get(),
             'jurusan' => Jurusan::all(),
+            'walas'   => Walas::all(),
         ];
 
         if (auth()->user()->role == 'siswa')
@@ -324,7 +325,7 @@ class DashboardController extends Controller
             case 'siswa':
                 // TODO: add prakerin data into ui
                 $data = [
-                    'data' => Prakerin::with('siswa')->where('nis_siswa', auth()->user()->siswa->nis)->get(),
+                    'data'  => Prakerin::with('siswa')->where('nis_siswa', auth()->user()->siswa->nis)->get(),
                     'siswa' => auth()->user()->siswa,
                     'user'  => auth()->user(),
                 ];

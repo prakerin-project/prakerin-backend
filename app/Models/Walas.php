@@ -44,6 +44,6 @@ class Walas extends Model
 
     public function kelas()
     {
-        return $this->belongsTo(Kelas::class, 'id_kelas');
+        return $this->hasMany(Kelas::class, 'nip_walas');
     }
 }
