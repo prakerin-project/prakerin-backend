@@ -50,7 +50,7 @@
             </div>
         </div>
         <div class="col">
-            <h3 class="text-center">Daftar siswa</h3>
+            <h3>Daftar siswa</h3>
             <table class="table rounded-2 overflow-hidden table-bordered">
                 <thead class="table-secondary">
                     <tr>

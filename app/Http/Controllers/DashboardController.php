@@ -309,8 +309,11 @@ class DashboardController extends Controller
 
                 return view('dashboard.prakerin.hubin.index', $data);
             case 'siswa':
+                // TODO: add prakerin data into ui
                 $data = [
-                    'data' => Prakerin::with('siswa')->where('nis', auth()->user()->id)->get(),
+                    'data' => Prakerin::with('siswa')->where('nis_siswa', auth()->user()->siswa->nis)->get(),
+                    'siswa' => auth()->user()->siswa,
+                    'user'  => auth()->user(),
                 ];
                 return view('dashboard.prakerin.siswa.index', $data);
             case 'walas':
