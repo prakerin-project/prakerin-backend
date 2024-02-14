@@ -21,6 +21,8 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Logs whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Logs whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Logs whereUser($value)
+ * @property string $ip_address
+ * @method static \Illuminate\Database\Eloquent\Builder|Logs whereIpAddress($value)
  * @mixin \Eloquent
  */
 class Logs extends Model

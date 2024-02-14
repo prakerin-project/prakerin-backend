@@ -22,6 +22,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Hubin whereNama($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Hubin whereNip($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Hubin whereNoTelp($value)
+ * @method static \Database\Factories\HubinFactory factory($count = null, $state = [])
  * @mixin \Eloquent
  */
 class Hubin extends Model

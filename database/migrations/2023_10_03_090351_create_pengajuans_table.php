@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('id', 15)->primary();
             $table->string('nip_walas', 20)->nullable(false);
             $table->string('nip_kaprog', 20)->nullable(false);
-            $table->date('tanggal_pengajuan')->nullable(false);
+            $table->date('tanggal_pengajuan')->nullable(true);
             $table->string('nama_industri', 100)->nullable(false);
             $table->text('alamat')->nullable(false);
             $table->string('kontak_industri', 20)->nullable(false);
