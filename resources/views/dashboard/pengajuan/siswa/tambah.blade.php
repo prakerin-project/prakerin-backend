@@ -19,7 +19,7 @@
                             <div class="mb-3">
                                 <label for="kontak_industri" class="form-label">Kontak perusahaan:</label>
                                 <input type="text" class="form-control bg-white" id="kontak_industri"
-                                    name="industri_industri" autofocus required>
+                                    name="kontak_industri" autofocus required>
                             </div>
                             <div class="mb-3">
                                 <label for="alamat" class="form-label">Alamat perusahaan :</label>
@@ -27,7 +27,7 @@
                             </div>
                         </form>
                     </div>
-                    <div class="col">
+                    <div class="col-md-6">
                         <div class="mb-3">
                             <label for="siswa" class="form-label">Pilih Siswa:</label>
                             <div class="d-flex gap-2 align-items-center">
@@ -166,7 +166,21 @@
                 }
             }).get()
 
-            data.append('siswa', JSON.stringify(nisSiswa))
+            // Remove any existing alert
+            $('#alertMessage').remove();
+
+            // Check if the table contains only the default row
+            if ($('#tableBody tr').length === 1 && $('#tableBody tr#defaultRow').length === 1) {
+                let alertMessage = `
+            <div id="alertMessage" class="alert alert-danger alert-dismissible fade show" role="alert">
+                Tabel siswa kosong. Silakan tambah siswa terlebih dahulu.
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>`;
+                $('#dataTable').after(alertMessage);
+                return; // Stop form submission
+            }
+
+            data.append('nis_siswa', JSON.stringify(nisSiswa))
 
             console.log(Object.fromEntries(data));
         }))
