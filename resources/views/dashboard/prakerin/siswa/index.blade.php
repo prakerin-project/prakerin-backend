@@ -2,7 +2,7 @@
 @section('title', 'Prakerin')
 @section('content')
     <div class="row align-items-stretch justify-content-between gap-3">
-        <div class="col-12 col-sm">
+        <div class="col-12 col-lg">
             <span class="d-flex align-items-center">
                 <h1 class="d-inline m-0 lh-sm me-3">Prakerin</h1>
                 <i class="d-inline iconsax" @style(['zoom: 1.5']) type="linear" stroke-width="1.5" icon="building-1"></i>
@@ -13,19 +13,29 @@
 
                 @for ($i = 0; $i < 20; $i++)
                     <section class="card">
-                        <div class="card-body">
-                            <div class="card-title mb-3 d-flex justify-content-between flex-wrap align-items-center">
-                                <h4 class="fw-bold m-0 lh-1">Prakerin {PT APA AJA}</h4>
-                                <span class="badge bg-primary fw-normal">{STATUS}</span>
-                            </div>
-                            <div class="card-text">
-                                <a class="m-0 d-block">{PENGAJUAN}</a>
-                                <a class="m-0 d-block">{PEMBIMBING}</a>
-                            </div>
+                        <div class="card-body position-relative">
+                            <a href="#" class="stretched-link text-decoration-none link-dark">
+                                <div class="m-0 card-title d-flex justify-content-between flex-wrap align-items-center">
+                                    <h4 class="fw-bold m-0 lh-1">Prakerin {PT APA AJA}</h4>
+                                    <span class="badge bg-primary fw-normal mt-1">{STATUS}</span>
+                                </div>
+                            </a>
                         </div>
-                        <div class="card-footer d-flex flex-wrap justify-content-between">
-                            <span class="badge d-inline bg-success m-0 fw-normal">Tanggal mulai: {TANGGAL}</span>
-                            <span class="badge d-inline bg-danger m-0 fw-normal">Tanggal selesai: {TANGGAL}</span>
+                        <div class="card-footer">
+                            <button onclick="flipCaretIcon({{ $i }})"
+                                class="w-100 btn btn-sm btn-outline-primary d-flex justify-content-between align-items-center"
+                                data-bs-toggle="collapse" data-bs-target="#footer-collapse-{{ $i }}"
+                                aria-expanded="false" aria-controls="footer-collapse-{{ $i }}">
+                                Periode prakerin
+                                <i class="iconsax" type="bold" id="caret-icon-{{ $i }}" @style(['zoom: 0.7']) type="linear"
+                                    stroke-width="1.5" icon="chevron-down" ></i>
+                            </button>
+                            <div class="collapse mt-2" id="footer-collapse-{{ $i }}">
+                                <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+                                    <span class="badge d-inline bg-success m-0 fw-normal">Tanggal mulai: {TANGGAL}</span>
+                                    <span class="badge d-inline bg-danger m-0 fw-normal">Tanggal selesai: {TANGGAL}</span>
+                                </div>
+                            </div>
                         </div>
                     </section>
                 @endfor
@@ -33,7 +43,8 @@
             </div>
             {{-- PRAKERIN CARD SECTION --}}
         </div>
-        <div class="col-12 col-md-auto">
+
+        <div class="col-12 col-lg-auto order-first order-lg-last">
             {{-- DATA PRIBADI CARD --}}
             <div class="card sticky-top" @style(['scroll-padding-top: 100px', 'top: 95px'])>
                 @isset($user->foto_profil)
@@ -81,4 +92,18 @@
             {{-- DATA PRIBADI CARD --}}
         </div>
     </div>
+@endsection
+@section('footer')
+    <script type="module">
+        // get footer collapse id from clicked button
+        window.flipCaretIcon = function(id) {
+            //init current
+            let current = $(`#caret-icon-${id}`);
+
+            //run rotate accordingly
+            current.data('rotate') === '180deg'
+            ? current.animate({rotate: '0deg'}) && current.data('rotate', '0deg')
+            : current.animate({rotate: '180deg'}) && current.data('rotate', '180deg');
+        }
+    </script>
 @endsection
