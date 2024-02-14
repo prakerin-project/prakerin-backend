@@ -1,9 +1,9 @@
-<aside class="position-fixed z-3 h-100 bg-white flex-column align-items-center p-0 border rounded-end-3" id="sidebar"
-    style="width: 300px;display: none;max-height: 100vh; overflow-y: auto;">
+<aside class="position-fixed h-100 bg-white flex-column align-items-center p-0 border" id="sidebar"
+    @style(['z-index: 100','max-height: calc(100vh - 80px)', 'width: 300px', 'display: none', 'overflow-y: auto'])>
 
-    <div class="h-100 mb-3 rounded w-100 p-3 position-relative">
+    <div class="h-100 w-100 p-3 position-relative">
         <h4>Menu</h4>
-        <div class="menu d-flex h-100 flex-column gap-2 justify-content-between">
+        <div class="menu d-flex flex-column gap-2 justify-content-between pb-5">
             <div class="d-flex gap-1 flex-column">
                 <a href="{{ url('/dashboard') }}"
                     class="menu-item py-2 px-2 rounded d-flex gap-3 align-items-center link-underline link-underline-opacity-0">
@@ -107,8 +107,7 @@
                 @if ($user_role == 'hubin')
                     <a href="{{ url('/dashboard/log') }}"
                         class="menu-item  py-2 px-2 rounded d-flex gap-3 align-items-center link-underline link-underline-opacity-0">
-                        <h3 class="m-0"><i class="iconsax" type="linear" stroke-width="1.5"
-                                icon="menu-board"></i>
+                        <h3 class="m-0"><i class="iconsax" type="linear" stroke-width="1.5" icon="menu-board"></i>
                         </h3>
                         <h5 class="m-0">Logs</h5>
                     </a>

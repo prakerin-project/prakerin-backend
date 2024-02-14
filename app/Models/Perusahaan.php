@@ -24,6 +24,8 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Perusahaan whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Perusahaan whereIdJenisPerusahaan($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Perusahaan whereNamaPerusahaan($value)
+ * @property string|null $link_website
+ * @method static \Illuminate\Database\Eloquent\Builder|Perusahaan whereLinkWebsite($value)
  * @mixin \Eloquent
  */
 class Perusahaan extends Model

@@ -23,6 +23,8 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Kelas whereIdJurusan($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Kelas whereKelompok($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Kelas whereTingkat($value)
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Siswa> $siswa
+ * @property-read int|null $siswa_count
  * @mixin \Eloquent
  */
 class Kelas extends Model

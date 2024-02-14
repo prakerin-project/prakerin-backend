@@ -15,8 +15,8 @@ return new class extends Migration {
             $table->string('id', 15)->primary();
             $table->string('id_pengajuan', 15);
             $table->string('nis_siswa', 12)->nullable(false);
-            $table->string('nip_nik_pembimbing_sekolah', 20)->nullable(false);
-            $table->string('nip_nik_pembimbing_industri', 20)->nullable(false);
+            $table->string('nip_pembimbing_sekolah', 20)->nullable(false);
+            $table->string('nik_pembimbing_industri', 20)->nullable(false);
             $table->enum('status', ['berlangsung', 'selesai'])->default('berlangsung')->nullable(false);
             $table->date('tanggal_mulai')->nullable(false);
             $table->date('tanggal_selesai')->nullable(false);
@@ -26,9 +26,9 @@ return new class extends Migration {
                 ->cascadeOnDelete()->cascadeOnUpdate();
             $table->foreign('nis_siswa')->references('nis')->on('siswa')
                 ->cascadeOnDelete()->cascadeOnUpdate();
-            $table->foreign('nip_nik_pembimbing_sekolah')->references('nip_nik')->on('pembimbing')
+            $table->foreign('nip_pembimbing_sekolah')->references('nip_nik')->on('pembimbing')
                 ->cascadeOnDelete()->cascadeOnUpdate();
-            $table->foreign('nip_nik_pembimbing_industri')->references('nip_nik')->on('pembimbing')
+            $table->foreign('nik_pembimbing_industri')->references('nip_nik')->on('pembimbing')
                 ->cascadeOnDelete()->cascadeOnUpdate();
         });
     }

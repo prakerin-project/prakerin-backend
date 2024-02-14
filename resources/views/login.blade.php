@@ -76,7 +76,7 @@
 
             await axios({
                 method: 'post',
-                url: 'http://localhost:8000/login',
+                url: '<?= env('APP_URL') ?>/login',
                 data: {
                     username,
                     password

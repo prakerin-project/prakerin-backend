@@ -16,7 +16,7 @@
     </section>
     <section>
         <h2 class="fs-4 position-relative">
-            <span class="position-relative fs-1 ">
+            <span class="position-relative fs-1">
                 <span @style(['position: absolute', 'bottom: .65rem', 'right: -100%', 'width: 100%', 'height: .5rem', 'background-color: var(--bs-primary)', 'z-index: -1'])></span>
                 Prakerin bersama,
             </span>
