@@ -22,13 +22,13 @@
                             </a>
                         </div>
                         <div class="card-footer">
-                            <button onclick="flipCaretIcon({{ $i }})"
+                            <button onclick="flipCaretIcon(this)" data-collapse-id="{{ $i }}"
                                 class="w-100 btn btn-sm btn-outline-primary d-flex justify-content-between align-items-center"
                                 data-bs-toggle="collapse" data-bs-target="#footer-collapse-{{ $i }}"
                                 aria-expanded="false" aria-controls="footer-collapse-{{ $i }}">
                                 Periode prakerin
-                                <i class="iconsax" type="bold" id="caret-icon-{{ $i }}" @style(['zoom: 0.7']) type="linear"
-                                    stroke-width="1.5" icon="chevron-down" ></i>
+                                <i class="iconsax" type="bold" id="caret-icon-{{ $i }}" @style(['zoom: 0.7'])
+                                    type="linear" stroke-width="1.5" icon="chevron-down"></i>
                             </button>
                             <div class="collapse mt-2" id="footer-collapse-{{ $i }}">
                                 <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
@@ -95,15 +95,17 @@
 @endsection
 @section('footer')
     <script type="module">
-        // get footer collapse id from clicked button
-        window.flipCaretIcon = function(id) {
-            //init current
+        // get footer collapse from clicked button
+        window.flipCaretIcon = function(el) {
+            //get icon id current
+            let id = $(el).data('collapse-id');
             let current = $(`#caret-icon-${id}`);
+            console.log();
 
             //run rotate accordingly
-            current.data('rotate') === '180deg'
-            ? current.animate({rotate: '0deg'}) && current.data('rotate', '0deg')
-            : current.animate({rotate: '180deg'}) && current.data('rotate', '180deg');
+            $(el).attr("aria-expanded") === "true" 
+                ? current.animate({rotate: '180deg'},250) 
+                : current.animate({rotate: '0deg'},250);
         }
     </script>
 @endsection
