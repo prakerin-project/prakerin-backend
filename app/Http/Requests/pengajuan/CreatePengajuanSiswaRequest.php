@@ -23,13 +23,14 @@ class CreatePengajuanSiswaRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'id_user'         => ['required', 'exists:user,id'],
             /* -------------------------- INSTANCE OF PENGAJUAN ------------------------- */
-            'nama_industri'     => ['required', 'string', 'max:100'],
-            'alamat'            => ['required', 'string'],
+            'nama_industri'   => ['required', 'string', 'max:100'],
+            'alamat'          => ['required', 'string'],
             //TODO: Add phone number regex
-            'kontak_indsutri'   => ['required', 'string','regex:^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$'],
+            'kontak_industri' => ['required', 'string', 'regex:/^\+?([0-9]{3})\)?[-.●]?([0-9]{3})[-.●]?([0-9]{4,6})$/'],
             /* ---------------------------- INSTANCE OF SISWA --------------------------- */
-            'nis_siswa'         => ['array', 'required']
+            'nis_siswa'       => ['array', 'required', 'min:1'],
         ];
     }
 }

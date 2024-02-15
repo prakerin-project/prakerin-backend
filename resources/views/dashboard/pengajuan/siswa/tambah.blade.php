@@ -6,11 +6,13 @@
         <div class="col">
             <div class="card bg-white">
                 <div class="card-header py-3">
-                    <h2 class="m-0 fw-semibold text-center text-uppercase">Form Pengajuan Prakerin</h1>
+                    <h2 class="m-0 fw-semibold text-center text-uppercase">Form Pengajuan Prakerin
+                        </h1>
                 </div>
                 <div class="row card-body">
-                    <div class="col border-end">
+                    <div class="col">
                         <form id="form-pengajuan">
+                            @csrf
                             <div class="mb-3">
                                 <label for="nama_industri" class="form-label">Nama perusahaan:</label>
                                 <input type="text" class="form-control bg-white" id="nama_industri" name="nama_industri"
@@ -25,9 +27,10 @@
                                 <label for="alamat" class="form-label">Alamat perusahaan :</label>
                                 <textarea name="alamat" class="form-control bg-white" id="alamat" cols="30" rows="3"></textarea>
                             </div>
+                            <input type="hidden" name="id_user" value="{{ Auth::user()->id }}">
                         </form>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-lg-6">
                         <div class="mb-3">
                             <label for="siswa" class="form-label">Pilih Siswa:</label>
                             <div class="d-flex gap-2 align-items-center">
@@ -180,9 +183,17 @@
                 return; // Stop form submission
             }
 
-            data.append('nis_siswa', JSON.stringify(nisSiswa))
-
+            data.append('nis_siswa[]', nisSiswa)
             console.log(Object.fromEntries(data));
+
+            axios.post('<?= config('app.url') ?>/api/pengajuan', data)
+                .then((res) => {
+                    swal.fire('Berhasil tambah data!', '', 'success').then(function() {})
+                })
+                .catch(() => {
+                    // show alert with error message
+                    swal.fire('Gagal tambah data!', '', 'error').then(function() {})
+                })
         }))
     </script>
 @endsection

@@ -76,7 +76,7 @@
 
             await axios({
                 method: 'post',
-                url: '<?= env('APP_URL') ?>/login',
+                url: '<?= config('app.url') ?>/login',
                 data: {
                     username,
                     password

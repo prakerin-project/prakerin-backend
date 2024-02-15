@@ -52,7 +52,7 @@ class Pengajuan extends Model
     protected $table = 'pengajuan';
     protected $primaryKey = 'id';
     protected $keyType = 'string';
-    protected $guarded = ['id'];
+    protected $guarded = [''];
     public $timestamps = true;
     /* -------------------------------- RELATION -------------------------------- */
     public function walas()

@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\JenisPerusahaanController;
 use App\Http\Controllers\Api\JurusanController;
 use App\Http\Controllers\Api\KelasController;
+use App\Http\Controllers\Api\PengajuanController;
 use App\Http\Controllers\Api\PerusahaanController;
 use App\Http\Controllers\Api\UserController;
 use Illuminate\Support\Facades\Route;
@@ -49,6 +50,7 @@ Route::controller(PerusahaanController::class)->group(function () {
     Route::put('/perusahaan/{id}', 'update')->where('id', '[0-9]+');
     Route::delete('/perusahaan/{id}', 'delete')->where('id', '[0-9]+');
 });
+
 Route::controller(UserController::class)->group(function () {
     Route::get('/user', 'getAll');
     Route::get('/user/{role}/{id}', 'getOne')->whereIn('role', ['siswa', 'walas', 'kaprog', 'pembimbing', 'hubin', 'tata_usaha']);
@@ -56,4 +58,9 @@ Route::controller(UserController::class)->group(function () {
     Route::put('/user/{role}/{id}', 'update')->whereIn('role', ['siswa', 'walas', 'kaprog', 'pb_industri', 'pb_sekolah', 'hubin', 'tu']);
     Route::post('/user/{id}/upload', 'uploadFoto');
     Route::delete('/user/{id}', 'delete');
+});
+
+Route::controller(PengajuanController::class)->group(function () {
+    Route::get('/pengajuan', 'getAll');
+    Route::post('/pengajuan', 'create');
 });
