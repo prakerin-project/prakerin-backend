@@ -27,7 +27,7 @@ return new class extends Migration {
             LEFT JOIN
             kelas
             ON 
-                walas.id_kelas = kelas.id
+                kelas.wali_kelas = walas.nip
             LEFT JOIN
             jurusan
             ON 

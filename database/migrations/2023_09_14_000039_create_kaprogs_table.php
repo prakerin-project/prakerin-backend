@@ -14,12 +14,14 @@ return new class extends Migration {
             /* ------------------------------- ATTRIBUTES ------------------------------- */
             $table->string('nip', 20)->primary();
             $table->unsignedBigInteger('id_jurusan')->nullable(false);
-            $table->string('id_user',36)->nullable(false);
+            $table->string('id_user', 36)->nullable(false);
             $table->string('nama', 100)->nullable(false);
             $table->string('no_telp', 22)->nullable(false); // (+62) 8XX-XXXX-XXXX
             $table->enum('jenis_kelamin', ['L', 'P'])->nullable(false);
             /* ----------------------------------- FK ----------------------------------- */
             $table->foreign('id_jurusan')->references('id')->on('jurusan')
+                ->cascadeOnDelete()->cascadeOnUpdate();
+            $table->foreign('id_user')->references('id')->on('user')
                 ->cascadeOnDelete()->cascadeOnUpdate();
         });
     }
