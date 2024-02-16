@@ -22,13 +22,13 @@ class UploadUserPhotoRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'foto_profil' => 'required|image',
+            'foto_profil' => 'required|image|dimensions:ratio=1/1',
         ];
     }
     public function messages()
     {
         return [
-            "foto_profil.dimensions"=>"Please upload a square image"
+            "foto_profil.dimensions" => "Please upload a square image"
         ];
     }
 }

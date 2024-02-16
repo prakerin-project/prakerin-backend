@@ -19,6 +19,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Storage;
 
 class UserController extends Controller
@@ -171,19 +172,29 @@ class UserController extends Controller
     }
     public function uploadFoto(UploadUserPhotoRequest $request)
     {
-        $currDate = Carbon::now(16)->format("Y-m-d");
-        $currUser = User::query()->findOrFail($request->id);
-        $oldFile  = $currUser->foto_profil;
+        //prevent non-owning user from uploading
+        if ($request->id != $request->user()->id) {
+            return response()->json(["message" => "Unauthorized"], 403);
+        }
+
+        $currUser = User::findOrFail($request->id); //init current user
+        $currDate = Carbon::now(16)->format("Y-m-d"); //init current date
+        $oldFile  = $currUser->foto_profil; //get old file
+
+        //check wether old file exists and perform delete
         if (!empty($oldFile) && Storage::disk('public')->exists($oldFile)) {
             Storage::disk('public')->delete($oldFile);
         }
 
+        //upload new file to local disk
         $file     = $request->file('foto_profil');
         $ext      = $file->getClientOriginalExtension();
         $fileName = $currUser->username . "_" . $currDate . "." . $ext;
         $file->storePubliclyAs("user", $fileName, "public");
 
-        $currUser->foto_profil = $fileName;
+        $currUser->foto_profil = $fileName; //set new filename to model
+
+        //save filename to database
         return $currUser->saveOrFail()
             ? response()->json(["foto_profil" => $file->getClientOriginalName()])
             : response()->json(["errors" => ["message" => "Foto profil $currUser->username gagal diupload"]], 422);

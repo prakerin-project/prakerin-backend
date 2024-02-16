@@ -41,7 +41,7 @@ class DashboardController extends Controller
             ];
         }
         return $request->user()->role == 'siswa'
-            ? view('dashboard.siswa', $data)
+            ? view('dashboard.siswa.index', $data)
             : view('dashboard.index', $data);
     }
     public function perusahaan()
