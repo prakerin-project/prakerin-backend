@@ -27,10 +27,10 @@ class DatabaseSeeder extends Seeder
         }
 
         /* -------------------------- SEED JENISPERUSAHAAN -------------------------- */
-        \App\Models\JenisPerusahaan::factory()->create();
+        $this->call(JenisPerusahaanSeeder::class);
 
         /* ------------------------------ SEED JURUSAN ------------------------------ */
-        \App\Models\Jurusan::factory()->create();
+        $this->call(JurusanSeeder::class);
 
         /* ------------------------------ SEED HUBIN ----------------------------- */
         \App\Models\Hubin::factory()->create([
